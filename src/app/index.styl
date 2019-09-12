@@ -1,6 +1,51 @@
 @import "lib"
 
 
+html, body
+	margin 0
+	padding 0
+	height 100%
+	width 100%
+	overflow hidden
+
+:root
+	--icon-size 74px
+	--color #fff
+	--bg #333
+	--grid-width 968px
+	--grid-gap 5px
+
+body
+	font 12px sans-serif
+	background var(--bg)
+	color var(--color)
+	-moz-user-select none
+	user-select none
+	box-sizing border-box
+	padding-bottom 20px
+	overflow-y auto
+
+body *
+	box-sizing inherit
+
+
 h1, h2, h3, h4, h5, h6
 	margin 0
 	b 0
+
+
+.btn
+	position absolute
+	height 32px
+	width 32px
+	border none
+	background none
+	text-align center
+	cursor pointer
+	z-index 10
+	color #888
+	transition color .2s
+	display inline-block
+
+.btn:hover
+	color #eee

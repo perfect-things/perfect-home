@@ -1,6 +1,6 @@
 <svelte:window on:popstate={onpopstate}/>
 
-<main class="bookmarks">
+<main class="bookmarks {folderSwitching ? 'folder-switching' : ''}">
 	{#if $items.length}
 		{#each $items as item}
 			<Tile item="{item}" />
@@ -15,6 +15,7 @@ import { onMount } from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle} from '../store';
 import Sortable from 'sortablejs';
 
+let folderSwitching = false;
 
 function optionsChanged (props) {
 	document.documentElement.style.setProperty('--color', props.pageColor);
@@ -39,15 +40,19 @@ function folderChanged (folderId) {
 	let id = folderId || $options.rootFolder;
 
 	if (!history.state || !history.state.id || history.state.id !== folderId) {
-		window.history.pushState({ id }, document.title, '');
+		const fn = (id === $options.rootFolder) ? 'replaceState' : 'pushState';
+		window.history[fn]({ id }, document.title, '');
 	}
-
-	return browser.bookmarks
+	folderSwitching = true;
+	browser.bookmarks
 		.getSubTree(id)
 		.then(tree => {
 			if (!tree || !tree.length) return;
 			$currentFolder = tree[0].id;
-			$items = tree[0].children;
+			setTimeout(() => {
+				$items = tree[0].children;
+				folderSwitching = false;
+			}, 100);
 		});
 }
 
@@ -59,6 +64,7 @@ onMount(() => {
 		.get('settings')
 		.then(stored => options.set(Object.assign({}, $options, stored)));
 
+	onpopstate(history);
 	options.subscribe(optionsChanged);
 	currentFolder.subscribe(folderChanged);
 });
