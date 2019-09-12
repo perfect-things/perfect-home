@@ -1,0 +1,28 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "es6": true,
+        "commonjs": true,
+        "node": true,
+        "browser": true
+    },
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaVersion": 8
+	},
+    "rules": {
+        "indent": [2, "tab"],
+        "quotes": [2, "single", "avoid-escape"],
+        "semi": [2, "always"],
+        "no-undef": 2,
+        "no-mixed-spaces-and-tabs": 2,
+        "no-unused-vars": 2,
+        "no-trailing-spaces": 2,
+        "no-shadow": 2,
+        "eol-last": 1,
+        "curly": 0,
+        "no-console": 0,
+        "comma-dangle": 0,
+        "no-cond-assign": 0
+    }
+}

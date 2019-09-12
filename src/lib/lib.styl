@@ -1,0 +1,188 @@
+// VARS
+main-font = system,-apple-system,".SFNSDisplay-Regular","Helvetica Neue",Helvetica,"Segoe UI",sans-serif;
+
+
+// // Color Palette
+// color-bg-dark0 = nord0
+// color-bg-dark1 = nord1
+// color-bg-dark2 = nord2
+// color-bg-dark3 = nord3
+
+// color-bg-light0 = nord4
+// color-bg-light1 = nord5
+// color-bg-light2 = nord6
+
+
+
+// color-text-dark0 = nord0
+// color-text-dark1 = nord1
+// color-text-dark2 = nord2
+// color-text-dark3 = nord3
+
+// color-text-light0 = nord4
+// color-text-light1 = nord5
+// color-text-light2 = nord6
+
+// color-link0 = nord7
+// color-link1 = nord8
+// color-link2 = nord9
+// color-link3 = nord10
+
+
+// color-highlight = nord3
+// color-accent = nord12
+// color-accent-alt = nord15
+
+// color-info = nord10
+// color-danger = nord11
+// color-warning = nord13
+// color-success = nord14
+
+
+
+
+
+//*** SHORTCUTS ************************************************************************************
+b(n) { if n is 0 { font-weight: normal } else { font-weight: bold } }				// b:1 -> font-weight: bold;
+i(n) { if n is 0 { font-style: normal } else { font-style: italic } }				// i:1 -> font-style: italic;
+u(n) { if n is 0 { text-decoration: none } else { text-decoration: underline } }	// u:1 -> text-decoration: underline;
+
+padding() { padding: joinArgs(arguments) }
+padding-left(a) { padding-left: px(a) }
+padding-right(a) { padding-right: px(a) }
+padding-top(a) { padding-top: px(a) }
+padding-bottom(a) { padding-bottom: px(a) }
+
+margin() { margin: joinArgs(arguments) }
+margin-left(a) { margin-left: px(a) }
+margin-right(a) { margin-right: px(a) }
+margin-top(a) { margin-top: px(a) }
+margin-bottom(a) { margin-bottom: px(a) }
+
+size(w, h=w) { width: px(w); height: px(h); }
+width(n = 0) { width: px(n) }
+height(n = 0) { height: px(n) }
+
+top(n = 0) { top: px(n) }
+right(n = 0) { right: px(n) }
+left(n = 0) { left: px(n) }
+bottom(n = 0) { bottom: px(n) }
+
+z(n = 0) { z-index: n }
+//*** SHORTCUTS ************************************************************************************
+
+multiline-ellipsis(lines)
+	display block
+	display -webkit-box
+	-webkit-line-clamp lines
+	-webkit-box-orient vertical
+	overflow hidden
+	text-overflow ellipsis
+	word-wrap break-word
+
+
+
+// top, right, bottom, left
+pos()
+	a = arguments
+	position: absolute;
+	unless type(a[0]) is not 'unit' { top: px(a[0]); }
+	unless type(a[1]) is not 'unit' { right: px(a[1]); }
+	unless type(a[2]) is not 'unit' { bottom: px(a[2]); }
+	unless type(a[3]) is not 'unit' { left: px(a[3]); }
+
+
+font()
+	if length(arguments) is 3 and type(arguments[1]) is 'literal'	// font: 12/2 -> font-size: 12px; line-height: 2
+		font-size: px(arguments[0]);
+		line-height: arguments[2]
+	else if length(arguments) is 1									// font: 13 -> font-size: 13px;
+		if type(arguments[0]) == 'unit'
+			font-size: px(arguments[0]);
+		else
+			font: arguments;
+	else															// use native font
+		font: arguments;
+
+
+
+// border: [top] [1px] [solid] [blue], e.g. border: 1px; border: red; border: top blue; border: top 1px; border: top 2px dotted green;
+border-top() { border-top: setBorder(arguments); }
+border-right() { border-right: setBorder(arguments); }
+border-bottom() { border-bottom: setBorder(arguments); }
+border-left() { border-left: setBorder(arguments); }
+border()
+	if arguments[0] == 'none' { border: none; } else { border: setBorder(arguments); }
+
+border-radius() { border-radius: joinArgs(arguments); }
+
+
+// set background, e.g. bg: red; bg: img x y; bg: red img;
+bg()
+	arg = arguments
+	if type(arg[0]) == 'rgba'
+		if length(arg) > 1
+			background: arg[0] setBg(arg[1], arg[2] || 0, arg[3] || 0, arg[4] || no-repeat)
+		else
+			background: arg[0]
+	else
+		if arguments[0] == 'none'
+			background: none
+		else
+			background: setBg(arg[0], arg[1] || 0, arg[2] || 0, arg[3] || no-repeat)
+
+
+
+
+
+//*** STYLE HELPERS ********************************************************************************
+
+// border: [1px] [solid] [blue], e.g. border: 1; border: red; border: 1 red; border: 1 dotted red;
+setBorder()
+	arg = arguments
+	if arg[0] == 'none'
+		return none
+	else if type(arg[0]) == 'unit'
+		size = arg[0]
+		if type(arg[1]) == 'rgba'
+			color = arg[1]
+			style = solid
+		else
+			if type(arg[1]) == 'ident'
+				style = arg[1]
+				if type(arg[2]) == 'rgba' { color = arg[2] } else { color = transparent }
+			else
+				style = solid
+				if arg[1] == null
+					color = transparent
+	else
+		size = 1
+		style = solid
+		if type(arg[0]) == 'rgba' { color = arg[0] }
+
+	return px(size) style color;
+
+
+setBg()
+	arg = arguments
+	return unquote('url(' + img-base + '/' + unquote(arg[0]) + ') ' + px(arg[1]) + ' ' + px(arg[2]) + ' ' + arg[3]);
+//*** STYLE HELPERS ********************************************************************************
+
+
+
+
+
+//*** GENERIC HELPERS ******************************************************************************
+px(a)
+	if type(a) == 'unit'
+		if unit(a) == 'px' || a == 0 { return a } else { return (a + 0px) }
+	else
+		return a
+
+// Joins arguments with space and adds "px" to values if needed
+joinArgs(args)
+	buf = ''
+	for arg, i in args
+		if i { buf += ' ' + px(arg)	} else { buf += px(arg) }
+	return unquote(buf)
+//*** GENERIC HELPERS ******************************************************************************

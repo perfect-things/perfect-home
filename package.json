@@ -1,0 +1,37 @@
+{
+	"name": "newtab-bookmarks2",
+	"description": "Firefox new tab replacement",
+	"version": "1.0.0",
+	"author": "Tom",
+	"scripts": {
+		"start": "gulp dev",
+		"ext-start": "web-ext run --source-dir ./dist",
+		"ext-lint": "web-ext lint --source-dir ./dist",
+		"ext-build": "web-ext build --overwrite-dest --source-dir ./dist",
+		"ext-sign": "web-ext sign "
+	},
+	"license": "GPL-3.0-or-later",
+	"devDependencies": {
+		"@babel/core": "^7.6.0",
+		"babel-loader": "^8.0.6",
+		"babel-minify-webpack-plugin": "^0.3.1",
+		"babel-preset-env": "^1.7.0",
+		"del": "^5.1.0",
+		"gulp": "^4.0.2",
+		"gulp-clean-css": "^4.2.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-env": "^0.4.0",
+		"gulp-eslint": "^6.0.0",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-stylus": "^2.7.0",
+		"svelte": "^3.12.1",
+		"svelte-loader": "^2.13.6",
+		"through2": "^3.0.1",
+		"web-ext": "^3.1.1",
+		"webpack": "^4.39.3",
+		"webpack-stream": "^5.2.1"
+	},
+	"dependencies": {
+		"sortablejs": "^1.10.0-rc3"
+	}
+}

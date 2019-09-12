@@ -1,0 +1,40 @@
+{#if item.type === 'separator'}
+	<div class="item separator"></div>
+{:else}
+	<a href="{item.url || item.id}" class="item item-{item.type} item-{item.id}"
+		data-id="{item.id}"
+		on:click|preventDefault="{e => onclick(item)}">
+		<span class="item-thumb" bind:this={thumb}></span>
+		<span class="item-title" title="{item.title}">{item.title}</span>
+	</a>
+{/if}
+
+
+<script>
+import {currentFolder, options} from '../store';
+import {colorFromString, isDark} from '../lib';
+import { afterUpdate } from 'svelte';
+
+
+export let item;
+let thumb;
+
+function onclick (item) {
+	if (item.type === 'folder') $currentFolder = item.id;
+	else if (item.type === 'bookmark') location.href = item.url;
+}
+
+
+afterUpdate(() => {
+	if (item.type === 'bookmark' && item.url) {
+		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
+		const color = isDark(bg) ? '#ccc' : '#333';
+		thumb.style = `background-color: ${bg}; color: ${color};`;
+		thumb.innerText = item.title.substr(0, 1).toUpperCase();
+	}
+	else {
+		thumb.style = '';
+		thumb.innerText = '';
+	}
+});
+</script>

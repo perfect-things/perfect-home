@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+	<title>New Tab - Bookmarks :: Settings</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link rel="stylesheet" href="css/settings.css">
+	<link rel="stylesheet" href="css/toast.css">
+</head>
+<body>
+	<div class="col">
+		<h1>Settings</h1>
+		<form id="settingsForm">
+			<div class="row">
+				<label>Folder name</label>
+				<select name="rootfolder" id="folderName"></select>
+			</div>
+
+			<div class="row">
+				<label>Grid width</label>
+				<input name="gridwidth" value="968" type="range" min="400" max="2000">
+				<span class="range-tooltip gridwidth-tooltip" data-for="gridwidth"></span>
+			</div>
+
+			<div class="row">
+				<label>Grid spacing</label>
+				<input name="gridgap" value="74" type="range" min="0" max="256">
+				<span class="range-tooltip gridgap-tooltip" data-for="gridgap"></span>
+			</div>
+
+			<div class="row">
+				<label>Icon size</label>
+				<input name="iconsize" value="74" type="range" min="16" max="256">
+				<span class="range-tooltip iconsize-tooltip" data-for="iconsize"></span>
+			</div>
+
+			<div class="row">
+				<label>Text color</label>
+				<input name="pagecolor" value="#444">
+			</div>
+			<div class="row">
+				<label>Background</label>
+				<input name="pagebg" value="#eee">
+				<small><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background">css <code>background</code> syntax</a></small>
+			</div>
+
+			<div class="row">
+				<label>Custom CSS</label>
+				<textarea name="css"></textarea>
+			</div>
+
+			<div class="row buttons">
+				<button type="button" class="btn-reset">Reset to defaults</button>
+				<button type="submit" class="btn-submit">Save</button>
+			</div>
+		</form>
+
+		<button type="button" class="btn-clear">Clear cache</button>
+		<small>This will remove all local cache for icons and settings!</small>
+	</div>
+
+
+	<script src="js/form.js"></script>
+	<script src="js/toast.js"></script>
+	<script src="js/settings.js"></script>
+
+</body>
