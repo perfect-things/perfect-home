@@ -1,6 +1,14 @@
 /* global browser */
 
 
+function injectCss (css) {
+	const style = document.createElement('STYLE');
+	style.innerHTML = css;
+	document.head.appendChild(style);
+}
+
+
+
 // https://stackoverflow.com/a/16348977/424446
 function colorFromString (str) {
 	let hash = 0;
@@ -27,18 +35,21 @@ function isDark (color) {
 
 
 
-const getSettings = () => browser.storage.local.get('settings');
+const getSettings = async () => browser.storage.local.get('settings');
 
-const getSubTree = id => browser.bookmarks.getSubTree(id);
+const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
 
-const getBookmark = id => browser.bookmarks.get(id);
+const getBookmark = async (id) => browser.bookmarks.get(id);
 
+const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
 
 
 export {
+	injectCss,
 	getSettings,
 	getSubTree,
 	getBookmark,
 	colorFromString,
 	isDark,
+	updateIndexes,
 };

@@ -13,7 +13,7 @@
 import Tile from '../tile';
 import {onMount} from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded} from '../store';
-import {getSubTree, getSettings} from '../lib';
+import {getSubTree, getSettings, updateIndexes} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
@@ -28,9 +28,7 @@ function optionsChanged (props) {
 
 
 function onsort (e) {
-	const {oldIndex, newIndex, item} = e;
-	const id = item.dataset.id;
-	console.log(id, item, oldIndex, newIndex);
+	updateIndexes(e.item.dataset.id, e.newIndex);
 }
 
 function onpopstate (e) {

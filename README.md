@@ -6,16 +6,17 @@ Just your own, predictable grid of links.
 ![Screen1](_stuff/screen1.png)
 
 
-## TODO
+## FEATURES
+- [x] drag & drop to reorder
 - [ ] breadcrumbs in header
-- [ ] improve styling
-- [ ] custom images for tiles
-- [ ] drag & drop to reorder
+- [ ] improve styling (bigger tiles)
 - [ ] command palette (filter flat list)
+- [ ] custom images for tiles
 - [ ] shortcuts (1-9?)
 - [ ] light/dark themes
 - [ ] custom css
 - [ ] accessibility
+- [x] Requires only 1 permission (bookmarks)!
 
 
 ## Usage
