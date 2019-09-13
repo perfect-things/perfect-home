@@ -9,9 +9,13 @@ Just your own, predictable grid of links.
 ## FEATURES
 - [x] drag & drop to reorder
 - [x] command palette (filter flat list)
+- [ ] context-menu
+  - [ ] removing items
+  - [ ] assigning custom images
+- [ ] settings pane
 - [ ] improve styling (bigger tiles)
 - [ ] custom images for tiles
-- [ ] light/dark themes
+- [ ] light/dark themes (css based on the OS?)
 - [ ] custom css
 - [ ] accessibility
 - [ ] shortcuts (1-9?)
