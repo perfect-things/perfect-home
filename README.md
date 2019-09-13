@@ -13,6 +13,8 @@ Just your own, predictable grid of links.
 - [ ] drag & drop to reorder
 - [ ] command palette (filter flat list)
 - [ ] shortcuts (1-9?)
+- [ ] light/dark themes
+- [ ] custom css
 - [ ] accessibility
 
 
