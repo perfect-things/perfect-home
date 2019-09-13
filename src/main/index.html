@@ -64,7 +64,8 @@ onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
 		animation: 150,
 		ghostClass: 'sortable-ghost',
-		chosenClass: 'sortable-chosen',
+		onStart: e => e.item.classList.add('sortable-plate'),
+		onEnd: e => e.item.classList.remove('sortable-plate'),
 		onSort: onsort
 	});
 

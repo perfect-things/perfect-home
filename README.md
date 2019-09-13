@@ -8,14 +8,13 @@ Just your own, predictable grid of links.
 
 ## FEATURES
 - [x] drag & drop to reorder
-- [ ] command palette (filter flat list)
-- [ ] breadcrumbs in header
+- [x] command palette (filter flat list)
 - [ ] improve styling (bigger tiles)
 - [ ] custom images for tiles
-- [ ] shortcuts (1-9?)
 - [ ] light/dark themes
 - [ ] custom css
 - [ ] accessibility
+- [ ] shortcuts (1-9?)
 - [x] Requires only 1 permission (bookmarks)!
 
 
