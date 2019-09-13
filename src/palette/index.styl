@@ -1,0 +1,90 @@
+.autocomplete
+	flex 1
+	display flex
+	flex-wrap wrap
+	min-width 200px
+	max-width 60%
+	position fixed
+	left 30%
+	right 30%
+	top 15%
+	background #444
+	color #fff
+	border-radius 4px
+	box-shadow 0 1px 5px 1px rgba(#000, 0.5)
+	z-index 999
+	font-size 14px
+
+	&.hidden
+		display none
+
+
+.autocomplete-input
+	color inherit
+	font inherit
+	font-size 16px
+	width 100%
+	border none
+	background none
+	padding 10px 20px 8px 40px
+	margin 10px 0
+	outline none
+
+
+.autocomplete-list
+	position relative
+	width 100%
+	overflow-y auto
+	z-index 99
+	padding 10px 0
+	border-top 1px solid #000
+	max-height calc(20 * (1em + 10px) + 15px)
+	user-select none
+
+	&:empty
+		padding 0
+
+
+.autocomplete-list-item
+	padding 5px 20px 5px 0
+	color #eee
+	cursor pointer
+	line-height 1.4
+	margin 6px 0
+	display flex
+	align-items flex-start
+
+
+	&:hover,
+	&.selected
+		background-color #637291
+		color #fff
+
+	&.hidden
+		display none
+
+.autocomplete-list-item-icon
+	width 40px
+	min-width 40px
+	height 20px
+	mask-repeat no-repeat
+	mask-position center
+
+.autocomplete-list-item-text
+	display inline-block
+	padding-top 2px
+
+
+.autocomplete-list-item-folder
+	.autocomplete-list-item-icon
+		background-color #fff
+		mask-image url('assets/folder.svg')
+
+	.autocomplete-list-item-text
+		text-transform uppercase
+
+
+.autocomplete-list-item-bookmark
+	.autocomplete-list-item-icon
+		background-color #fff
+		mask-image url('assets/bookmark.svg')

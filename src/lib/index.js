@@ -43,6 +43,7 @@ const getBookmark = async (id) => browser.bookmarks.get(id);
 
 const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
 
+const getAllItems = async () => browser.bookmarks.search({ title: '' });
 
 export {
 	injectCss,
@@ -52,4 +53,5 @@ export {
 	colorFromString,
 	isDark,
 	updateIndexes,
+	getAllItems,
 };

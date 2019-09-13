@@ -1,5 +1,7 @@
 <svelte:window on:popstate={onpopstate}/>
 
+<Palette data={allItems} />
+
 <main class="bookmarks {folderSwitching ? 'folder-switching' : ''}">
 	{#if $items.length}
 		{#each $items as item}
@@ -11,12 +13,14 @@
 
 <script>
 import Tile from '../tile';
+import Palette from '../palette';
 import {onMount} from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded} from '../store';
-import {getSubTree, getSettings, updateIndexes} from '../lib';
+import {getSubTree, getSettings, updateIndexes, getAllItems} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
+let allItems = [];
 
 function optionsChanged (props) {
 	document.documentElement.style.setProperty('--color', props.pageColor);
@@ -65,6 +69,7 @@ onMount(() => {
 	});
 
 	getSettings().then(stored => options.set(Object.assign({}, $options, stored)));
+	getAllItems().then(all => allItems = all);
 
 	onpopstate(history);
 	options.subscribe(optionsChanged);

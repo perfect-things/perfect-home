@@ -1,0 +1,179 @@
+<div class="autocomplete {opened ? '' : 'hidden'}">
+	<input type="text" class="autocomplete-input"
+		autofocus="autofocus"
+		bind:this="{input}"
+		bind:value="{text}"
+		on:input="{oninput}"
+		on:focus="{open}"
+		on:keydown="{onkeydown}"
+		on:keypress="{onkeypress}"
+		>
+	<div class="autocomplete-list" bind:this="{list}">
+		{#each filteredData as item, i}
+			<div
+				class="autocomplete-list-item autocomplete-list-item-{item.type} {i === highlightIndex ? 'selected' : ''}"
+				on:click="{() => onclick(item)}">
+				<div class="autocomplete-list-item-icon"></div>
+				<span class="autocomplete-list-item-text">
+					{@html item.highlighted && item.highlighted.title || item.title}
+				</span>
+			</div>
+		{/each}
+	</div>
+</div>
+
+<svelte:window on:click={onDocumentClick}/>
+
+<script>
+import {onMount} from 'svelte';
+import {currentFolder} from '../store';
+
+
+export let data = [];
+export let value = null;
+export let text = '';
+let opened = false;
+let highlightIndex = 0;
+let input, list, filteredData;
+
+onMount(() => {
+	close();
+	clear();
+	document.addEventListener('keydown', onDocumentKeydown);
+	setTimeout(() => document.body.focus(), 100);
+});
+
+function gotoItem (item) {
+	if (item.type === 'folder') currentFolder.set(item.id);
+	else if (item.type === 'bookmark') location.href = item.url;
+}
+
+
+function onDocumentKeydown (e) {
+	const key = e.key;
+	if (key === 'p' && e.metaKey) {
+		e.preventDefault();
+		open();
+		setTimeout(() => input.select(), 100);
+	}
+}
+
+
+$: {
+	const f = text.toLowerCase();
+	const hlfilter = highlightFilter(text, ['title']);
+	data = data.filter(item => item.type !== 'separator');
+	filteredData = !text ? data : data
+		.filter(item => item.title.toLowerCase().includes(f))
+		.map(hlfilter);
+}
+
+function selectItem () {
+	value = filteredData[highlightIndex];
+	text = value.title;
+	close();
+	gotoItem(value);
+}
+
+function up () {
+	if (highlightIndex > 0) highlightIndex--;
+	highlight();
+}
+
+function down () {
+	if (highlightIndex < filteredData.length - 1) highlightIndex++;
+	highlight();
+}
+
+function highlight () {
+	const el = list.querySelector('.selected');
+	if (el) el.scrollIntoView();
+}
+
+
+function onclick (item) {
+	value = item;
+	text = item.title;
+	close();
+	gotoItem(item);
+}
+
+function onDocumentClick (e) {
+	if (!e.target.closest('.autocomplete')) close();
+}
+
+function onkeydown (e) {
+	let key = e.key;
+	if (key === 'Tab' && e.shiftKey) key = 'ShiftTab';
+	const fnmap = {
+		Tab: opened ? down.bind(this) : null,
+		ShiftTab: opened ? up.bind(this) : null,
+		ArrowDown: down.bind(this),
+		ArrowUp: up.bind(this),
+		Escape: onEsc.bind(this),
+	};
+	const fn = fnmap[key];
+	if (typeof fn === 'function') {
+		e.preventDefault();
+		fn(e);
+	}
+}
+
+function oninput (e) {
+	text = e.target.value;
+	open();
+	highlightIndex = 0;
+}
+
+function onkeypress (e) {
+	if (e.key === 'Enter') {
+		e.preventDefault();
+		selectItem();
+	}
+}
+
+function onEsc (e) {
+	if (text) return clear();
+	e.stopPropagation();
+	if (opened) {
+		input.focus();
+		close();
+	};
+}
+
+function clear () {
+	text = '';
+	setTimeout(() => input.focus());
+}
+
+function open () {
+	opened = true;
+}
+
+function close () {
+	opened = false;
+}
+
+
+// 'item number one'.replace(/(it)(.*)(nu)(.*)(one)/ig, '<b>$1</b>$2 <b>$3</b>$4 <b>$5</b>')
+function highlightFilter (q, fields) {
+	const qs = '(' + q.trim().replace(/\s/g, ')(.*)(') + ')';
+	const reg = new RegExp(qs, 'ig');
+	let n = 1, len = qs.split(')(').length + 1, repl = '';
+	for (; n < len; n++) repl += n % 2 ? `<b>$${n}</b>` : `$${n}`;
+
+	return i => {
+		const newI = Object.assign({ highlighted: {} }, i);
+		if (fields) {
+			fields.forEach(f => {
+				if (!newI[f]) return;
+				newI.highlighted[f] = newI[f].replace(reg, repl);
+			});
+		}
+		return newI;
+	};
+}
+
+
+
+</script>
