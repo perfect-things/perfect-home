@@ -5,13 +5,8 @@ Just your own, predictable grid of links.
 
 ![Screen1](_stuff/screen1.png)
 
-# Usage
-- Select a folder from your bookmarks
-- Enjoy!
 
-
-
-# TODO
+## TODO
 - [ ] breadcrumbs in header
 - [ ] improve styling
 - [ ] custom images for tiles
@@ -21,8 +16,12 @@ Just your own, predictable grid of links.
 - [ ] accessibility
 
 
+## Usage
+- Select a folder from your bookmarks
+- Enjoy!
 
-# Build locally
+
+## Build locally
 1. `npm i`
 2. To test the extension in a temporary firefox profile, use the test script:
     ```sh
