@@ -7,6 +7,7 @@
 	text-align center
 	text-decoration none
 	color inherit
+	border-radius 10px
 
 
 .item-title
@@ -26,11 +27,11 @@
 	width var(--icon-size)
 	height var(--icon-size)
 	display block
-	border-radius 10px
 	background-size cover
 	background-repeat no-repeat
 	background-position center
 	border 1px solid var(--bg)
+	border-radius inherit
 
 
 
@@ -60,3 +61,15 @@
 		font-size calc(var(--icon-size) - 25px)
 		font-weight 600
 		line-height 1
+
+
+
+
+.sortable-chosen
+	background #000
+
+.sortable-ghost
+	filter grayscale(1) contrast(0) brightness(0.1)
+
+	.item-title
+		display none

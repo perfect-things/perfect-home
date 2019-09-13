@@ -8,7 +8,7 @@
 		</button>
 	{/if}
 	<h1 class="title">
-		{#if !$items.length}
+		{#if !$items.length && $itemsLoaded}
 		<p>Add some links to <b>{$rootFolderTitle}</b> folder in your bookmarks.</p>
 		{:else}
 			{$currentFolderTitle}
@@ -18,7 +18,7 @@
 
 <script>
 import { onMount } from 'svelte';
-import {items, options, currentFolder, rootFolderTitle, currentFolderTitle} from '../store';
+import {items, options, currentFolder, rootFolderTitle, currentFolderTitle, itemsLoaded} from '../store';
 
 function goBack () {
 	history.back();

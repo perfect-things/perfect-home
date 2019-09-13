@@ -1,10 +1,10 @@
 {
-	"name": "newtab-bookmarks2",
+	"name": "perfect-home",
 	"description": "Firefox new tab replacement",
 	"version": "1.0.0",
 	"author": "Tom",
 	"scripts": {
-		"start": "gulp dev",
+		"start": "gulp",
 		"ext-start": "web-ext run --source-dir ./dist",
 		"ext-lint": "web-ext lint --source-dir ./dist",
 		"ext-build": "web-ext build --overwrite-dest --source-dir ./dist",

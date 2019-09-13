@@ -1,9 +1,12 @@
 {#if item.type === 'separator'}
 	<div class="item separator"></div>
 {:else}
-	<a href="{item.url || item.id}" class="item item-{item.type} item-{item.id}"
+	<a
+		href="{item.url || item.id}"
+		class="item item-{item.type} item-{item.id}"
 		data-id="{item.id}"
-		on:click|preventDefault="{e => onclick(item)}">
+		on:click|preventDefault="{e => onclick(item)}"
+	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-title" title="{item.title}">{item.title}</span>
 	</a>
@@ -13,7 +16,7 @@
 <script>
 import {currentFolder, options} from '../store';
 import {colorFromString, isDark} from '../lib';
-import { afterUpdate } from 'svelte';
+import {afterUpdate} from 'svelte';
 
 
 export let item;
@@ -32,7 +35,7 @@ afterUpdate(() => {
 		thumb.style = `background-color: ${bg}; color: ${color};`;
 		thumb.innerText = item.title.substr(0, 1).toUpperCase();
 	}
-	else {
+	else if (thumb) {
 		thumb.style = '';
 		thumb.innerText = '';
 	}

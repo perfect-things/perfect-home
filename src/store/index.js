@@ -1,10 +1,13 @@
-/*global browser */
-import { writable, derived } from 'svelte/store';
+import {writable, derived} from 'svelte/store';
+import {getBookmark} from '../lib';
 
 
-const ROOT_FOLDER = 'menu________';
+const ROOT_ID = 'menu________';
+const ROOT_TITLE = '';
 
-const setFolderTitle = (id, set) => browser.bookmarks.get(id).then(res => set(res[0].title));
+function setFolderTitle (id, set) {
+	return getBookmark(id).then(res => set(res[0].title));
+}
 
 
 export const options = writable({
@@ -14,12 +17,15 @@ export const options = writable({
 	pageColor  : '#fff',
 	pageBg     : '#333',
 	css        : '',
-	rootFolder : ROOT_FOLDER,
+	rootFolder : ROOT_ID,
 });
-export const rootFolderTitle = derived(options, ($options, set) => setFolderTitle($options.rootFolder, set), 'Bookmarks Menu');
-
-export const currentFolder = writable(ROOT_FOLDER);
-export const currentFolderTitle = derived(currentFolder, setFolderTitle, 'Bookmarks Menu');
+export const rootFolderTitle = derived(options, ($options, set) => setFolderTitle($options.rootFolder, set), ROOT_TITLE);
 
 
+export const currentFolder = writable(ROOT_ID);
+export const currentFolderTitle = derived(currentFolder, setFolderTitle, ROOT_TITLE);
+
+
+
+export const itemsLoaded = writable(false);
 export const items = writable([]);

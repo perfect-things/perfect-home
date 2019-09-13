@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "newtab-bookmarks",
+	"name": "perfect-home",
 	"version": "1.0.0",
 	"author": "Tom",
 	"chrome_url_overrides": {
