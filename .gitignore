@@ -1,6 +1,4 @@
-node_modules/*
+node_modules/
 dist/
-*.xpi
 web-ext-artifacts/
-src/.web-extension-id
-.history/
+sign

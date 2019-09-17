@@ -23,11 +23,13 @@ let folderSwitching = false;
 let allItems = [];
 
 function optionsChanged (props) {
+	document.documentElement.style.setProperty('--columns', props.columns);
+	document.documentElement.style.setProperty('--icon-width', props.iconWidth + 'px');
+	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
+	document.documentElement.style.setProperty('--grid-gap', props.gridGap + 'px');
+
 	document.documentElement.style.setProperty('--color', props.pageColor);
 	document.documentElement.style.setProperty('--bg', props.pageBg);
-	document.documentElement.style.setProperty('--icon-size', props.iconSize + 'px');
-	document.documentElement.style.setProperty('--grid-width', props.gridWidth + 'px');
-	document.documentElement.style.setProperty('--grid-gap', props.gridGap + 'px');
 }
 
 
@@ -69,7 +71,8 @@ onMount(() => {
 		onSort: onsort
 	});
 
-	getSettings().then(stored => options.set(Object.assign({}, $options, stored)));
+	// getSettings().then(stored => options.set(Object.assign({}, $options, stored)));
+	getSettings().then(stored => options.set(Object.assign({}, $options)));
 	getAllItems().then(all => allItems = all);
 
 	onpopstate(history);

@@ -7,8 +7,7 @@
 		"start": "gulp",
 		"ext-start": "web-ext run --source-dir ./dist",
 		"ext-lint": "web-ext lint --source-dir ./dist",
-		"ext-build": "web-ext build --overwrite-dest --source-dir ./dist",
-		"ext-sign": "web-ext sign "
+		"ext-build": "web-ext build --overwrite-dest --source-dir ./dist"
 	},
 	"license": "GPL-3.0-or-later",
 	"devDependencies": {

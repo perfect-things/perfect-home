@@ -9,16 +9,20 @@ Just your own, predictable grid of links.
 ## FEATURES
 - [x] drag & drop to reorder
 - [x] command palette (filter flat list)
+- [ ] improve styling (bigger tiles)
+- [ ] settings pane
 - [ ] context-menu
   - [ ] removing items
   - [ ] assigning custom images
-- [ ] settings pane
-- [ ] improve styling (bigger tiles)
+- [ ] show 1st work instead of 1st letter?
+- [ ] show same on top of folders? (or - like in vivaldi - show first 4 thumbs?)
 - [ ] custom images for tiles
 - [ ] light/dark themes (css based on the OS?)
 - [ ] custom css
 - [ ] accessibility
 - [ ] shortcuts (1-9?)
+- [ ] show another (e.g. TODO) folder in  list view?
+- [ ] Dock concept for most important?
 - [x] Requires only 1 permission (bookmarks)!
 
 

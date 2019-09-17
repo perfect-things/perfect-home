@@ -1,13 +1,17 @@
+:root
+	--grid-width calc((var(--icon-width) + var(--grid-gap)) * var(--columns))
+
 .bookmarks
 	width 100%
-	max-width var(--grid-width)
 	margin 20px auto
-	padding 0 var(--icon-size) 60px
 	display grid
-	grid-gap var(--grid-gap)
-	grid-auto-rows minmax(var(--icon-size), auto)
-	grid-template-columns repeat(auto-fill, minmax(var(--icon-size), 1fr))
 	transition opacity .1s
+
+	max-width var(--grid-width)
+	padding 0 10px 60px
+	grid-gap var(--grid-gap)
+	grid-auto-rows var(--icon-height)
+	grid-template-columns repeat(var(--columns), var(--icon-width))
 
 
 	&.folder-switching
@@ -15,11 +19,20 @@
 
 
 
-@media (max-width 915px)
-	.bookmarks
-		padding-left 10px
-		padding-right 10px
+@media (max-width 1090px)
+	:root
+		--icon-w calc(var(--icon-width) / 4 * 3)
+		--icon-h calc(var(--icon-height) / 4 * 3)
+		--grid-width calc((var(--icon-w) + var(--grid-gap)) * var(--columns))
 
-@media (max-width 665px)
 	.bookmarks
-		grid-gap 54px 37px
+		max-width var(--grid-width)
+		grid-auto-rows var(--icon-h)
+		grid-template-columns repeat(var(--columns), var(--icon-w))
+
+
+@media (max-width 840px)
+	.bookmarks
+		max-width 100%
+		grid-auto-rows minmax(var(--icon-h), auto)
+		grid-template-columns repeat(auto-fill, minmax(var(--icon-w), .5fr))
