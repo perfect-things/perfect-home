@@ -10,7 +10,7 @@ Just your own, predictable grid of links.
 - [x] drag & drop to reorder
 - [x] command palette (filter flat list)
 - [x] improve styling (bigger tiles)
-- [ ] show 1st work instead of 1st letter?
+- [x] show 1st word instead of 1st letter?
 - [ ] settings pane
 - [ ] context-menu
   - [ ] removing items
@@ -19,10 +19,10 @@ Just your own, predictable grid of links.
 - [ ] custom images for tiles
 - [ ] light/dark themes (css based on the OS?)
 - [ ] custom css
-- [ ] accessibility
+- [ ] accessibility (keyboard support)
 - [ ] shortcuts (1-9?)
 - [ ] show another (e.g. TODO) folder in  list view?
-- [ ] Dock concept for most important?
+- [ ] show recently closed?
 - [x] Requires only 1 permission (bookmarks)!
 
 
