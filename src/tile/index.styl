@@ -8,6 +8,7 @@
 	border-radius 10px
 	width var(--icon-width)
 	height var(--icon-height)
+	filter drop-shadow(0 3px 3px #000)
 
 
 .item-title
@@ -30,8 +31,16 @@
 	background-size cover
 	background-repeat no-repeat
 	background-position center
-	border 1px solid var(--bg)
 	border-radius inherit
+	font-family helvetica, arial, sans-serif
+	font-size 2em
+	font-weight 600
+	line-height 1
+	text-align center
+	display flex
+	justify-content center
+	align-items center
+	word-wrap anywhere
 
 
 
@@ -39,9 +48,11 @@
 	.item-thumb
 		mask url('assets/folder.svg') center no-repeat
 		mask-size cover
-		background-color var(--color)
+		background-color #ccc
 		opacity 0.8
-
+		color #666
+		text-shadow 0 1px 0 #fff
+		padding-top .9em
 
 .item-bookmark
 	.item-thumb
@@ -49,16 +60,7 @@
 		background-image linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3))
 		overflow hidden
 		color #555
-		text-align center
-		display flex
-		justify-content center
-		align-items center
 		padding-top .25em
-		font-family helvetica, arial, sans-serif
-		font-size calc(var(--icon-height) / 2)
-		font-weight 600
-		line-height 1
-
 
 
 .sortable-plate
@@ -66,6 +68,7 @@
 
 .sortable-ghost
 	filter grayscale(1) contrast(0) brightness(0.1)
+	opacity 0.2
 
 	.item-title
 		display none

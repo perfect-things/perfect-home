@@ -33,7 +33,14 @@ afterUpdate(() => {
 		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 		const color = isDark(bg) ? '#ccc' : '#333';
 		thumb.style = `background-color: ${bg}; color: ${color};`;
-		thumb.innerText = item.title.substr(0, 1).toUpperCase();
+		thumb.innerText = item.title.split(' ')[0];
+	}
+	else if (item.type === 'folder') {
+		// const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
+		// const color = isDark(bg) ? '#ccc' : '#333';
+		// thumb.style = `background-color: ${bg}; color: ${color};`;
+		thumb.style = '';
+		thumb.innerText = item.title.split(' ')[0];
 	}
 	else if (thumb) {
 		thumb.style = '';

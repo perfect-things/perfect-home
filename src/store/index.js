@@ -12,9 +12,9 @@ function setFolderTitle (id, set) {
 
 export const options = writable({
 	columns    : 6,
-	iconWidth  : 160,
+	iconWidth  : 150,
 	iconHeight : 140,
-	gridGap    : 20,
+	gridGap    : 30,
 	pageColor  : '#fff',
 	pageBg     : '#333',
 	css        : '',
