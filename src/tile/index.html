@@ -1,5 +1,5 @@
 {#if item.type === 'separator'}
-	<div class="item separator" data-id="{item.id}"></div>
+	<div class="item separator" data-id="{item.id}"><span class="item-thumb"></span></div>
 {:else}
 	<a
 		href="{item.url || item.id}"
@@ -33,14 +33,7 @@ afterUpdate(() => {
 		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 		const color = isDark(bg) ? '#ccc' : '#333';
 		thumb.style = `background-color: ${bg}; color: ${color};`;
-		thumb.innerText = item.title.split(' ')[0];
-	}
-	else if (item.type === 'folder') {
-		// const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
-		// const color = isDark(bg) ? '#ccc' : '#333';
-		// thumb.style = `background-color: ${bg}; color: ${color};`;
-		thumb.style = '';
-		thumb.innerText = item.title.split(' ')[0];
+		thumb.innerText = item.title[0].toUpperCase();
 	}
 	else if (thumb) {
 		thumb.style = '';

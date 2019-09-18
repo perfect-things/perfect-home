@@ -8,16 +8,16 @@
 	border-radius 10px
 	width var(--icon-width)
 	height var(--icon-height)
-	filter drop-shadow(0 3px 3px #000)
+	filter drop-shadow(0 3px 3px #0009)
 
+.separator .item-thumb
+	filter none
+	background none
 
 .item-title
 	display block
-	margin-top 10px
 	padding 0
-	overflow hidden
-	justify-content center
-
+	margin-top 10px
 	max-height 2.3em
 	overflow hidden
 	text-overflow ellipsis
@@ -25,50 +25,46 @@
 
 
 .item-thumb
-	display block
 	width 100%
 	height calc(100% - 22px)
-	background-size cover
-	background-repeat no-repeat
-	background-position center
 	border-radius inherit
-	font-family helvetica, arial, sans-serif
-	font-size 2em
-	font-weight 600
-	line-height 1
+
+	background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
+	background-size cover
+
+	font 600 4em/1 helvetica, arial, sans-serif
 	text-align center
 	display flex
 	justify-content center
 	align-items center
-	word-wrap anywhere
+	color #555
+	overflow hidden
 
 
 
-.item-folder
-	.item-thumb
-		mask url('assets/folder.svg') center no-repeat
-		mask-size cover
-		background-color #ccc
-		opacity 0.8
-		color #666
-		text-shadow 0 1px 0 #fff
-		padding-top .9em
+.item-folder .item-thumb
+	background-color #ccc
+	mask url('assets/folder.svg') center no-repeat
+	mask-size cover
 
-.item-bookmark
-	.item-thumb
-		background-color #f9f9f9
-		background-image linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3))
-		overflow hidden
-		color #555
-		padding-top .25em
+.item-bookmark .item-thumb
+	padding-top .25em
+
+
+
 
 
 .sortable-plate
-	background #000
+	.item-thumb
+		background #333
+		filter none
 
 .sortable-ghost
-	filter grayscale(1) contrast(0) brightness(0.1)
-	opacity 0.2
+	filter none
+
+	.item-thumb
+		filter grayscale(1) contrast(0) brightness(0.1)
+		opacity 0.3
 
 	.item-title
 		display none
