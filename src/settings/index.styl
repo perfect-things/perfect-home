@@ -38,23 +38,41 @@
 	font inherit
 	font-size 15px
 
+
 	label
 		display block
 		margin 20 2 5
 
-	input
+	input:not([type="color"])
 	textarea
 	select
-		padding 5 10
+		padding 10
 		margin 0
 		font inherit
+		border none
+		flex 1
+		width 100%
+		background-color #222
+		color #eee
+
+	select
+		text-indent -2px
 
 	textarea
 		min-height 2.4em
 
 	input
-		[type=radio],
-		[type=checkbox]
+		&[type="color"]
+			-moz-appearance none
+			background none
+			border none
+			width 60
+			height 35
+			margin 0 0 0 10
+			padding 0
+
+		&[type=radio],
+		&[type=checkbox]
 			width auto
 			margin-bottom 3
 			margin-right 5
@@ -66,3 +84,53 @@
 
 	a
 		color inherit
+
+
+	.row
+		display flex
+		flex-flow row
+		align-items center
+		justify-content space-between
+
+	.buttons-row
+		margin-top 30
+
+	button
+		font-size 16px
+		padding 10px 30px
+		border-radius 5px
+		transition background .2s
+		border 1px solid #333
+		background #eee
+		flex 1
+
+	button:focus
+	button:hover
+		background #c1c1c1
+	button:active
+		background: #424242
+
+	.btn-submit
+		font-weight bold
+		border-color darkgreen
+		color darkgreen
+
+	.btn-submit:focus,
+	.btn-submit:hover
+		background #b7d1b7
+
+	.btn-submit:active
+		background #2f522f
+		color #b7d1b7
+
+	.btn-clear
+		border-color #A01
+		color #A01
+		margin 50px 0 0
+
+	.btn-clear:focus,
+	.btn-clear:hover
+		background #e0cccf
+
+	.btn-clear:active
+		background #432429

@@ -56,16 +56,20 @@ function folderChanged (folderId) {
 		const fn = (id === $options.rootFolder) ? 'replaceState' : 'pushState';
 		window.history[fn]({ id }, document.title, '');
 	}
+
 	folderSwitching = true;
+	console.log(id);
 	getSubTree(id)
 		.then(tree => {
+			console.log(tree);
 			if (!tree || !tree.length) return;
 			setTimeout(() => {
 				$items = tree[0].children;
 				folderSwitching = false;
 				$itemsLoaded = true;
 			}, 100);
-		});
+		})
+		.catch(e => console.error(e));
 }
 
 
