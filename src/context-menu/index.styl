@@ -1,0 +1,31 @@
+@import "lib"
+
+.context-menu
+	position absolute
+	top 0
+	left 0
+	background #222
+	padding 5 0
+	display flex
+	flex-flow column
+	align-items stretch
+	list-style none
+	border #000
+	box-shadow 10px 10px 2px #000
+	z-index 20
+
+	&.hidden
+		display none
+
+.context-menu-item
+	padding 10 20
+
+	&:hover
+		background-color darken(orange, 50%)
+
+
+.context-menu-separator
+	height 0
+	margin 5 0
+	padding 0
+	border-bottom: #000

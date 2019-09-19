@@ -56,7 +56,7 @@ import {onMount} from 'svelte';
 import {options} from '../store';
 import {getAllItems, saveSettings, getSettings} from '../lib';
 
-let isVisible = true;
+let isVisible = false;
 let folders = [];
 
 onMount(() => {

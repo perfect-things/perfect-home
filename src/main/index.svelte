@@ -61,10 +61,8 @@ function folderChanged (folderId) {
 	}
 
 	folderSwitching = true;
-	console.log(id);
 	getSubTree(id)
 		.then(tree => {
-			console.log(tree);
 			if (!tree || !tree.length) return;
 			setTimeout(() => {
 				$items = tree[0].children;

@@ -59,6 +59,19 @@ function emphasize (str, q) {
 
 
 
+function animate (el, from, to, options = {}) {
+	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
+	const opts = Object.assign({}, dflt, options);
+
+	return new Promise (resolve => {
+		const anim = el.animate([from, to], opts);
+		anim.oncancel = resolve;
+		anim.onfinish = resolve;
+	});
+}
+
+
+
 const getSettings = async () => browser.storage.local.get('settings');
 const saveSettings = async (settings) => browser.storage.local.set({ settings });
 
@@ -66,7 +79,9 @@ const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].
 
 const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
 
-const getBookmark = async (id) => browser.bookmarks.get(id);
+const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]);
+
+const delBookmark = async (id) => browser.bookmarks.remove(id);
 
 const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
 
@@ -81,6 +96,7 @@ export {
 	isDark,
 	fuzzy,
 	emphasize,
+	animate,
 
 	getSettings,
 	saveSettings,
@@ -88,6 +104,7 @@ export {
 	getFolderTitle,
 	getSubTree,
 	getBookmark,
+	delBookmark,
 	updateIndexes,
 	getAllItems,
 	clearCache,
