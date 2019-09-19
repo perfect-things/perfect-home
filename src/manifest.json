@@ -14,11 +14,6 @@
 		"bookmarks",
 		"storage"
 	],
-	"options_ui": {
-		"page": "settings.html",
-		"open_in_tab": true,
-		"browser_style": true
-	},
 	"icons": {
 		"48": "assets/icon.png",
 		"96": "assets/icon.png"

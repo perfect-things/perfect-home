@@ -15,10 +15,9 @@ function webpackLogger (err) {
 
 function eslint () {
 	const gulpEslint = require('gulp-eslint');
-	return src(['src/**/*.js'])
+	return src(['src/**/*.js', 'src/**/*.svelte', '*.js'])
 		.pipe(gulpEslint())
-		.pipe(gulpEslint.format())
-		.pipe(gulpEslint.failAfterError());
+		.pipe(gulpEslint.format());
 }
 
 
@@ -31,15 +30,13 @@ function js () {
 		output: {
 			filename: 'index.js',
 			path: path.join(__dirname, DIST_PATH),
-			// publicPath: './app/',
 		},
-		resolve: { extensions: ['.mjs', '.js', '.json', '.html'] },
-		// stats: 'normal',
+		resolve: { extensions: ['.mjs', '.js', '.json', '.svelte'] },
 		module: {
 			rules: [
 				{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
 				{
-					test: /\.html$/,
+					test: /\.svelte$/,
 					exclude: /node_modules/,
 					use: { loader: 'svelte-loader', options: { css: false } },
 				},
@@ -96,8 +93,7 @@ function cleanup () {
 
 function watchTask () {
 	watch('src/**/*.styl', css);
-	watch('src/**/*.js', js);
-	watch('src/**/*.html', js);
+	watch('src/**/*.{js,svelte}', parallel(eslint, js));
 	watch('src/*.html', htmls);
 	watch('src/assets/**/*.*', assets);
 }

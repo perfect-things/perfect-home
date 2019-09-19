@@ -1,0 +1,68 @@
+@import "lib"
+
+
+.btn-settings
+	right 3
+	top 6
+	z-index 11
+
+.btn-settings svg
+	height 20
+	width 20
+	margin 3 0 0 -1
+
+
+.settings-pane
+	position absolute
+	background-color #444
+	top 0
+	right 0
+	bottom 0
+	width 300
+	padding 20
+	min-height 300
+	box-shadow -2px 0 5px #0008
+	transition transform .1s, opacity .1s
+	z-index 10
+
+
+	&.hidden
+		transform translateX(300px)
+		opacity 0
+
+.settings-form
+	display flex
+	flex-flow column
+	align-items stretch
+	padding 10 0
+	font inherit
+	font-size 15px
+
+	label
+		display block
+		margin 20 2 5
+
+	input
+	textarea
+	select
+		padding 5 10
+		margin 0
+		font inherit
+
+	textarea
+		min-height 2.4em
+
+	input
+		[type=radio],
+		[type=checkbox]
+			width auto
+			margin-bottom 3
+			margin-right 5
+			transform scale(1.3)
+
+	small
+		width 100%
+		margin-left 140
+
+	a
+		color inherit

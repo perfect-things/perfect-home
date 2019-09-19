@@ -35,7 +35,33 @@ function isDark (color) {
 
 
 
+function fuzzy (hay = '', s = '') {
+	hay = hay.toLowerCase();
+	let n = -1;
+	for (let l of s) if (!~(n = hay.indexOf(l, n + 1))) return false;
+	return true;
+}
+
+
+function emphasize (str, q) {
+	let idx = 0;
+	let low = str.toLowerCase();
+	let stra = str.split('');
+	q = q.toLowerCase();
+	for (let l of q) {
+		idx = low.indexOf(l, idx);
+		let letter = stra[idx];
+		if (letter) stra.splice(idx, 1, `<b>${letter}</b>`);
+	}
+	return stra.join('');
+}
+
+
+
 const getSettings = async () => browser.storage.local.get('settings');
+const saveSettings = async (settings) => browser.storage.local.set({ settings });
+
+const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title);
 
 const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
 
@@ -45,13 +71,23 @@ const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
 
 const getAllItems = async () => browser.bookmarks.search({ title: '' });
 
+const clearCache = async () => browser.storage.local.clear();
+
+
 export {
 	injectCss,
-	getSettings,
-	getSubTree,
-	getBookmark,
 	colorFromString,
 	isDark,
+	fuzzy,
+	emphasize,
+
+	getSettings,
+	saveSettings,
+
+	getFolderTitle,
+	getSubTree,
+	getBookmark,
 	updateIndexes,
 	getAllItems,
+	clearCache,
 };

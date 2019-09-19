@@ -1,14 +1,7 @@
-import {writable, derived} from 'svelte/store';
-import {getBookmark} from '../lib';
+import {writable} from 'svelte/store';
 
 
-const ROOT_ID = 'menu________';
-const ROOT_TITLE = '';
-
-function setFolderTitle (id, set) {
-	return getBookmark(id).then(res => set(res[0].title));
-}
-
+const ROOT_ID = 'menu________'; // = Bookmarks Menu
 
 export const options = writable({
 	columns    : 6,
@@ -20,13 +13,10 @@ export const options = writable({
 	css        : '',
 	rootFolder : ROOT_ID,
 });
-export const rootFolderTitle = derived(options, ($options, set) => setFolderTitle($options.rootFolder, set), ROOT_TITLE);
-
+export const rootFolderTitle = writable('');
 
 export const currentFolder = writable(ROOT_ID);
-export const currentFolderTitle = derived(currentFolder, setFolderTitle, ROOT_TITLE);
-
-
+export const currentFolderTitle = writable('');
 
 export const itemsLoaded = writable(false);
 export const items = writable([]);

@@ -16,13 +16,20 @@ import Tile from '../tile';
 import Palette from '../palette';
 import {onMount} from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded} from '../store';
-import {getSubTree, getSettings, updateIndexes, getAllItems} from '../lib';
+import {getSubTree, getSettings, updateIndexes, getAllItems, getFolderTitle} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
 let allItems = [];
 
+function updateTitles () {
+	getFolderTitle($options.rootFolder).then(title => rootFolderTitle.set(title));
+	getFolderTitle($currentFolder).then(title => currentFolderTitle.set(title));
+}
+
 function optionsChanged (props) {
+	currentFolder.set(props.rootFolder);
+	setTimeout(updateTitles, 200);
 	document.documentElement.style.setProperty('--columns', props.columns);
 	document.documentElement.style.setProperty('--icon-width', props.iconWidth + 'px');
 	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
@@ -38,10 +45,11 @@ function onsort (e) {
 }
 
 function onpopstate (e) {
-	if (e.state) $currentFolder = e.state.id
+	if (e.state) $currentFolder = e.state.id;
 }
 
 function folderChanged (folderId) {
+	updateTitles();
 	let id = folderId || $options.rootFolder;
 
 	if (!history.state || !history.state.id || history.state.id !== folderId) {
@@ -52,7 +60,6 @@ function folderChanged (folderId) {
 	getSubTree(id)
 		.then(tree => {
 			if (!tree || !tree.length) return;
-			$currentFolder = tree[0].id;
 			setTimeout(() => {
 				$items = tree[0].children;
 				folderSwitching = false;
@@ -71,12 +78,14 @@ onMount(() => {
 		onSort: onsort
 	});
 
-	// getSettings().then(stored => options.set(Object.assign({}, $options, stored)));
-	getSettings().then(stored => options.set(Object.assign({}, $options)));
 	getAllItems().then(all => allItems = all);
+	getSettings().then(stored => {
+		options.set(Object.assign({}, $options, stored.settings));
 
-	onpopstate(history);
-	options.subscribe(optionsChanged);
-	currentFolder.subscribe(folderChanged);
+		options.subscribe(optionsChanged);
+		currentFolder.subscribe(folderChanged);
+		onpopstate(history);
+	});
+
 });
 </script>

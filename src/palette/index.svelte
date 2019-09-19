@@ -1,6 +1,5 @@
 <div class="autocomplete {opened ? '' : 'hidden'}">
 	<input type="text" class="autocomplete-input"
-		autofocus="autofocus"
 		bind:this="{input}"
 		bind:value="{text}"
 		on:input="{oninput}"
@@ -15,7 +14,7 @@
 				on:click="{() => onclick(item)}">
 				<div class="autocomplete-list-item-icon"></div>
 				<span class="autocomplete-list-item-text">
-					{@html item.highlighted && item.highlighted.title || item.title}
+					{@html item.highlightedTitle || item.title}
 				</span>
 			</div>
 		{/each}
@@ -27,6 +26,7 @@
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
+import {fuzzy, emphasize} from '../lib';
 
 
 export let data = [];
@@ -60,13 +60,14 @@ function onDocumentKeydown (e) {
 
 
 $: {
-	const f = text.toLowerCase();
-	const hlfilter = highlightFilter(text, ['title']);
-	data = data.filter(item => item.type !== 'separator');
-	filteredData = !text ? data : data
-		.filter(item => item.title.toLowerCase().includes(f))
-		.map(hlfilter);
+	const q = text.toLowerCase();
+	let filtered = data.filter(item => item.type !== 'separator');
+	if (text) filtered = filtered
+		.filter(item => fuzzy(item.title, q))
+		.map(item => (item.highlightedTitle = emphasize(item.title, q), item));
+	filteredData = filtered;
 }
+
 
 function selectItem () {
 	value = filteredData[highlightIndex];
@@ -87,7 +88,7 @@ function down () {
 
 function highlight () {
 	const el = list.querySelector('.selected');
-	if (el) el.scrollIntoView();
+	if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 
@@ -138,7 +139,7 @@ function onEsc (e) {
 	if (opened) {
 		input.focus();
 		close();
-	};
+	}
 }
 
 function clear () {
@@ -153,27 +154,5 @@ function open () {
 function close () {
 	opened = false;
 }
-
-
-// 'item number one'.replace(/(it)(.*)(nu)(.*)(one)/ig, '<b>$1</b>$2 <b>$3</b>$4 <b>$5</b>')
-function highlightFilter (q, fields) {
-	const qs = '(' + q.trim().replace(/\s/g, ')(.*)(') + ')';
-	const reg = new RegExp(qs, 'ig');
-	let n = 1, len = qs.split(')(').length + 1, repl = '';
-	for (; n < len; n++) repl += n % 2 ? `<b>$${n}</b>` : `$${n}`;
-
-	return i => {
-		const newI = Object.assign({ highlighted: {} }, i);
-		if (fields) {
-			fields.forEach(f => {
-				if (!newI[f]) return;
-				newI.highlighted[f] = newI[f].replace(reg, repl);
-			});
-		}
-		return newI;
-	};
-}
-
-
 
 </script>

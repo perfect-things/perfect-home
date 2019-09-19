@@ -5,7 +5,7 @@
 		href="{item.url || item.id}"
 		class="item item-{item.type} item-{item.id}"
 		data-id="{item.id}"
-		on:click|preventDefault="{e => onclick(item)}"
+		on:click|preventDefault="{() => onclick(item)}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-title" title="{item.title}">{item.title}</span>
@@ -14,7 +14,7 @@
 
 
 <script>
-import {currentFolder, options} from '../store';
+import {currentFolder} from '../store';
 import {colorFromString, isDark} from '../lib';
 import {afterUpdate} from 'svelte';
 
@@ -22,9 +22,9 @@ import {afterUpdate} from 'svelte';
 export let item;
 let thumb;
 
-function onclick (item) {
-	if (item.type === 'folder') $currentFolder = item.id;
-	else if (item.type === 'bookmark') location.href = item.url;
+function onclick (i) {
+	if (i.type === 'folder') $currentFolder = i.id;
+	else if (i.type === 'bookmark') location.href = i.url;
 }
 
 
