@@ -29,7 +29,7 @@ function updateTitles () {
 
 function optionsChanged (props) {
 	currentFolder.set(props.rootFolder);
-	setTimeout(updateTitles, 200);
+	updateTitles();
 	document.documentElement.style.setProperty('--columns', props.columns);
 	document.documentElement.style.setProperty('--icon-width', props.iconWidth + 'px');
 	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
