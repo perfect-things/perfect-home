@@ -38,6 +38,9 @@
 			<input type="color" bind:value="{$options.pageBg}">
 		</div>
 
+		<label>Custom CSS</label>
+		<textarea bind:value="{$options.css}"></textarea>
+
 		<div class="row buttons-row">
 			<button class="btn btn-reset" on:click="{reset}">Reset</button>
 		</div>

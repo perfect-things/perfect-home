@@ -24,6 +24,7 @@
 	box-shadow -2px 0 5px #0008
 	transition transform .1s, opacity .1s
 	z-index 10
+	overflow-y auto
 
 
 	&.hidden
@@ -60,6 +61,8 @@
 
 	textarea
 		min-height 2.4em
+		resize vertical
+		flex unset
 
 	input
 		&[type="color"]

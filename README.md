@@ -11,7 +11,7 @@ Just your own, predictable grid of links.
 - [x] command palette (filter flat list)
 - [x] improve styling (bigger tiles)
 - [x] show 1st word instead of 1st letter?
-- [ ] settings pane
+- [x] settings pane
 - [ ] context-menu
   - [ ] removing items
   - [ ] assigning custom images

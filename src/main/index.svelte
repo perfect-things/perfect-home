@@ -16,7 +16,7 @@ import Tile from '../tile';
 import Palette from '../palette';
 import {onMount} from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded} from '../store';
-import {getSubTree, getSettings, updateIndexes, getAllItems, getFolderTitle} from '../lib';
+import {getSubTree, getSettings, updateIndexes, getAllItems, getFolderTitle, injectCss} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
@@ -37,6 +37,9 @@ function optionsChanged (props) {
 
 	document.documentElement.style.setProperty('--color', props.pageColor);
 	document.documentElement.style.setProperty('--bg', props.pageBg);
+	const style = document.querySelector('#CustomStyle');
+	if (style) style.remove();
+	injectCss(props.css);
 }
 
 

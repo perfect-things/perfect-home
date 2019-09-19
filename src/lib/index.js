@@ -3,6 +3,7 @@
 
 function injectCss (css) {
 	const style = document.createElement('STYLE');
+	style.id = 'CustomStyle';
 	style.innerHTML = css;
 	document.head.appendChild(style);
 }
