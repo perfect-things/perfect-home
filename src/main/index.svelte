@@ -28,6 +28,7 @@ function updateTitles () {
 }
 
 function optionsChanged (props) {
+	if (!props) return;
 	currentFolder.set(props.rootFolder);
 	updateTitles();
 	document.documentElement.style.setProperty('--columns', props.columns);

@@ -41,8 +41,10 @@ afterUpdate(() => {
 		innerText = item.title[0].toUpperCase();
 	}
 
-	thumb.style = style;
-	thumb.innerText = innerText;
+	if (thumb) {
+		thumb.style = style;
+		thumb.innerText = innerText;
+	}
 });
 
 </script>

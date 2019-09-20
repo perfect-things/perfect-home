@@ -98,9 +98,7 @@ function onDocClick (e) {
 function onchange () {
 	saveSettings($options)
 		.then(getSettings)
-		.then(res => {
-			options.set(res.settings);
-		});
+		.then(res => res && options.set(res));
 }
 
 
