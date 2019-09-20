@@ -91,7 +91,8 @@ function cleanup () {
 	return del(['dist/*']);
 }
 
-function watchTask () {
+function watchTask (done) {
+	if (isProd) return done();
 	watch('src/**/*.styl', css);
 	watch('src/**/*.{js,svelte}', parallel(eslint, js));
 	watch('src/*.html', htmls);

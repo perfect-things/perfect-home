@@ -1,7 +1,7 @@
 {
 	"name": "perfect-home",
 	"description": "Firefox new tab replacement",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"author": "Tom",
 	"scripts": {
 		"start": "gulp",
