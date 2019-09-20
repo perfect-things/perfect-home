@@ -4,7 +4,7 @@ No ads, no speed dials, no frequently visited or other "frecence" bullshit!
 Just your own, predictable grid of links.
 
 ## First pre-release available for testing!
-- [Download from mozilla](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)
+- [Download here](https://github.com/tborychowski/perfect-home/releases/latest)
 - Enjoy :smile:
 
 ![Screen1](_stuff/screen-main.png)
