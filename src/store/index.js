@@ -8,8 +8,8 @@ export const options = writable({
 	iconWidth  : 150,
 	iconHeight : 140,
 	gridGap    : 30,
-	pageColor  : '#fff',
-	pageBg     : '#333',
+	pageColor  : '#ffffff',
+	pageBg     : '#333333',
 	css        : '',
 	rootFolder : ROOT_ID,
 });

@@ -1,6 +1,5 @@
 @import "lib"
 
-
 .btn-settings
 	right 3
 	top 6
@@ -10,6 +9,8 @@
 	height 20
 	width 20
 	margin 3 0 0 -1
+
+
 
 
 .settings-pane
@@ -26,32 +27,26 @@
 	z-index 10
 	overflow-y auto
 
-
 	&.hidden
 		transform translateX(300px)
 		opacity 0
 
-.settings-form
-	display flex
-	flex-flow column
-	align-items stretch
-	padding 10 0
-	font inherit
-	font-size 15px
+	h1
+		margin-bottom 20
 
 
 	label
 		display block
-		margin 20 2 5
+		margin 0 0 5
 
-	input:not([type="color"])
+	input
 	textarea
 	select
 		padding 10
 		margin 0
 		font inherit
 		border none
-		flex 1
+		min-width 0
 		width 100%
 		background-color #222
 		color #eee
@@ -69,9 +64,7 @@
 			-moz-appearance none
 			background none
 			border none
-			width 60
 			height 35
-			margin 0 0 0 10
 			padding 0
 
 		&[type=radio],
@@ -81,22 +74,9 @@
 			margin-right 5
 			transform scale(1.3)
 
-	small
-		width 100%
-		margin-left 140
+	input + input
+		margin 0 0 0 10
 
-	a
-		color inherit
-
-
-	.row
-		display flex
-		flex-flow row
-		align-items center
-		justify-content space-between
-
-	.buttons-row
-		margin-top 30
 
 	button
 		font-size 16px
@@ -105,31 +85,19 @@
 		transition background .2s
 		border 1px solid #333
 		background #eee
-		flex 1
+		width 100%
 
-	button:focus
-	button:hover
-		background #c1c1c1
-	button:active
-		background: #424242
+		&:focus
+		&:hover
+			background #c1c1c1
 
-	.btn-submit
-		font-weight bold
-		border-color darkgreen
-		color darkgreen
+		&:active
+			background: #424242
 
-	.btn-submit:focus,
-	.btn-submit:hover
-		background #b7d1b7
-
-	.btn-submit:active
-		background #2f522f
-		color #b7d1b7
 
 	.btn-clear
 		border-color #A01
 		color #A01
-		margin 50px 0 0
 
 	.btn-clear:focus,
 	.btn-clear:hover
@@ -137,3 +105,33 @@
 
 	.btn-clear:active
 		background #432429
+
+	hr
+		margin 10 0 20
+		height 0
+		width 100%
+
+.settings-form
+	display flex
+	flex-flow column
+	align-items stretch
+	padding 10 0
+	font inherit
+	font-size 15px
+
+
+.settings-row
+	display flex
+	flex-flow row
+	align-items center
+	justify-content space-between
+	margin-bottom 20
+
+	label
+		margin 0 5 0 0
+	input
+		width 70
+
+
+.buttons-row
+	margin-top 10

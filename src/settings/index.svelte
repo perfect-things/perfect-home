@@ -7,45 +7,58 @@
 
 	<form class="settings-form" on:change="{onchange}">
 		<label>Bookmarks folder</label>
-		<select name="rootfolder" bind:value="{$options.rootFolder}">
-			{#each folders as folder}
-				<option value="{folder.id}">{folder.title}</option>
-			{/each}
-		</select>
+		<div class="settings-row">
+			<select name="rootfolder" bind:value="{$options.rootFolder}">
+				{#each folders as folder}
+					<option value="{folder.id}">{folder.title}</option>
+				{/each}
+			</select>
+		</div>
 
-		<label>Max number of columns</label>
-		<input type="number" bind:value="{$options.columns}">
+		<div class="settings-row">
+			<label>Max number of columns</label>
+			<input type="number" bind:value="{$options.columns}">
+		</div>
 
-		<label>Tile width</label>
-		<input type="number" bind:value="{$options.iconWidth}">
+		<div class="settings-row">
+			<label>Gaps</label>
+			<input type="number" bind:value="{$options.gridGap}">
+		</div>
 
-		<label>Tile height</label>
-		<input type="number" bind:value="{$options.iconHeight}">
+		<div class="settings-row">
+			<label>Tile size (w &times; h)</label>
+			<div class="flex-spacer"></div>
+			<input type="number" bind:value="{$options.iconWidth}">
+			<input type="number" bind:value="{$options.iconHeight}">
+		</div>
 
-		<label>Gaps</label>
-		<input type="number" bind:value="{$options.gridGap}">
-
-
-		<label>Text color</label>
-		<div class="row">
-			<input type="input" bind:value="{$options.pageColor}">
+		<div class="settings-row">
+			<label>Text color</label>
+			<div class="flex-spacer"></div>
+			<input type="text" bind:value="{$options.pageColor}">
 			<input type="color" bind:value="{$options.pageColor}">
 		</div>
 
-		<label>Background</label>
-		<div class="row">
-			<input type="input" bind:value="{$options.pageBg}">
+		<div class="settings-row">
+			<label>Background</label>
+			<div class="flex-spacer"></div>
+			<input type="text" bind:value="{$options.pageBg}">
 			<input type="color" bind:value="{$options.pageBg}">
 		</div>
 
 		<label>Custom CSS</label>
-		<textarea bind:value="{$options.css}"></textarea>
+		<div class="settings-row">
+			<textarea bind:value="{$options.css}"></textarea>
+		</div>
+
+		<hr>
+
 
 		<div class="row buttons-row">
-			<button class="btn btn-reset" on:click="{reset}">Reset</button>
+			<button class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
 		</div>
 		<div class="row buttons-row">
-			<button class="btn btn-clear" on:click="{clearCache}">Clear cache</button>
+			<button class="btn btn-clear" on:click="{clear}">Clear cache</button>
 		</div>
 	</form>
 
@@ -54,7 +67,7 @@
 <script>
 import {onMount} from 'svelte';
 import {options} from '../store';
-import {getAllItems, saveSettings, getSettings} from '../lib';
+import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
 let isVisible = false;
 let folders = [];
@@ -67,8 +80,8 @@ onMount(() => {
 });
 
 
-function clearCache () {
-
+function clear () {
+	clearCache();
 }
 
 function reset () {
