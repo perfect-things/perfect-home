@@ -7,7 +7,7 @@ export const options = writable({
 	columns    : 6,
 	iconWidth  : 150,
 	iconHeight : 140,
-	gridGap    : 30,
+	gridGap    : 35,
 	pageColor  : '#ffffff',
 	pageBg     : '#333333',
 	css        : '',

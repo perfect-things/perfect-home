@@ -20,7 +20,6 @@
 	right 0
 	bottom 0
 	width 300
-	padding 20
 	min-height 300
 	box-shadow -2px 0 5px #0008
 	transition transform .1s, opacity .1s
@@ -29,10 +28,9 @@
 
 	&.hidden
 		transform translateX(300px)
-		opacity 0
 
 	h1
-		margin-bottom 20
+		margin 20
 
 
 	label
@@ -116,8 +114,12 @@
 	flex-flow column
 	align-items stretch
 	padding 10 0
+	margin 0 20
 	font inherit
 	font-size 15px
+
+	&.hidden
+		display none
 
 
 .settings-row

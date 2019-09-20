@@ -77,7 +77,7 @@ function folderChanged (folderId) {
 
 onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
-		animation: 150,
+		animation: 200,
 		ghostClass: 'sortable-ghost',
 		onStart: e => e.item.classList.add('sortable-plate'),
 		onEnd: e => e.item.classList.remove('sortable-plate'),

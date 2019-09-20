@@ -5,7 +5,7 @@
 <div class="settings-pane {isVisible ? '' : 'hidden'}">
 	<h1>Settings</h1>
 
-	<form class="settings-form" on:change="{onchange}">
+	<form class="settings-form {isVisible ? '' : 'hidden'}" on:change="{onchange}">
 		<label>Bookmarks folder</label>
 		<div class="settings-row">
 			<select name="rootfolder" bind:value="{$options.rootFolder}">

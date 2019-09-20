@@ -14,12 +14,11 @@ Just your own, predictable grid of links.
 - [x] settings pane
 - [x] context-menu
 - [x] custom images for tiles
+- [x] custom css
 - [ ] backup settings to a file?
-- [ ] show same on top of folders? (or - like in vivaldi - show first 4 thumbs?)
+- [ ] show same on top of folders? (like in vivaldi - first 4 mini-thumbs)?
 - [ ] light/dark themes (css based on the OS?)
-- [ ] custom css
 - [ ] accessibility (keyboard support)
-- [ ] shortcuts (1-9?)
 - [ ] show another (e.g. TODO) folder in  list view?
 - [ ] show recently closed?
 - [x] Requires only 2 permissions (bookmarks & storage for cache)!

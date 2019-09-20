@@ -1,7 +1,7 @@
-<Settings />
 <Header />
 <Main />
 <ContextMenu />
+<Settings />
 
 <script>
 import Settings from '../settings';
