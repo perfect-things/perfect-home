@@ -20,3 +20,5 @@ export const currentFolderTitle = writable('');
 
 export const itemsLoaded = writable(false);
 export const items = writable([]);
+
+export const thumbs = writable({});

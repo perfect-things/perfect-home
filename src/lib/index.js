@@ -72,7 +72,7 @@ function animate (el, from, to, options = {}) {
 
 
 
-const getSettings = async () => browser.storage.local.get('settings');
+const getSettings = async () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = async (settings) => browser.storage.local.set({ settings });
 
 const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title);
@@ -88,6 +88,11 @@ const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
 const getAllItems = async () => browser.bookmarks.search({ title: '' });
 
 const clearCache = async () => browser.storage.local.clear();
+
+
+const getThumbs = async () => browser.storage.local.get('thumbs').then(res => res && res.thumbs);
+const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
+
 
 
 export {
@@ -108,4 +113,7 @@ export {
 	updateIndexes,
 	getAllItems,
 	clearCache,
+
+	getThumbs,
+	saveThumbs,
 };

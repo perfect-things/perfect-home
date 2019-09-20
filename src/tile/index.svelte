@@ -14,7 +14,7 @@
 
 
 <script>
-import {currentFolder} from '../store';
+import {currentFolder, thumbs} from '../store';
 import {colorFromString, isDark} from '../lib';
 import {afterUpdate} from 'svelte';
 
@@ -29,15 +29,20 @@ function onclick (i) {
 
 
 afterUpdate(() => {
-	if (item.type === 'bookmark' && item.url) {
+	let style = '', innerText = '';
+
+	if ($thumbs && $thumbs[item.id]) {
+		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
+	}
+	else if (item.type === 'bookmark' && item.url) {
 		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 		const color = isDark(bg) ? '#ccc' : '#333';
-		thumb.style = `background-color: ${bg}; color: ${color};`;
-		thumb.innerText = item.title[0].toUpperCase();
+		style = `background-color: ${bg}; color: ${color};`;
+		innerText = item.title[0].toUpperCase();
 	}
-	else if (thumb) {
-		thumb.style = '';
-		thumb.innerText = '';
-	}
+
+	thumb.style = style;
+	thumb.innerText = innerText;
 });
+
 </script>

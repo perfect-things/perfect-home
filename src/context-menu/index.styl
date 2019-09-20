@@ -19,6 +19,12 @@
 
 .context-menu-item
 	padding 10 20
+	position relative
+	overflow hidden
+
+	input[type=file]
+		position absolute
+		left -250px
 
 	&:hover
 		background-color darken(orange, 50%)

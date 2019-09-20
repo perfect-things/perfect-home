@@ -12,18 +12,17 @@ Just your own, predictable grid of links.
 - [x] improve styling (bigger tiles)
 - [x] show 1st word instead of 1st letter?
 - [x] settings pane
-- [ ] context-menu
-  - [ ] removing items
-  - [ ] assigning custom images
+- [x] context-menu
+- [x] custom images for tiles
+- [ ] backup settings to a file?
 - [ ] show same on top of folders? (or - like in vivaldi - show first 4 thumbs?)
-- [ ] custom images for tiles
 - [ ] light/dark themes (css based on the OS?)
 - [ ] custom css
 - [ ] accessibility (keyboard support)
 - [ ] shortcuts (1-9?)
 - [ ] show another (e.g. TODO) folder in  list view?
 - [ ] show recently closed?
-- [x] Requires only 1 permission (bookmarks)!
+- [x] Requires only 2 permissions (bookmarks & storage for cache)!
 
 
 ## Usage
