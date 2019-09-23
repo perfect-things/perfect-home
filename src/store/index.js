@@ -5,10 +5,10 @@ const ROOT_ID = 'menu________'; // = Bookmarks Menu
 
 export const options = writable({
 	columns    : 6,
-	iconWidth  : 150,
-	iconHeight : 140,
+	iconWidth  : 170,
+	iconHeight : 160,
 	gridGap    : 35,
-	pageColor  : '#ffffff',
+	pageColor  : '#eeeeee',
 	pageBg     : '#333333',
 	css        : '',
 	rootFolder : ROOT_ID,

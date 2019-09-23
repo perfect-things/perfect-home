@@ -20,11 +20,8 @@ Just your own, predictable grid of links.
 
 ## TODO
 - [ ] backup settings to a file?
-- [ ] show same on top of folders? (like in vivaldi - first 4 mini-thumbs)?
 - [ ] light/dark themes (css based on the OS?)
 - [ ] accessibility (keyboard support)
-- [ ] show another (e.g. TODO) folder in list view?
-- [ ] show recently closed?
 
 
 ## Usage

@@ -22,7 +22,7 @@
 
 
 
-@media (max-width 1090px)
+@media (max-width 1280px)
 	:root
 		--icon-w calc(var(--icon-width) / 4 * 3)
 		--icon-h calc(var(--icon-height) / 4 * 3)
@@ -34,7 +34,19 @@
 		grid-template-columns repeat(var(--columns), var(--icon-w))
 
 
-@media (max-width 840px)
+@media (max-width 960px)
+	:root
+		--icon-w calc(var(--icon-width) / 2)
+		--icon-h calc(var(--icon-height) / 2)
+		--grid-width calc((var(--icon-w) + var(--grid-gap)) * var(--columns))
+
+	.bookmarks
+		max-width var(--grid-width)
+		grid-auto-rows var(--icon-h)
+		grid-template-columns repeat(var(--columns), var(--icon-w))
+
+
+@media (max-width 700px)
 	.bookmarks
 		max-width 100%
 		grid-auto-rows minmax(var(--icon-h), auto)
