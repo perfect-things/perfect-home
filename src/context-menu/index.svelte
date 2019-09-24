@@ -37,7 +37,6 @@ function customThumbnail () {
 function onThumbnailSelect (e) {
 	const reader = new FileReader();
 	const thumb = el.querySelector('.item-thumb');
-	console.log(thumb);
 	reader.onload = ev => {
 		const dataUri = ev.target.result;
 		thumb.innerHTML = '';

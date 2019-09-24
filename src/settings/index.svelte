@@ -4,8 +4,8 @@
 
 <div class="settings-pane {isVisible ? '' : 'hidden'}">
 	<h1>Settings</h1>
-
 	<form class="settings-form {isVisible ? '' : 'hidden'}" on:change="{onchange}">
+
 		<label>Bookmarks folder</label>
 		<div class="settings-row">
 			<select name="rootfolder" bind:value="{$options.rootFolder}">
@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="settings-row">
-			<label>Tile size (w &times; h)</label>
+			<label>Tile size</label>
 			<div class="flex-spacer"></div>
 			<input type="number" bind:value="{$options.iconWidth}">
 			<input type="number" bind:value="{$options.iconHeight}">
@@ -53,24 +53,43 @@
 
 		<hr>
 
+		<div class="settings-row buttons-row">
+			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
+			<small>This will reset the above settings to their default values. It will not change the thumbnails cache.</small>
+		</div>
 
-		<div class="row buttons-row">
-			<button class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
+		<hr>
+
+		<div class="settings-row buttons-row">
+			<a class="btn btn-half btn-export" download="perfect-home-settings.json" href="{settingsBlob}">Export</a>
+			<div class="btn btn-half btn-import" on:click="{() => settingsInput.click()}">
+				Import
+				<input type="file" accept="application/json"
+					bind:this="{settingsInput}"
+					on:change="{onSettingsSelect}">
+			</div>
+			<small>You can Export settings with thumbnails to a json file to backup your configuration.
+			That file can then be imported in the same version of this Firefox extension.</small>
 		</div>
-		<div class="row buttons-row">
-			<button class="btn btn-clear" on:click="{clear}">Clear cache</button>
+
+		<hr>
+
+		<div class="settings-row buttons-row">
+			<button type="button" class="btn btn-clear" on:click="{clearCache}">Clear cache</button>
+			<small>This will clear all stored items: options and thumbnails cache.</small>
 		</div>
+
 	</form>
-
 </div>
 
 <script>
 import {onMount} from 'svelte';
-import {options} from '../store';
+import {options, defaultOptions, thumbs} from '../store';
 import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
-let isVisible = false;
+let isVisible = true;
 let folders = [];
+let settingsBlob, settingsInput;
 
 onMount(() => {
 	getAllItems().then(items => {
@@ -80,12 +99,28 @@ onMount(() => {
 });
 
 
-function clear () {
-	clearCache();
+$: {
+	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
+	settingsBlob = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
 }
 
-function reset () {
 
+function onSettingsSelect (e) {
+	const reader = new FileReader();
+	reader.onload = ev => {
+		let json;
+		try { json = JSON.parse(ev.target.result); }
+		catch (er) {/* no-empty: 0 */ }
+		if (!json) alert('Incorrect settings file!');
+		options.set(json.options);
+		thumbs.set(json.thumbs);
+	};
+	reader.readAsText(e.target.files[0]);
+}
+
+
+function reset () {
+	options.set($defaultOptions);
 }
 
 function onDocClick (e) {

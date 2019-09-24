@@ -1,9 +1,8 @@
-import {writable} from 'svelte/store';
+import {readable, writable} from 'svelte/store';
 
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu
-
-export const options = writable({
+const _options = {
 	columns    : 6,
 	iconWidth  : 170,
 	iconHeight : 160,
@@ -12,7 +11,11 @@ export const options = writable({
 	pageBg     : '#333333',
 	css        : '',
 	rootFolder : ROOT_ID,
-});
+};
+
+export const defaultOptions = readable(_options);
+export const options = writable(_options);
+
 export const rootFolderTitle = writable('');
 
 export const currentFolder = writable(ROOT_ID);
