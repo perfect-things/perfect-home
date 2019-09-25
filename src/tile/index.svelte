@@ -31,6 +31,13 @@ import {afterUpdate} from 'svelte';
 export let item;
 let thumb;
 
+function getHost (url) {
+	let _url;
+	try { _url = new URL(url); }
+	catch (e) {/*eslint no-empty: 0*/}
+	return _url.host.replace(/^www\./, '');
+}
+
 afterUpdate(() => {
 	if (!thumb) return;
 
@@ -42,7 +49,11 @@ afterUpdate(() => {
 		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 		const color = isDark(bg) ? '#ccc' : '#333';
 		style = `background-color: ${bg}; color: ${color};`;
-		innerText = item.title[0].toUpperCase();
+
+		const host = getHost(item.url);
+		const title = item.title || host || '';
+		const letter = title.replace(/^\W+|\W+$/gi, '')[0] || '';
+		innerText = letter.toUpperCase();
 	}
 	thumb.style = style;
 	thumb.innerText = innerText;
