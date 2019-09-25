@@ -116,7 +116,7 @@ function release () {
 				' sign --channel=listed' +
 				' --api-secret=' + config.apiSecret +
 				' --api-key=' + config.apiKey;
-			return run(signCmd);
+			return run(signCmd).catch(() => {});
 		})
 		.then(() => {
 			console.log('Signed & published!');
