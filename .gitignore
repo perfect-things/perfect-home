@@ -1,5 +1,4 @@
 node_modules/
 dist/
 web-ext-artifacts/
-sign
 config-prod.json

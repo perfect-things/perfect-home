@@ -28,6 +28,7 @@
 		"gulp-stylus": "^2.7.0",
 		"inquirer": "^7.0.0",
 		"open": "^6.4.0",
+		"ora": "^4.0.1",
 		"semver": "^6.3.0",
 		"simple-git": "^1.126.0",
 		"svelte": "^3.12.1",

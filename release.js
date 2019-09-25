@@ -4,6 +4,7 @@ const {exec} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const SemVer = require('semver');
+const ora = require('ora');
 const chalk = require('chalk');
 const indent = require('detect-indent');
 const inquirer = require('inquirer');
@@ -14,9 +15,11 @@ const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/edit';
-
+const dryrun = true;
+const faker = () => new Promise(resolve => setTimeout(resolve, 2000));
 
 function run (cmd) {
+	if (dryrun) return faker();
 	return new Promise((resolve, reject) => {
 		exec(cmd, (err, out) => (err ? reject(err) : resolve(out)));
 	});
@@ -43,21 +46,20 @@ function bump (manifest, newVersion) {
 	const pkg = require(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
-	fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
-	console.log(`Updated ${chalk.cyan(manifest)} to ${chalk.cyan(newVersion)}`);
+	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
 }
 
 
 function commit (version, notes) {
-	return new Promise(resolve => {
+	if (dryrun) return faker();
+	return new Promise((resolve, reject) => {
 		git
 			.silent(true)
 			.add('./*')
 			.commit(notes || 'version bump')
 			.push(['origin', 'master'], err => {
-				if (err) return console.error(chalk.red(err));
-				console.log(`Update ${chalk.cyan('committed')} to Github.`);
-				resolve({version, notes});
+				if (err) reject(err);
+				else resolve({version, notes});
 			});
 	});
 }
@@ -65,9 +67,10 @@ function commit (version, notes) {
 
 function release () {
 	const app = getVersion();
+	let spinner;
 	console.log('\n**************************************');
 	console.log('*                                    *');
-	console.log(`*      Releasing ${chalk.cyan(app.name)}       *`);
+	console.log(`*      Releasing ${chalk.cyan(app.name)}        *`);
 	console.log('*                                    *');
 	console.log('**************************************\n');
 	inquirer
@@ -103,15 +106,34 @@ function release () {
 			}
 		])
 		.then(({version, notes}) => {
-			manifests.forEach(m => bump(m, version));   // update package & manifest
+			spinner = ora('').start();
+			// update package & manifest
+			manifests.forEach(m => {
+				spinner.text = `Updating ${m}...`;
+				bump(m, version);
+				spinner.text = `Updated ${chalk.cyan(m)} to ${chalk.cyan(version)}`;
+				spinner.succeed();
+			});
+			spinner.text = 'Committing to GitHub...';
+			spinner.start();
 			return commit(version, notes);              // commit code changes to  github
 		})
 		.then(() => {
-			console.log('Building');
+			spinner.text = `Update ${chalk.cyan('committed')} to Github.`;
+			spinner.succeed();
+
+			spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
+			spinner.start();
 			return run('gulp --prod');
 		})
 		.then(() => {
-			console.log('Publishing to mozilla');
+			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
+			spinner.succeed();
+
+
+			spinner.text = 'Publishing addon to mozilla...';
+			spinner.start();
+
 			const signCmd = path.resolve('./', 'node_modules/.bin/web-ext') +
 				' sign --channel=listed' +
 				' --api-secret=' + config.apiSecret +
@@ -119,11 +141,16 @@ function release () {
 			return run(signCmd).catch(() => {});
 		})
 		.then(() => {
-			console.log('Signed & published!');
+			spinner.text = 'Signed & published!';
+			spinner.succeed();
+
 			console.log(chalk.cyan('All done!'));
-			open(addonUrl);
+			if (!dryrun) open(addonUrl);
 		})
-		.catch(e => console.error(chalk.red(e)));
+		.catch(e => {
+			spinner.text = e;
+			spinner.fail();
+		});
 }
 
 
