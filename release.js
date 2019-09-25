@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {execSync} = require('child_process');
+const {exec} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const SemVer = require('semver');
@@ -13,12 +13,20 @@ const config = require('./config-prod.json');
 const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
+const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/edit';
+
+
+function run (cmd) {
+	return new Promise((resolve, reject) => {
+		exec(cmd, (err, out) => (err ? reject(err) : resolve(out)));
+	});
+}
 
 
 function getVersion (manifest) {
-	let pkgPath = path.join(cwd, manifest || manifests[0]);
+	const pkgPath = path.join(cwd, manifest || manifests[0]);
 	const pkg = require(pkgPath);
-	let current = new SemVer(pkg.version || '0.0.0');
+	const current = new SemVer(pkg.version || '0.0.0');
 
 	return {
 		name: pkg.name,
@@ -31,9 +39,9 @@ function getVersion (manifest) {
 
 
 function bump (manifest, newVersion) {
-	let pkgPath = path.join(cwd, manifest);
+	const pkgPath = path.join(cwd, manifest);
 	const pkg = require(pkgPath);
-	let usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
+	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
 	fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
 	console.log(`Updated ${chalk.cyan(manifest)} to ${chalk.cyan(newVersion)}`);
@@ -98,25 +106,22 @@ function release () {
 			manifests.forEach(m => bump(m, version));   // update package & manifest
 			return commit(version, notes);              // commit code changes to  github
 		})
-		.then(res => {
+		.then(() => {
 			console.log('Building');
-			execSync('gulp --prod');
-			return res;
+			return run('gulp --prod');
 		})
-		.then(res => {
+		.then(() => {
 			console.log('Publishing to mozilla');
 			const signCmd = path.resolve('./', 'node_modules/.bin/web-ext') +
 				' sign --channel=listed' +
 				' --api-secret=' + config.apiSecret +
 				' --api-key=' + config.apiKey;
-
-			return execSync(signCmd).then(() => res);
+			return run(signCmd);
 		})
 		.then(() => {
 			console.log('Signed & published!');
 			console.log(chalk.cyan('All done!'));
-			const url = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/edit';
-			open(url);
+			open(addonUrl);
 		})
 		.catch(e => console.error(chalk.red(e)));
 }
