@@ -69,7 +69,7 @@ function folderChanged (folderId) {
 				$items = tree[0].children;
 				folderSwitching = false;
 				$itemsLoaded = true;
-			}, 100);
+			}, 150);
 		})
 		.catch(e => console.error(e));
 }
