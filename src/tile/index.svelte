@@ -4,20 +4,22 @@
 	<a
 		href="{item.id}"
 		class="item item-folder item-{item.id}"
+		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click|preventDefault="{() => $currentFolder = item.id}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
-		<span class="item-title" title="{item.title}">{item.title}</span>
+		<span class="item-title">{item.title || ''}</span>
 	</a>
 {:else}
 	<a
 		href="{item.url}"
 		class="item item-{item.type} item-{item.id}"
+		title="{item.title || ''}"
 		data-id="{item.id}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
-		<span class="item-title" title="{item.title}">{item.title}</span>
+		<span class="item-title">{item.title || ''}</span>
 	</a>
 {/if}
 
