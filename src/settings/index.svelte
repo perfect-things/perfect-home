@@ -118,6 +118,7 @@ function onSettingsSelect (e) {
 		if (!json) alert('Incorrect settings file!');
 		thumbs.set(json.thumbs);
 		options.set(json.options);
+		saveSettings(json.options);
 	};
 	reader.readAsText(e.target.files[0]);
 }
