@@ -30,7 +30,7 @@
 				<button
 					class="btn xbtn"
 					type="button"
-					on:click="{() => delFolder(dockedFolder)}">&times;
+					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
 				</button>
 			</div>
 		{/each}
@@ -143,8 +143,7 @@ function addFolder () {
 
 function delFolder (id) {
 	const opts = $options;
-	if (!id) opts.folders.pop();
-	else opts.folders.splice(opts.folders.indexOf(id), 1);
+	opts.folders.splice(opts.folders.indexOf(id), 1);
 	setOptions(opts);
 }
 
@@ -168,7 +167,7 @@ function reset () {
 }
 
 function onDocClick (e) {
-	if (e.target.closest('.settings-pane, .btn-settings')) return;
+	if (e.target.closest('.settings-pane,.btn-settings')) return;
 	if (!isVisible) return;
 	isVisible = false;
 }
