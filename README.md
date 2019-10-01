@@ -17,6 +17,9 @@ Just your own, predictable grid of links.
 - [x] Style page with custom css - paste your css in settings
 - [x] Requires only 2 permissions: bookmarks & storage (to save settings & cache thumbnails)!
 - [x] Settings export/import
+- [x] docked folders
+- [ ] drag & drop between docked folders
+- [ ] change icon for docked folders
 
 
 ## TODO
