@@ -9,7 +9,7 @@
 	<h1>Settings</h1>
 	<div class="settings-form {isVisible ? '' : 'hidden'}">
 		<form on:change="{onchange}">
-		<label>Bookmarks folder</label>
+		<label>Main folder</label>
 		<div class="settings-row">
 			<select name="rootfolder" bind:value="{$options.rootFolder}">
 				{#each folders as folder}
@@ -17,6 +17,27 @@
 				{/each}
 			</select>
 		</div>
+		<label>Docked folders</label>
+		{#each $options.folders as dockedFolder}
+			<div class="settings-row">
+				<select bind:value="{dockedFolder}">
+					<option value="">None</option>
+					{#each folders as folder}
+						<option value="{folder.id}">{folder.title}</option>
+					{/each}
+				</select>
+
+				<button
+					class="btn xbtn"
+					type="button"
+					on:click="{() => delFolder(dockedFolder)}">&times;
+				</button>
+			</div>
+		{/each}
+		<div class="settings-row">
+			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
+		</div>
+
 
 		<div class="settings-row">
 			<label>Max number of columns</label>
@@ -91,7 +112,7 @@ import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs} from '../store';
 import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
-let isVisible = false;
+let isVisible = true;
 let folders = [];
 let settingsBlob, settingsInput;
 
@@ -108,6 +129,25 @@ $: {
 	settingsBlob = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
 }
 
+function setOptions (json) {
+	options.set(json);
+	saveSettings(json);
+}
+
+function addFolder () {
+	const opts = $options;
+	opts.folders.push('');
+	setOptions(opts);
+}
+
+
+function delFolder (id) {
+	const opts = $options;
+	if (!id) opts.folders.pop();
+	else opts.folders.splice(opts.folders.indexOf(id), 1);
+	setOptions(opts);
+}
+
 
 function onSettingsSelect (e) {
 	const reader = new FileReader();
@@ -117,15 +157,14 @@ function onSettingsSelect (e) {
 		catch (er) {/* no-empty: 0 */ }
 		if (!json) alert('Incorrect settings file!');
 		thumbs.set(json.thumbs);
-		options.set(json.options);
-		saveSettings(json.options);
+		setOptions(json.options);
 	};
 	reader.readAsText(e.target.files[0]);
 }
 
 
 function reset () {
-	options.set($defaultOptions);
+	setOptions($defaultOptions);
 }
 
 function onDocClick (e) {

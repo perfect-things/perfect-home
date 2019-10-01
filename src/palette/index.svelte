@@ -40,7 +40,6 @@ onMount(() => {
 	close();
 	clear();
 	document.addEventListener('keydown', onDocumentKeydown);
-	setTimeout(() => document.body.focus(), 100);
 });
 
 function gotoItem (item) {
@@ -53,8 +52,7 @@ function onDocumentKeydown (e) {
 	const key = e.key;
 	if (key === 'p' && e.metaKey) {
 		e.preventDefault();
-		open();
-		setTimeout(() => input.select(), 100);
+		toggle();
 	}
 }
 
@@ -149,10 +147,15 @@ function clear () {
 
 function open () {
 	opened = true;
+	setTimeout(() => input.select(), 100);
 }
 
 function close () {
 	opened = false;
+}
+
+function toggle () {
+	return opened ? close() : open();
 }
 
 </script>
