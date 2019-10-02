@@ -1,0 +1,73 @@
+@import "lib"
+
+
+button::-moz-focus-inner
+	padding 0 !important
+	border 0
+
+
+.btn
+	font inherit
+	display inline-block
+	padding 5 15
+	min-width 34px
+	min-height 34px
+	margin-bottom 0
+	font 15/1.4
+	font-weight 400
+	height auto;
+	text-align center
+	white-space nowrap
+	vertical-align middle
+	text-decoration none
+	cursor default
+	border none
+	border-radius 3
+	user-select none
+	box-shadow 0 1px 0 rgba(#000, .8)
+	color color-text
+
+
+	// &.info
+	background color-info
+
+	&:focus
+		box-shadow 0 0 1px lighten(color-info, 50%)
+
+	&:active
+		outline none
+		box-shadow none
+		transform translateY(1px)
+		background darken(color-info, 15%)
+		color alpha(color-text, 50%)
+
+
+
+	&.success
+		background darken(color-success, 30%)
+
+		&:focus
+			box-shadow 0 0 1px lighten(color-success, 50%)
+
+		&:active
+			background darken(color-success, 15%)
+
+
+	&.warning
+		background color-warning
+
+		&:focus
+			box-shadow 0 0 1px lighten(color-warning, 50%)
+
+		&:active
+			background darken(color-warning, 15%)
+
+
+	&.danger
+		background color-danger
+
+		&:focus
+			box-shadow 0 0 1px lighten(color-danger, 50%)
+
+		&:active
+			background darken(color-danger, 15%)

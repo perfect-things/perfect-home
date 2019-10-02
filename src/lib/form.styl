@@ -1,0 +1,98 @@
+@import "lib"
+
+
+.select-wrap
+	background-image url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23eeeeee' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
+	background-repeat no-repeat
+	background-position right .75rem center
+	background-size 8px 10px
+	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
+	height 34
+	display inline-block
+	border color-bg-dark
+	background-color color-bg-dark
+	&:focus-within
+		border-color color-accent
+		box-shadow 0 0 2px 1px color-accent
+
+
+select
+	font inherit
+	background none
+	background-color color-bg-dark
+	border none
+	line-height 16px
+	box-sizing border-box
+	vertical-align top
+	padding 2 0 0 10
+	color color-text
+	width calc(100% - 22px)
+	height 100%
+	text-indent -2px
+	-webkit-appearance none
+	-moz-appearance none
+	appearance none
+
+
+textarea
+input:not([type=checkbox]):not([type=radio]):not([type=color])
+	font inherit
+	line-height 16px
+	box-sizing border-box
+	vertical-align top
+	height 34
+	padding 2 5
+	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
+
+	border color-bg-dark
+	color color-text
+	background-color color-bg-dark
+
+	&:focus
+		border-color color-accent
+		box-shadow 0 0 2px 1px color-accent
+		outline none
+
+	&:invalid
+		border-color color-danger
+		box-shadow 0 0 2px 1px color-danger
+		outline none
+
+	&:disabled
+		opacity 0.5
+
+
+textarea
+	min-height 2.4em
+	resize vertical
+	flex 1
+
+
+input[type=checkbox]
+input[type=radio]
+	vertical-align inherit
+	transform scale(1.4)
+	filter hue-rotate(-12deg) saturate(.4)
+	margin-right 6px
+
+
+input[type="color"]
+	-moz-appearance none
+	background none
+	border none
+	height 35
+	padding 0
+
+
+input[type=file]
+	position absolute
+	right -500px
+
+
+label
+	display inline-block
+	margin-top 1
+	vertical-align top
+
+	&.disabled
+		opacity 0.3

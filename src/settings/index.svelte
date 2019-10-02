@@ -14,11 +14,13 @@
 			<small>This is the primary navigable list of bookmarks.</small>
 
 			<div class="settings-row">
-				<select name="rootfolder" bind:value="{$options.rootFolder}">
-					{#each folders as folder}
-						<option value="{folder.id}">{folder.title}</option>
-					{/each}
-				</select>
+				<div class="select-wrap">
+					<select name="rootfolder" bind:value="{$options.rootFolder}">
+						{#each folders as folder}
+							<option value="{folder.id}">{folder.title}</option>
+						{/each}
+					</select>
+				</div>
 			</div>
 
 			<div class="settings-row">
@@ -63,13 +65,14 @@
 
 			{#each $options.folders as dockedFolder}
 				<div class="settings-row">
-					<select bind:value="{dockedFolder}">
-						<option value="">None</option>
-						{#each folders as folder}
-							<option value="{folder.id}">{folder.title}</option>
-						{/each}
-					</select>
-
+					<div class="select-wrap">
+						<select bind:value="{dockedFolder}">
+							<option value="">None</option>
+							{#each folders as folder}
+								<option value="{folder.id}">{folder.title}</option>
+							{/each}
+						</select>
+					</div>
 					<button
 						class="btn xbtn"
 						type="button"
@@ -108,7 +111,7 @@
 		<h2>Purge</h2>
 		<small>This will clear all stored items: options and thumbnails cache.</small>
 		<div class="settings-row">
-			<button type="button" class="btn btn-clear" on:click="{clearCache}">Clear cache</button>
+			<button type="button" class="btn btn-clear danger" on:click="{clearCache}">Clear cache</button>
 		</div>
 
 	</div>
@@ -119,7 +122,7 @@ import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs} from '../store';
 import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
-let isVisible = false;
+let isVisible = true;
 let folders = [];
 let settingsBlob, settingsInput;
 

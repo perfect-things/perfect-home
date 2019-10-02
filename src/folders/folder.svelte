@@ -6,8 +6,8 @@
 	{#if items && items.length}
 		{#each items as item}
 			<a class="folder-item" href="{item.url}" title="{item.title}" data-id="{item.id}">
-				<div class="item-thumb" style="{setStyle(item)}"></div>
-				<span>{item.title}</span>
+				<span class="item-thumb" style="{setStyle(item)}"></span>
+				<span class="item-title">{item.title}</span>
 			</a>
 		{/each}
 	{:else}

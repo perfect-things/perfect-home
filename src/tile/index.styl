@@ -12,36 +12,31 @@
 	height var(--icon-height)
 	filter drop-shadow(0 3px 3px #0009)
 
-.separator .item-thumb
-	filter none
-	background none
-
-.item-title
-	display block
-	padding 0
-	margin-top 10px
-	max-height 2.3em
-	overflow hidden
-	text-overflow ellipsis
+	.item-title
+		display block
+		padding 0
+		margin-top 10px
+		max-height 2.3em
+		overflow hidden
+		text-overflow ellipsis
 
 
 
-.item-thumb
-	width 100%
-	height calc(100% - 22px)
-	border-radius inherit
+	.item-thumb
+		width 100%
+		height calc(100% - 22px)
+		border-radius inherit
 
-	background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
-	background-size cover
-	display flex
+		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
+		background-size cover
+		display flex
 
-	font 600 4em/1 helvetica, arial, sans-serif
-	text-align center
-	justify-content center
-	align-items center
-	color #555
-	overflow hidden
-
+		font 600 4em/1 helvetica, arial, sans-serif
+		text-align center
+		justify-content center
+		align-items center
+		color #555
+		overflow hidden
 
 
 .item-folder .item-thumb
@@ -52,6 +47,10 @@
 .item-bookmark .item-thumb
 	padding-top .25em
 
+
+.separator .item-thumb
+	filter none
+	background none
 
 
 
