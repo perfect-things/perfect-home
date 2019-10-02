@@ -19,12 +19,13 @@
 
 <script>
 import {thumbs} from '../store';
-import {animate, getBookmark, delBookmark, getLetterThumbnail} from '../lib';
+import {animate, getBookmark, delBookmark, getLetterThumbnail, getFavicon} from '../lib';
 
 let menuEl;
 let item, el, hasThumbnail = false;
 let opened = false;
 let fileInput;
+
 
 function deleteBookmark () {
 	const from = {transform: 'scale(1)', opacity: 1};
@@ -41,10 +42,20 @@ function customThumbnail () {
 }
 
 function clearThumbnail () {
+	let style, text;
 	const thumb = el.querySelector('.item-thumb');
-	const letterThumb = getLetterThumbnail(item);
-	thumb.style = letterThumb.style;
-	thumb.innerText = letterThumb.innerText;
+	const isTile = el.closest('main.bookmarks');
+	if (isTile) {
+		const letterThumb = getLetterThumbnail(item);
+		style = letterThumb.style;
+		text = letterThumb.innerText;
+	}
+	else {
+		style = `background-image: url("${getFavicon(item.url)}")`;
+		text = '';
+	}
+	thumb.style = style;
+	thumb.innerText = text;
 
 	const _thumbs = $thumbs;
 	delete _thumbs[item.id];
@@ -74,7 +85,7 @@ function updatePosition (e)  {
 }
 
 function onContextMenu (e) {
-	el = e.target.closest('.item');
+	el = e.target.closest('.item, .folder-item');
 	if (!el) return;
 	if (el.classList.contains('item-folder')) return;
 	e.preventDefault();

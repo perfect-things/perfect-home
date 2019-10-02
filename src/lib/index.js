@@ -114,6 +114,14 @@ const getThumbs = async () => browser.storage.local.get('thumbs').then(res => re
 const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
 
 
+function getFavicon (url) {
+	const favIconService = 'https://www.google.com/s2/favicons?domain=';
+	let urlObj;
+	try { urlObj = new URL(url); }
+	catch (e) {/**/}
+	return favIconService + (urlObj.host || '');
+}
+
 
 export {
 	injectCss,
@@ -136,4 +144,6 @@ export {
 
 	getThumbs,
 	saveThumbs,
+
+	getFavicon,
 };

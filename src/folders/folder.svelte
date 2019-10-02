@@ -5,8 +5,8 @@
 	</h2>
 	{#if items && items.length}
 		{#each items as item}
-			<a class="folder-item" href="{item.url}" title="{item.title}">
-				<img src="{getFavicon(item.url)}" alt="{item.title}">
+			<a class="folder-item" href="{item.url}" title="{item.title}" data-id="{item.id}">
+				<div class="item-thumb" style="{setStyle(item)}"></div>
 				<span>{item.title}</span>
 			</a>
 		{/each}
@@ -17,14 +17,14 @@
 
 
 <script>
-import {getSubTree, getFolderTitle} from '../lib';
+import {thumbs} from '../store';
+import {getSubTree, getFolderTitle, getFavicon} from '../lib';
 
 export let id;
 let folderEl;
 let title = '';
 let items = [];
 let expanded = false;
-const favIconService = 'https://www.google.com/s2/favicons?domain=';
 
 
 $: {
@@ -40,11 +40,11 @@ $: {
 }
 
 
-function getFavicon (url) {
-	let urlObj;
-	try { urlObj = new URL(url); }
-	catch (e) {/**/}
-	return favIconService + (urlObj.host || '');
+function setStyle (item) {
+	let url;
+	if ($thumbs && $thumbs[item.id]) url = $thumbs[item.id];
+	else url = getFavicon(item.url);
+	return `background-image: url("${url}")`;
 }
 
 

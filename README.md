@@ -19,11 +19,11 @@ Just your own, predictable grid of links.
 - [x] Settings export/import
 - [x] docked folders
 - [x] context-menu: clear thumb
+- [x] change icons for bookmarks in docked folders
 
 
 ## TODO
 - [ ] drag & drop between docked folders
-- [ ] change icons for bookmarks in docked folders
 - [ ] favicons:
   - [ ] fallback: if better quality exists - replace the crap from google's service
   - [ ] cache url (or icon?)
