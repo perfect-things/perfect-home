@@ -26,19 +26,13 @@
 
 <script>
 import {currentFolder, thumbs} from '../store';
-import {colorFromString, isDark} from '../lib';
+import {getLetterThumbnail} from '../lib';
 import {afterUpdate} from 'svelte';
 
 
 export let item;
 let thumb;
 
-function getHost (url) {
-	let _url;
-	try { _url = new URL(url); }
-	catch (e) {/*eslint no-empty: 0*/}
-	return _url.host.replace(/^www\./, '');
-}
 
 afterUpdate(() => {
 	if (!thumb) return;
@@ -48,14 +42,9 @@ afterUpdate(() => {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
-		const color = isDark(bg) ? '#ccc' : '#333';
-		style = `background-color: ${bg}; color: ${color};`;
-
-		const host = getHost(item.url);
-		const title = item.title || host || '';
-		const letter = title.replace(/^\W+|\W+$/gi, '')[0] || '';
-		innerText = letter.toUpperCase();
+		const letterThumb = getLetterThumbnail(item);
+		style = letterThumb.style;
+		innerText = letterThumb.innerText;
 	}
 	thumb.style = style;
 	thumb.innerText = innerText;

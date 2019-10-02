@@ -9,6 +9,13 @@ function injectCss (css) {
 }
 
 
+function getHost (url) {
+	let _url;
+	try { _url = new URL(url); }
+	catch (e) {/*eslint no-empty: 0*/}
+	return _url.host.replace(/^www\./, '');
+}
+
 
 // https://stackoverflow.com/a/16348977/424446
 function colorFromString (str) {
@@ -32,6 +39,19 @@ function isDark (color) {
 	const c_b = parseInt(hex.substr(4, 2), 16);
 	const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
 	return brightness < 80;
+}
+
+
+function getLetterThumbnail (item) {
+	const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
+	const color = isDark(bg) ? '#ccc' : '#333';
+	const style = `background-color: ${bg}; color: ${color};`;
+
+	const host = getHost(item.url);
+	const title = item.title || host || '';
+	const letter = title.replace(/^\W+|\W+$/gi, '')[0] || '';
+	const innerText = letter.toUpperCase();
+	return {style, innerText};
 }
 
 
@@ -97,8 +117,8 @@ const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
 
 export {
 	injectCss,
-	colorFromString,
-	isDark,
+	getLetterThumbnail,
+
 	fuzzy,
 	emphasize,
 	animate,
