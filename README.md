@@ -18,13 +18,37 @@ Just your own, predictable grid of links.
 - [x] Requires only 2 permissions: bookmarks & storage (to save settings & cache thumbnails)!
 - [x] Settings export/import
 - [x] docked folders
-- [ ] drag & drop between docked folders
-- [ ] change icon for docked folders
 
 
 ## TODO
+- [ ] drag & drop between docked folders
+- [ ] change icons for bookmarks in docked folders
+- [ ] context-menu: clear thumb
+- [ ] favicons:
+  - [ ] fallback: if better quality exists - replace the crap from google's service
+  - [ ] cache url (or icon?)
+- [ ] Testing:
+  - [ ] https://github.com/pngwn/svelte-test
+  - [ ] https://github.com/testing-library/svelte-testing-library
+  - [ ] https://github.com/rspieker/jest-transform-svelte
+  - [ ] https://github.com/ktsn/svelte-jest
 - [ ] light/dark themes (css based on the OS?)
 - [ ] accessibility (keyboard support)
+
+<!--
+	Docked Folder
+	There would be max 3 different docks: left, right, bottom; with options:
+	- folder ID
+	- view mode: list (column grid) | icons (row grid)
+	- size: distance from the edge (height | width), depending on the clip side
+	- background?
+	- hide when empty?
+	- align items:
+	- on left|right: top | middle | bottom
+	- on bottom one: left | center | right
+-->
+
+
 
 
 ## Usage

@@ -9,83 +9,92 @@
 	<h1>Settings</h1>
 	<div class="settings-form {isVisible ? '' : 'hidden'}">
 		<form on:change="{onchange}">
-		<label>Main folder</label>
-		<div class="settings-row">
-			<select name="rootfolder" bind:value="{$options.rootFolder}">
-				{#each folders as folder}
-					<option value="{folder.id}">{folder.title}</option>
-				{/each}
-			</select>
-		</div>
-		<label>Docked folders</label>
-		{#each $options.folders as dockedFolder}
+
+			<h2>Main folder</h2>
+			<small>This is the primary navigable list of bookmarks.</small>
+
 			<div class="settings-row">
-				<select bind:value="{dockedFolder}">
-					<option value="">None</option>
+				<select name="rootfolder" bind:value="{$options.rootFolder}">
 					{#each folders as folder}
 						<option value="{folder.id}">{folder.title}</option>
 					{/each}
 				</select>
-
-				<button
-					class="btn xbtn"
-					type="button"
-					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
-				</button>
 			</div>
-		{/each}
-		<div class="settings-row">
-			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
-		</div>
+
+			<div class="settings-row">
+				<label>Max number of columns</label>
+				<input type="number" bind:value="{$options.columns}">
+			</div>
+
+			<div class="settings-row">
+				<label>Gaps</label>
+				<input type="number" bind:value="{$options.gridGap}">
+			</div>
+
+			<div class="settings-row">
+				<label>Tile size</label>
+				<div class="flex-spacer"></div>
+				<input type="number" bind:value="{$options.iconWidth}">
+				<input type="number" bind:value="{$options.iconHeight}">
+			</div>
+
+			<div class="settings-row">
+				<label>Text color</label>
+				<div class="flex-spacer"></div>
+				<input type="text" bind:value="{$options.pageColor}">
+				<input type="color" bind:value="{$options.pageColor}">
+			</div>
+
+			<div class="settings-row">
+				<label>Background</label>
+				<div class="flex-spacer"></div>
+				<input type="text" bind:value="{$options.pageBg}">
+				<input type="color" bind:value="{$options.pageBg}">
+			</div>
+
+			<label>Custom CSS</label>
+			<div class="settings-row">
+				<textarea bind:value="{$options.css}"></textarea>
+			</div>
 
 
-		<div class="settings-row">
-			<label>Max number of columns</label>
-			<input type="number" bind:value="{$options.columns}">
-		</div>
+			<h2>Docked folders</h2>
+			<small>These folders will be docked to the bottom.</small>
 
-		<div class="settings-row">
-			<label>Gaps</label>
-			<input type="number" bind:value="{$options.gridGap}">
-		</div>
+			{#each $options.folders as dockedFolder}
+				<div class="settings-row">
+					<select bind:value="{dockedFolder}">
+						<option value="">None</option>
+						{#each folders as folder}
+							<option value="{folder.id}">{folder.title}</option>
+						{/each}
+					</select>
 
-		<div class="settings-row">
-			<label>Tile size</label>
-			<div class="flex-spacer"></div>
-			<input type="number" bind:value="{$options.iconWidth}">
-			<input type="number" bind:value="{$options.iconHeight}">
-		</div>
+					<button
+						class="btn xbtn"
+						type="button"
+						on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
+					</button>
+				</div>
+			{/each}
+			<div class="settings-row">
+				<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
+			</div>
 
-		<div class="settings-row">
-			<label>Text color</label>
-			<div class="flex-spacer"></div>
-			<input type="text" bind:value="{$options.pageColor}">
-			<input type="color" bind:value="{$options.pageColor}">
-		</div>
-
-		<div class="settings-row">
-			<label>Background</label>
-			<div class="flex-spacer"></div>
-			<input type="text" bind:value="{$options.pageBg}">
-			<input type="color" bind:value="{$options.pageBg}">
-		</div>
-
-		<label>Custom CSS</label>
-		<div class="settings-row">
-			<textarea bind:value="{$options.css}"></textarea>
-		</div>
 		</form>
 
-		<hr>
 
-		<div class="settings-row buttons-row">
+		<h2>Reset</h2>
+		<small>This will reset the above settings to their default values. It will not change the thumbnails cache.</small>
+		<div class="settings-row">
 			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
-			<small>This will reset the above settings to their default values. It will not change the thumbnails cache.</small>
 		</div>
 
-		<hr>
 
-		<div class="settings-row buttons-row">
+		<h2>Import/Export</h2>
+		<small>You can Export settings with thumbnails to a json file to backup your configuration. That file can then be imported in the same version of this Firefox extension.</small>
+		<div class="settings-row">
+
 			<a class="btn btn-half btn-export" download="perfect-home-settings.json" href="{settingsBlob}">Export</a>
 			<div class="btn btn-half btn-import" on:click="{() => settingsInput.click()}">
 				Import
@@ -93,15 +102,13 @@
 					bind:this="{settingsInput}"
 					on:change="{onSettingsSelect}">
 			</div>
-			<small>You can Export settings with thumbnails to a json file to backup your configuration.
-			That file can then be imported in the same version of this Firefox extension.</small>
 		</div>
 
-		<hr>
 
-		<div class="settings-row buttons-row">
+		<h2>Purge</h2>
+		<small>This will clear all stored items: options and thumbnails cache.</small>
+		<div class="settings-row">
 			<button type="button" class="btn btn-clear" on:click="{clearCache}">Clear cache</button>
-			<small>This will clear all stored items: options and thumbnails cache.</small>
 		</div>
 
 	</div>

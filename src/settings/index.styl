@@ -35,8 +35,15 @@
 		transform translateX(310px)
 
 	h1
-		margin 20
+		margin 20 20 0
 
+	h2
+		padding 10 20
+		margin 25 -20 15
+		background #666
+		text-align left
+		border-top #888
+		border-bottom #888
 
 	label
 		display block
@@ -138,14 +145,17 @@
 		background #432429
 
 	hr
-		margin 10 0 20
+		margin 10 -20
 		height 0
-		width 100%
+		width auto
+		border 0
+		border-bottom #888
 
 	small
+		display block
 		flex 1
 		min-width 100%
-		margin-top 15
+		margin-bottom 15
 		opacity 0.7
 
 	input[type=file]
@@ -158,7 +168,6 @@
 	display flex
 	flex-flow column
 	align-items stretch
-	padding 10 0
 	margin 0 20
 	font inherit
 	font-size 15px
@@ -179,10 +188,6 @@
 		margin 0 5 0 0
 	input
 		width 75
-
-
-.buttons-row
-	margin-top 10
 
 
 .btn-export

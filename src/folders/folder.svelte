@@ -5,7 +5,7 @@
 	</h2>
 	{#if items && items.length}
 		{#each items as item}
-			<a class="folder-item" href="{item.url}">
+			<a class="folder-item" href="{item.url}" title="{item.title}">
 				<img src="{getFavicon(item.url)}" alt="{item.title}">
 				<span>{item.title}</span>
 			</a>
@@ -49,7 +49,7 @@ function getFavicon (url) {
 
 
 function toggle () {
-	let marginTop = 40;
+	let marginTop = 42;
 	if (!expanded) marginTop = folderEl.getBoundingClientRect().height;
 	folderEl.style.marginTop = `-${marginTop}px`;
 	expanded = !expanded;
