@@ -12,7 +12,7 @@ const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.leng
 
 const delBookmark = async (id) => browser.bookmarks.remove(id);
 
-const updateIndexes = async (id, index) => browser.bookmarks.move(id, {index});
+const moveBookmark = async (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
 
 const getAllItems = async () => browser.bookmarks.search({ title: '' });
 
@@ -31,7 +31,7 @@ export {
 	getSubTree,
 	getBookmark,
 	delBookmark,
-	updateIndexes,
+	moveBookmark,
 	getAllItems,
 	clearCache,
 

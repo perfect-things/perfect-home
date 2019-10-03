@@ -15,8 +15,12 @@
 import Tile from '../tile';
 import Palette from '../palette';
 import {onMount} from 'svelte';
-import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded, thumbs} from '../store';
-import {getSubTree, getSettings, updateIndexes, getAllItems, getFolderTitle, injectCss, getThumbs, saveThumbs} from '../lib';
+import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded,
+	thumbs} from '../store';
+
+import {getSubTree, getSettings, moveBookmark, getAllItems, getFolderTitle, injectCss, getThumbs,
+	saveThumbs} from '../lib';
+
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
@@ -45,7 +49,8 @@ function optionsChanged (props) {
 
 
 function onsort (e) {
-	updateIndexes(e.item.dataset.id, e.newIndex);
+	const isInMain = e.item.closest('.bookmarks');
+	if (isInMain) moveBookmark(e.item.dataset.id, {index: e.newIndex, parentId: $currentFolder});
 }
 
 function onpopstate (e) {
@@ -77,12 +82,14 @@ function folderChanged (folderId) {
 
 onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
+		group: 'bookmarks',
 		animation: 200,
 		ghostClass: 'sortable-ghost',
 		onStart: e => e.item.classList.add('sortable-plate'),
 		onEnd: e => e.item.classList.remove('sortable-plate'),
-		onSort: onsort
+		onSort: onsort,
 	});
+
 
 	getAllItems().then(all => allItems = all);
 	getThumbs().then(_thumbs => {

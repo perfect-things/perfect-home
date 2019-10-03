@@ -1,30 +1,35 @@
-<div class="folder" bind:this="{folderEl}">
+<div class="folder folder-{id}" data-id="{id}" bind:this="{folderEl}">
 	<h2 class="folder-titlebar" on:click="{toggle}">
 		<span class="folder-title">{title}</span>
 		<span class="folder-badge">{items.length || ''}</span>
 	</h2>
-	{#if items && items.length}
-		{#each items as item}
-			<a class="folder-item" href="{item.url}" title="{item.title}" data-id="{item.id}">
-				<span class="item-thumb" style="{setStyle(item)}"></span>
-				<span class="item-title">{item.title}</span>
-			</a>
-		{/each}
-	{:else}
-		<span class="folder-empty">Folder is empty</span>
-	{/if}
+	<div class="folder-items" bind:this="{folderItems}">
+		{#if items && items.length}
+			{#each items as item}
+				<a class="item" href="{item.url}" title="{item.title}" data-id="{item.id}">
+					<span class="item-thumb" style="{setStyle(item)}"></span>
+					<span class="item-title">{item.title}</span>
+				</a>
+			{/each}
+		{:else}
+			<span class="folder-empty">Folder is empty</span>
+		{/if}
+	</div>
 </div>
 
 
 <script>
+import {onMount} from 'svelte';
 import {thumbs} from '../store';
-import {getSubTree, getFolderTitle, getFavicon} from '../lib';
+import {getSubTree, getFolderTitle, getFavicon, moveBookmark} from '../lib';
+import Sortable from 'sortablejs';
 
 export let id;
 let folderEl;
 let title = '';
 let items = [];
 let expanded = false;
+let folderItems;
 
 
 $: {
@@ -39,6 +44,25 @@ $: {
 	}
 }
 
+
+onMount(() => {
+	new Sortable(folderItems, {
+		group: 'bookmarks',
+		animation: 200,
+		ghostClass: 'sortable-ghost',
+		onStart: e => e.item.classList.add('sortable-plate'),
+		onEnd: e => e.item.classList.remove('sortable-plate'),
+		onSort: onsort,
+	});
+
+});
+
+
+function onsort (e) {
+	console.log(e.item.dataset.id, {parentId: id, index: e.newIndex});
+	const isInFolder = e.item.closest('.folder-items');
+	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: id, index: e.newIndex});
+}
 
 function setStyle (item) {
 	let url;

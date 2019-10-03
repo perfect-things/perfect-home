@@ -1,16 +1,17 @@
 @import "lib"
 
 
-.item
-	margin auto
-	display block
-	text-align center
-	text-decoration none
-	color inherit
-	border-radius 10px
-	width var(--icon-width)
-	height var(--icon-height)
-	filter drop-shadow(0 3px 3px #0009)
+.bookmarks
+	.item
+		margin auto
+		display block
+		text-align center
+		text-decoration none
+		color inherit
+		border-radius 10px
+		width var(--icon-width)
+		height var(--icon-height)
+		filter drop-shadow(0 3px 3px #0009)
 
 	.item-title
 		display block
@@ -19,8 +20,6 @@
 		max-height 2.3em
 		overflow hidden
 		text-overflow ellipsis
-
-
 
 	.item-thumb
 		width 100%
@@ -39,18 +38,18 @@
 		overflow hidden
 
 
-.item-folder .item-thumb
-	background-color #ccc
-	mask url('assets/folder.svg') center no-repeat
-	mask-size cover
+	.item-folder .item-thumb
+		background-color #ccc
+		mask url('assets/folder.svg') center no-repeat
+		mask-size cover
 
-.item-bookmark .item-thumb
-	padding-top .25em
+	.item-bookmark .item-thumb
+		padding-top .25em
 
 
-.separator .item-thumb
-	filter none
-	background none
+	.separator .item-thumb
+		filter none
+		background none
 
 
 
@@ -73,14 +72,14 @@
 
 
 @media (max-width 1280px)
-	.item
+	.bookmarks .item
 		width 100%
 		height 100%
 
 @media (max-width 960px)
-	.item-thumb
+	.bookmarks .item-thumb
 		font-size 3em
 
 @media (max-width 590px)
-	.item-folder .item-thumb
+	.bookmarks .item-folder .item-thumb
 		mask-size auto
