@@ -72,7 +72,7 @@ function css () {
 
 	return src(['src/**/*.styl'])
 		.pipe(isProd ? noop() : sourcemaps.init())
-		.pipe(stylus({ paths: ['src/lib'], 'include css': true }))
+		.pipe(stylus({ paths: ['src/ui'], 'include css': true }))
 		.pipe(isProd ? cssmin({ keepSpecialComments: 0 }) : noop())
 		.pipe(concat('index.css'))
 		.pipe(isProd ? noop() : sourcemaps.write())

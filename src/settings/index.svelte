@@ -122,7 +122,7 @@ import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs} from '../store';
 import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
-let isVisible = true;
+let isVisible = false;
 let folders = [];
 let settingsBlob, settingsInput;
 

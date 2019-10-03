@@ -1,6 +1,6 @@
 @import "lib"
 
-.btn-settings
+.icon-btn.btn-settings
 	right 3
 	top 6
 	z-index 11
@@ -10,10 +10,10 @@
 	&.hidden
 		transform rotate(-90deg)
 
-.btn-settings svg
-	height 20
-	width 20
-	margin 3 0 0 -1
+	svg
+		height 20
+		width 20
+		margin 3 0 0 -1
 
 
 
@@ -66,12 +66,13 @@
 		flex 0.5
 
 	.xbtn
-		padding 1 5 0
+		padding 0 5
 		flex unset
 		width 38
 		margin-left 10
 		align-items flex-start
 		font-size 23px
+		min-height 33px
 
 
 	div.btn
@@ -102,7 +103,7 @@
 .settings-row
 	display flex
 	flex-flow row
-	align-items center
+	align-items flex-start
 	justify-content space-between
 	margin-bottom 20
 	flex-wrap wrap
