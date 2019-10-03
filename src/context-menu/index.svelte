@@ -1,10 +1,16 @@
 <ul class="context-menu {opened ? '' : 'hidden'}" bind:this="{menuEl}">
-	<li class="context-menu-item" on:click="{customThumbnail}">
-		<input type="file" accept="image/png, image/jpeg"
-			bind:this="{fileInput}"
-			on:change="{onThumbnailSelect}">
-		Custom thumbnail
-	</li>
+	{#if !hasThumbnail}
+		<li class="context-menu-item" on:click="{customThumbnail}">
+			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
+			Set thumbnail
+		</li>
+	{:else}
+		<li class="context-menu-item" on:click="{customThumbnail}">
+			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
+			Change thumbnail
+		</li>
+		<li class="context-menu-item" on:click="{clearThumbnail}">Clear thumbnail</li>
+	{/if}
 	<li class="context-menu-item context-menu-separator"></li>
 	<li class="context-menu-item" on:click="{deleteBookmark}">Delete bookmark</li>
 </ul>
@@ -13,12 +19,13 @@
 
 <script>
 import {thumbs} from '../store';
-import {animate, getBookmark, delBookmark} from '../lib';
+import {animate, getBookmark, delBookmark, getLetterThumbnail, getFavicon} from '../lib';
 
 let menuEl;
-let item, el;
+let item, el, hasThumbnail = false;
 let opened = false;
 let fileInput;
+
 
 function deleteBookmark () {
 	const from = {transform: 'scale(1)', opacity: 1};
@@ -31,6 +38,29 @@ function deleteBookmark () {
 
 function customThumbnail () {
 	fileInput.click();
+	close();
+}
+
+function clearThumbnail () {
+	let style, text;
+	const thumb = el.querySelector('.item-thumb');
+	const isTile = el.closest('main.bookmarks');
+	if (isTile) {
+		const letterThumb = getLetterThumbnail(item);
+		style = letterThumb.style;
+		text = letterThumb.innerText;
+	}
+	else {
+		style = `background-image: url("${getFavicon(item.url)}")`;
+		text = '';
+	}
+	thumb.style = style;
+	thumb.innerText = text;
+
+	const _thumbs = $thumbs;
+	delete _thumbs[item.id];
+	thumbs.set(_thumbs);
+
 	close();
 }
 
@@ -57,10 +87,14 @@ function updatePosition (e)  {
 function onContextMenu (e) {
 	el = e.target.closest('.item');
 	if (!el) return;
+	if (el.classList.contains('item-folder')) return;
 	e.preventDefault();
-	getBookmark(el.dataset.id).then(i => item = i);
 	updatePosition(e);
-	open();
+	getBookmark(el.dataset.id).then(i => {
+		item = i;
+		hasThumbnail = !!$thumbs[item.id];
+		if (item.type === 'bookmark') open();
+	});
 }
 
 function onDocumentClick (e) {

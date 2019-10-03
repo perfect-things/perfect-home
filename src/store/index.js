@@ -11,7 +11,9 @@ const _options = {
 	pageBg     : '#333333',
 	css        : '',
 	rootFolder : ROOT_ID,
+	folders    : []
 };
+
 
 export const defaultOptions = readable(_options);
 export const options = writable(_options);

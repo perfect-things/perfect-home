@@ -1,7 +1,5 @@
 <svelte:window on:popstate={onpopstate}/>
 
-<Palette data={allItems} />
-
 <main class="bookmarks {folderSwitching ? 'folder-switching' : ''}">
 	{#if $items.length}
 		{#each $items as item}
@@ -13,14 +11,12 @@
 
 <script>
 import Tile from '../tile';
-import Palette from '../palette';
 import {onMount} from 'svelte';
 import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded, thumbs} from '../store';
-import {getSubTree, getSettings, updateIndexes, getAllItems, getFolderTitle, injectCss, getThumbs, saveThumbs} from '../lib';
+import {getSubTree, getSettings, moveBookmark, getFolderTitle, injectCss, getThumbs, saveThumbs} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
-let allItems = [];
 
 function updateTitles () {
 	getFolderTitle($options.rootFolder).then(title => rootFolderTitle.set(title));
@@ -45,8 +41,10 @@ function optionsChanged (props) {
 
 
 function onsort (e) {
-	updateIndexes(e.item.dataset.id, e.newIndex);
+	const isInMain = e.item.closest('.bookmarks');
+	if (isInMain) moveBookmark(e.item.dataset.id, {index: e.newIndex, parentId: $currentFolder});
 }
+
 
 function onpopstate (e) {
 	if (e.state) $currentFolder = e.state.id;
@@ -60,7 +58,11 @@ function folderChanged (folderId) {
 		const fn = (id === $options.rootFolder) ? 'replaceState' : 'pushState';
 		window.history[fn]({ id }, document.title, '');
 	}
+	readFolder(id);
+}
 
+
+function readFolder (id) {
 	folderSwitching = true;
 	getSubTree(id)
 		.then(tree => {
@@ -69,22 +71,21 @@ function folderChanged (folderId) {
 				$items = tree[0].children;
 				folderSwitching = false;
 				$itemsLoaded = true;
-			}, 100);
+			}, 150);
 		})
 		.catch(e => console.error(e));
 }
 
-
 onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
+		group: 'bookmarks',
 		animation: 200,
 		ghostClass: 'sortable-ghost',
 		onStart: e => e.item.classList.add('sortable-plate'),
 		onEnd: e => e.item.classList.remove('sortable-plate'),
-		onSort: onsort
+		onSort: onsort,
 	});
 
-	getAllItems().then(all => allItems = all);
 	getThumbs().then(_thumbs => {
 		if (_thumbs) thumbs.set(_thumbs);
 		thumbs.subscribe(saveThumbs);

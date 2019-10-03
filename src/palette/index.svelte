@@ -1,7 +1,6 @@
 <div class="autocomplete {opened ? '' : 'hidden'}">
 	<input type="text" class="autocomplete-input"
 		bind:this="{input}"
-		bind:value="{text}"
 		on:input="{oninput}"
 		on:focus="{open}"
 		on:keydown="{onkeydown}"
@@ -26,22 +25,25 @@
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
-import {fuzzy, emphasize} from '../lib';
+import {fuzzy, emphasize, getAllItems} from '../lib';
 
 
-export let data = [];
-export let value = null;
-export let text = '';
+let data = [];
+let value = null;
+let text = '';
 let opened = false;
 let highlightIndex = 0;
 let input, list, filteredData;
+
+
 
 onMount(() => {
 	close();
 	clear();
 	document.addEventListener('keydown', onDocumentKeydown);
-	setTimeout(() => document.body.focus(), 100);
+	getAllItems().then(all => data = all);
 });
+
 
 function gotoItem (item) {
 	if (item.type === 'folder') currentFolder.set(item.id);
@@ -53,8 +55,7 @@ function onDocumentKeydown (e) {
 	const key = e.key;
 	if (key === 'p' && e.metaKey) {
 		e.preventDefault();
-		open();
-		setTimeout(() => input.select(), 100);
+		toggle();
 	}
 }
 
@@ -148,11 +149,18 @@ function clear () {
 }
 
 function open () {
+	if (opened) return;
 	opened = true;
+	setTimeout(() => input.select(), 100);
 }
 
 function close () {
+	if (!opened) return;
 	opened = false;
+}
+
+function toggle () {
+	return opened ? close() : open();
 }
 
 </script>

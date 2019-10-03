@@ -4,39 +4,38 @@
 	<a
 		href="{item.id}"
 		class="item item-folder item-{item.id}"
+		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click|preventDefault="{() => $currentFolder = item.id}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
-		<span class="item-title" title="{item.title}">{item.title}</span>
+		<span class="item-title">{item.title || ''}</span>
 	</a>
 {:else}
 	<a
 		href="{item.url}"
 		class="item item-{item.type} item-{item.id}"
+		title="{item.title || ''}"
 		data-id="{item.id}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
-		<span class="item-title" title="{item.title}">{item.title}</span>
+		<span class="item-favicon" bind:this={favicon}></span>
+		<span class="item-title">{item.title || ''}</span>
 	</a>
 {/if}
 
 
 <script>
 import {currentFolder, thumbs} from '../store';
-import {colorFromString, isDark} from '../lib';
+import {getLetterThumbnail, getFavicon} from '../lib';
 import {afterUpdate} from 'svelte';
 
 
 export let item;
 let thumb;
+let favicon;
 
-function getHost (url) {
-	let _url;
-	try { _url = new URL(url); }
-	catch (e) {/*eslint no-empty: 0*/}
-	return _url.host.replace(/^www\./, '');
-}
+
 
 afterUpdate(() => {
 	if (!thumb) return;
@@ -46,14 +45,14 @@ afterUpdate(() => {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
-		const color = isDark(bg) ? '#ccc' : '#333';
-		style = `background-color: ${bg}; color: ${color};`;
+		const letterThumb = getLetterThumbnail(item);
+		style = letterThumb.style;
+		innerText = letterThumb.innerText;
 
-		const host = getHost(item.url);
-		const title = item.title || host || '';
-		const letter = title.replace(/^\W+|\W+$/gi, '')[0] || '';
-		innerText = letter.toUpperCase();
+		let url;
+		if ($thumbs && $thumbs[item.id]) url = $thumbs[item.id];
+		else url = getFavicon(item.url);
+		favicon.style = `background-image: url("${url}")`;
 	}
 	thumb.style = style;
 	thumb.innerText = innerText;

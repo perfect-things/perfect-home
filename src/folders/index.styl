@@ -1,0 +1,56 @@
+@import "lib"
+
+
+.folders
+	position absolute
+	bottom 0
+	left 0
+	right 0
+	display flex
+	align-items flex-start
+	justify-content flex-start
+	height 0
+
+
+.folder
+	background-color #333
+	border #000
+	border-width 1px 1px 0 1px
+	padding 0 0 10
+	display flex
+	flex-flow column
+	margin-top -42
+	margin-left -1
+	transition margin .2s
+
+
+.folder-titlebar
+	display flex
+	align-items center
+	justify-content space-between
+	padding 15 20 10
+	margin-bottom 5
+	border-bottom #000
+	cursor pointer
+	color #888
+	transition color .2s
+
+	&:hover
+		color #fff
+
+.folder-title
+	padding 0 20 0 0
+	font-weight 600
+	letter-spacing 1px
+
+
+.folder-badge
+	&:empty
+		display none
+
+
+.folder-empty
+	color #888
+	text-align center
+	padding 30 0 20
+	display block

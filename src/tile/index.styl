@@ -1,57 +1,91 @@
 @import "lib"
 
 
-.item
-	margin auto
-	display block
-	text-align center
-	text-decoration none
-	color inherit
-	border-radius 10px
-	width var(--icon-width)
-	height var(--icon-height)
-	filter drop-shadow(0 3px 3px #0009)
+.bookmarks
+	.item
+		margin auto
+		display block
+		text-align center
+		text-decoration none
+		color inherit
+		border-radius 10px
+		width var(--icon-width)
+		height var(--icon-height)
+		filter drop-shadow(0 3px 3px #0009)
 
-.separator .item-thumb
-	filter none
-	background none
+	.item-title
+		display block
+		padding 0
+		margin-top 10px
+		max-height 2.3em
+		overflow hidden
+		text-overflow ellipsis
 
-.item-title
-	display block
-	padding 0
-	margin-top 10px
-	max-height 2.3em
-	overflow hidden
-	text-overflow ellipsis
+	.item-thumb
+		width 100%
+		height calc(100% - 22px)
+		border-radius inherit
+
+		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
+		background-size cover
+		display flex
+
+		font 600 4em/1 helvetica, arial, sans-serif
+		text-align center
+		justify-content center
+		align-items center
+		color #555
+		overflow hidden
+
+	.item-favicon
+		display none
+
+	.item-folder .item-thumb
+		background-color #ccc
+		mask url('assets/folder.svg') center no-repeat
+		mask-size cover
+
+	.item-bookmark .item-thumb
+		padding-top .25em
+
+
+	.separator .item-thumb
+		filter none
+		background none
 
 
 
-.item-thumb
-	width 100%
-	height calc(100% - 22px)
-	border-radius inherit
+.folder
+	.item
+		font inherit
+		font-size 14px
+		color inherit
+		text-decoration none
+		padding 7 20
+		display flex
+		align-items center
 
-	background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
-	background-size cover
-	display flex
+		&:hover
+			text-decoration underline
 
-	font 600 4em/1 helvetica, arial, sans-serif
-	text-align center
-	justify-content center
-	align-items center
-	color #555
-	overflow hidden
+	.item-title
+		flex 1
+		white-space nowrap
+		text-overflow ellipsis
+		overflow hidden
+		opacity 0.8
 
+	.item-thumb
+		display none
 
-
-.item-folder .item-thumb
-	background-color #ccc
-	mask url('assets/folder.svg') center no-repeat
-	mask-size cover
-
-.item-bookmark .item-thumb
-	padding-top .25em
-
+	.item-favicon
+		size 16
+		margin-right  10
+		overflow hidden
+		display inline-block
+		border-radius 4px
+		background-repeat no-repeat
+		background-position center
 
 
 
@@ -64,9 +98,14 @@
 .sortable-ghost
 	filter none
 
+	.item-favicon
 	.item-thumb
 		filter grayscale(1) contrast(0) brightness(0.1)
 		opacity 0.3
+
+	.item-favicon
+		width 100%
+		background #333
 
 	.item-title
 		display none
@@ -74,14 +113,14 @@
 
 
 @media (max-width 1280px)
-	.item
+	.bookmarks .item
 		width 100%
 		height 100%
 
 @media (max-width 960px)
-	.item-thumb
+	.bookmarks .item-thumb
 		font-size 3em
 
-@media (max-width 700px)
-	.item-folder .item-thumb
+@media (max-width 590px)
+	.bookmarks .item-folder .item-thumb
 		mask-size auto

@@ -17,11 +17,24 @@ Just your own, predictable grid of links.
 - [x] Style page with custom css - paste your css in settings
 - [x] Requires only 2 permissions: bookmarks & storage (to save settings & cache thumbnails)!
 - [x] Settings export/import
+- [x] docked folders
+- [x] context-menu: clear thumb
+- [x] change icons for bookmarks in docked folders
+- [x] drag & drop between docked folders
 
 
 ## TODO
+- [x] favicons:
+  - [ ] fallback: if better quality exists - replace the crap from google's service
+  - [ ] cache url (or icon?)
+- [ ] Testing:
+  - [ ] https://github.com/pngwn/svelte-test
+  - [ ] https://github.com/testing-library/svelte-testing-library
+  - [ ] https://github.com/rspieker/jest-transform-svelte
+  - [ ] https://github.com/ktsn/svelte-jest
 - [ ] light/dark themes (css based on the OS?)
 - [ ] accessibility (keyboard support)
+
 
 
 ## Usage
