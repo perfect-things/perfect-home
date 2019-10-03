@@ -6,10 +6,7 @@
 	<div class="folder-items" bind:this="{folderItems}">
 		{#if items && items.length}
 			{#each items as item}
-				<a class="item" href="{item.url}" title="{item.title}" data-id="{item.id}">
-					<span class="item-thumb" style="{setStyle(item)}"></span>
-					<span class="item-title">{item.title}</span>
-				</a>
+				<Tile item="{item}" />
 			{/each}
 		{:else}
 			<span class="folder-empty">Folder is empty</span>
@@ -19,9 +16,9 @@
 
 
 <script>
+import Tile from '../tile';
 import {onMount} from 'svelte';
-import {thumbs} from '../store';
-import {getSubTree, getFolderTitle, getFavicon, moveBookmark} from '../lib';
+import {getSubTree, getFolderTitle, moveBookmark} from '../lib';
 import Sortable from 'sortablejs';
 
 export let id;
@@ -35,12 +32,7 @@ let folderItems;
 $: {
 	if (id) {
 		getFolderTitle(id).then(_title => title = _title);
-		getSubTree(id)
-			.then(tree => {
-				if (!tree || !tree.length) return;
-				items = tree[0].children.filter(i => i.type !== 'folder');
-			})
-			.catch(e => console.error(e));
+		readFolder(id);
 	}
 }
 
@@ -53,30 +45,36 @@ onMount(() => {
 		onStart: e => e.item.classList.add('sortable-plate'),
 		onEnd: e => e.item.classList.remove('sortable-plate'),
 		onSort: onsort,
+		onAdd: addremove,
+		onRemove: addremove,
 	});
 
 });
 
+
+function addremove () {
+	toggle(true);
+}
 
 function onsort (e) {
 	const isInFolder = e.item.closest('.folder-items');
 	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: id, index: e.newIndex});
 }
 
-function setStyle (item) {
-	let url;
-	if ($thumbs && $thumbs[item.id]) url = $thumbs[item.id];
-	else url = getFavicon(item.url);
-	return `background-image: url("${url}")`;
-}
-
-
-function toggle () {
+function toggle (recalc) {
 	let marginTop = 42;
-	if (!expanded) marginTop = folderEl.getBoundingClientRect().height;
+	expanded = recalc === true ? true : !expanded;
+	if (expanded) marginTop = folderEl.getBoundingClientRect().height;
 	folderEl.style.marginTop = `-${marginTop}px`;
-	expanded = !expanded;
 }
 
+function readFolder () {
+	return getSubTree(id)
+		.then(tree => {
+			if (!tree || !tree.length) return;
+			items = tree[0].children.filter(i => i.type !== 'folder');
+		})
+		.catch(e => console.error(e));
+}
 
 </script>

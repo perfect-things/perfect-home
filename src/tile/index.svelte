@@ -19,6 +19,7 @@
 		data-id="{item.id}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
+		<span class="item-favicon" bind:this={favicon}></span>
 		<span class="item-title">{item.title || ''}</span>
 	</a>
 {/if}
@@ -26,12 +27,14 @@
 
 <script>
 import {currentFolder, thumbs} from '../store';
-import {getLetterThumbnail} from '../lib';
+import {getLetterThumbnail, getFavicon} from '../lib';
 import {afterUpdate} from 'svelte';
 
 
 export let item;
 let thumb;
+let favicon;
+
 
 
 afterUpdate(() => {
@@ -45,6 +48,11 @@ afterUpdate(() => {
 		const letterThumb = getLetterThumbnail(item);
 		style = letterThumb.style;
 		innerText = letterThumb.innerText;
+
+		let url;
+		if ($thumbs && $thumbs[item.id]) url = $thumbs[item.id];
+		else url = getFavicon(item.url);
+		favicon.style = `background-image: url("${url}")`;
 	}
 	thumb.style = style;
 	thumb.innerText = innerText;

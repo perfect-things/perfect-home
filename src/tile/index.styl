@@ -37,6 +37,8 @@
 		color #555
 		overflow hidden
 
+	.item-favicon
+		display none
 
 	.item-folder .item-thumb
 		background-color #ccc
@@ -53,6 +55,40 @@
 
 
 
+.folder
+	.item
+		font inherit
+		font-size 14px
+		color inherit
+		text-decoration none
+		padding 7 20
+		display flex
+		align-items center
+
+		&:hover
+			text-decoration underline
+
+	.item-title
+		flex 1
+		white-space nowrap
+		text-overflow ellipsis
+		overflow hidden
+		opacity 0.8
+
+	.item-thumb
+		display none
+
+	.item-favicon
+		size 16
+		margin-right  10
+		overflow hidden
+		display inline-block
+		border-radius 4px
+		background-repeat no-repeat
+		background-position center
+
+
+
 
 .sortable-plate
 	.item-thumb
@@ -62,9 +98,14 @@
 .sortable-ghost
 	filter none
 
+	.item-favicon
 	.item-thumb
 		filter grayscale(1) contrast(0) brightness(0.1)
 		opacity 0.3
+
+	.item-favicon
+		width 100%
+		background #333
 
 	.item-title
 		display none

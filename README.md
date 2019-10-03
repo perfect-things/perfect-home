@@ -20,11 +20,11 @@ Just your own, predictable grid of links.
 - [x] docked folders
 - [x] context-menu: clear thumb
 - [x] change icons for bookmarks in docked folders
+- [x] drag & drop between docked folders
 
 
 ## TODO
-- [ ] drag & drop between docked folders
-- [ ] favicons:
+- [x] favicons:
   - [ ] fallback: if better quality exists - replace the crap from google's service
   - [ ] cache url (or icon?)
 - [ ] Testing:
@@ -34,20 +34,6 @@ Just your own, predictable grid of links.
   - [ ] https://github.com/ktsn/svelte-jest
 - [ ] light/dark themes (css based on the OS?)
 - [ ] accessibility (keyboard support)
-
-<!--
-	Docked Folder
-	There would be max 3 different docks: left, right, bottom; with options:
-	- folder ID
-	- view mode: list (column grid) | icons (row grid)
-	- size: distance from the edge (height | width), depending on the clip side
-	- background?
-	- hide when empty?
-	- align items:
-	- on left|right: top | middle | bottom
-	- on bottom one: left | center | right
--->
-
 
 
 
