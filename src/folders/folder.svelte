@@ -59,7 +59,6 @@ onMount(() => {
 
 
 function onsort (e) {
-	console.log(e.item.dataset.id, {parentId: id, index: e.newIndex});
 	const isInFolder = e.item.closest('.folder-items');
 	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: id, index: e.newIndex});
 }
