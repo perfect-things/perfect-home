@@ -15,7 +15,7 @@ const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/edit';
-const dryrun = true;
+const dryrun = false;
 const faker = () => new Promise(resolve => setTimeout(resolve, 2000));
 
 function run (cmd) {
