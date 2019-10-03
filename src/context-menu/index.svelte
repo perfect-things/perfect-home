@@ -85,7 +85,7 @@ function updatePosition (e)  {
 }
 
 function onContextMenu (e) {
-	el = e.target.closest('.item, .folder-item');
+	el = e.target.closest('.item');
 	if (!el) return;
 	if (el.classList.contains('item-folder')) return;
 	e.preventDefault();
