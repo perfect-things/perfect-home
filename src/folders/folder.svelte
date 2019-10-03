@@ -1,8 +1,7 @@
 <div class="folder folder-{id}" data-id="{id}" bind:this="{folderEl}">
-	<h2 class="folder-titlebar" on:click="{toggle}">
-		<span class="folder-title">{title}</span>
-		<span class="folder-badge">{items.length || ''}</span>
-	</h2>
+
+	<h2 class="folder-title" on:click="{toggle}">{title}</h2>
+
 	<div class="folder-items" bind:this="{folderItems}">
 		{#if items && items.length}
 			{#each items as item}
