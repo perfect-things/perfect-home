@@ -14,6 +14,7 @@ const _options = {
 	folders    : []
 };
 
+export const wasSorted = writable(false);
 
 export const defaultOptions = readable(_options);
 export const options = writable(_options);

@@ -123,7 +123,6 @@ function onkeydown (e) {
 
 function oninput (e) {
 	text = e.target.value;
-	open();
 	highlightIndex = 0;
 }
 
@@ -145,6 +144,7 @@ function onEsc (e) {
 
 function clear () {
 	text = '';
+	input.value = '';
 	setTimeout(() => input.focus());
 }
 

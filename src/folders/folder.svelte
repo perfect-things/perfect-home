@@ -16,24 +16,25 @@
 
 <script>
 import Tile from '../tile';
-import {onMount} from 'svelte';
-import {options} from '../store';
+import {beforeUpdate, onMount} from 'svelte';
+import {options, wasSorted} from '../store';
 import {getSubTree, getFolderTitle, moveBookmark, saveSettings} from '../lib';
 import Sortable from 'sortablejs';
 
 export let folder;
+let folderId;
 let folderEl;
 let folderItemsEl;
 let items = [];
 let expanded = false;
 
 
-$: {
-	if (folder && folder.id) {
-		getFolderTitle(folder.id).then(title => folder.title = title);
-		readFolder(folder.id);
-	}
-}
+beforeUpdate(() => {
+	if (folderId === folder.id) return;
+	folderId = folder.id;
+	if (!folder.title) getFolderTitle(folder.id).then(title => folder.title = title);
+	if (folder && folder.id) readFolder(folder.id);
+});
 
 
 onMount(() => {
@@ -41,8 +42,14 @@ onMount(() => {
 		group: 'bookmarks',
 		animation: 200,
 		ghostClass: 'sortable-ghost',
-		onStart: e => e.item.classList.add('sortable-plate'),
-		onEnd: e => e.item.classList.remove('sortable-plate'),
+		onStart: e => {
+			$wasSorted = true;
+			e.item.classList.add('sortable-plate');
+		},
+		onEnd: e => {
+			e.item.classList.remove('sortable-plate');
+			setTimeout(() => $wasSorted = false, 100);
+		},
 		onSort: onsort,
 		onAdd: addremove,
 		onRemove: addremove,
@@ -67,7 +74,7 @@ function initialExpand () {
 		toggle(true);
 		// allow to expand fully before re-enabling transition
 		setTimeout(() => folderEl.style.transitionDuration = '.2s', 100);
-	}, 100);
+	}, 200);
 }
 
 function toggle (recalc) {

@@ -105,7 +105,7 @@
 				Import
 				<input type="file" accept="application/json"
 					bind:this="{settingsInput}"
-					on:change="{onSettingsSelect}">
+					on:change="{onFileSelect}">
 			</div>
 		</div>
 
@@ -171,7 +171,7 @@ function delFolder (id) {
 	setOptions(opts);
 }
 
-function onSettingsSelect (e) {
+function onFileSelect (e) {
 	const reader = new FileReader();
 	reader.onload = ev => {
 		let json;

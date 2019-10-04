@@ -18,14 +18,16 @@ Just your own, predictable grid of links.
 - [x] Requires only 2 permissions: bookmarks & storage (to save settings & cache thumbnails)!
 - [x] Settings export/import
 - [x] docked folders
-- [x] context-menu: clear thumb
-- [x] change icons for bookmarks in docked folders
-- [x] drag & drop between docked folders
+
+## BUGS
+- [ ] svelte observers seem to be causing high CPU
+- [ ] deleting items from docked folders is deleting twice
+- [x] sorting links triggers clicks
+- [x] fix palette clear on esc
+
 
 
 ## TODO
-- [x] confirm delete
-- [x] remember folder open|close state
 - [ ] docs: customize tutorial
 - [ ] docs: troubleshooting
 - [x] favicons:

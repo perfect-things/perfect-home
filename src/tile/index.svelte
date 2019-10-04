@@ -17,6 +17,7 @@
 		class="item item-{item.type} item-{item.id}"
 		title="{item.title || ''}"
 		data-id="{item.id}"
+		on:click="{onclick}"
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-favicon" bind:this={favicon}></span>
@@ -26,7 +27,7 @@
 
 
 <script>
-import {currentFolder, thumbs} from '../store';
+import {currentFolder, thumbs, wasSorted} from '../store';
 import {getLetterThumbnail, getFavicon} from '../lib';
 import {afterUpdate} from 'svelte';
 
@@ -35,7 +36,9 @@ export let item;
 let thumb;
 let favicon;
 
-
+function onclick (e) {
+	if ($wasSorted) e.preventDefault();
+}
 
 afterUpdate(() => {
 	if (!thumb) return;

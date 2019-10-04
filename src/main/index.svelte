@@ -12,8 +12,10 @@
 <script>
 import Tile from '../tile';
 import {onMount} from 'svelte';
-import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded, thumbs} from '../store';
-import {getSubTree, getSettings, moveBookmark, getFolderTitle, injectCss, getThumbs, saveThumbs} from '../lib';
+import {options, items, rootFolderTitle, currentFolder, currentFolderTitle, itemsLoaded,
+	wasSorted, thumbs} from '../store';
+import {getSubTree, getSettings, moveBookmark, getFolderTitle, injectCss, getThumbs,
+	saveThumbs} from '../lib';
 import Sortable from 'sortablejs';
 
 let folderSwitching = false;
@@ -81,8 +83,14 @@ onMount(() => {
 		group: 'bookmarks',
 		animation: 200,
 		ghostClass: 'sortable-ghost',
-		onStart: e => e.item.classList.add('sortable-plate'),
-		onEnd: e => e.item.classList.remove('sortable-plate'),
+		onStart: e => {
+			$wasSorted = true;
+			e.item.classList.add('sortable-plate');
+		},
+		onEnd: e => {
+			e.item.classList.remove('sortable-plate');
+			setTimeout(() => $wasSorted = false, 100);
+		},
 		onSort: onsort,
 	});
 
