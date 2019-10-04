@@ -24,6 +24,10 @@ Just your own, predictable grid of links.
 
 
 ## TODO
+- [x] confirm delete
+- [ ] remember folder open|close state
+- [ ] docs: customize tutorial
+- [ ] docs: troubleshooting
 - [x] favicons:
   - [ ] fallback: if better quality exists - replace the crap from google's service
   - [ ] cache url (or icon?)

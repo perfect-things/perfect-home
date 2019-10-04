@@ -1,15 +1,15 @@
 <ul class="context-menu {opened ? '' : 'hidden'}" bind:this="{menuEl}">
-	{#if !hasThumbnail}
-		<li class="context-menu-item" on:click="{customThumbnail}">
-			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
-			Set thumbnail
-		</li>
-	{:else}
+	{#if hasThumbnail}
 		<li class="context-menu-item" on:click="{customThumbnail}">
 			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
 			Change thumbnail
 		</li>
 		<li class="context-menu-item" on:click="{clearThumbnail}">Clear thumbnail</li>
+	{:else}
+		<li class="context-menu-item" on:click="{customThumbnail}">
+			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
+			Set thumbnail
+		</li>
 	{/if}
 	<li class="context-menu-item context-menu-separator"></li>
 	<li class="context-menu-item" on:click="{deleteBookmark}">Delete bookmark</li>
@@ -28,11 +28,14 @@ let fileInput;
 
 
 function deleteBookmark () {
-	const from = {transform: 'scale(1)', opacity: 1};
-	const to = {transform: 'scale(0)', opacity: 0};
-	animate(el, from, to).then(() => el.remove());
-	delBookmark(item.id);
 	close();
+	const res = window.confirm(`Are you sure you wish to delete "${item.title}"`);
+	if (res) {
+		const from = {transform: 'scale(1)', opacity: 1};
+		const to = {transform: 'scale(0)', opacity: 0};
+		animate(el, from, to).then(() => el.remove());
+		delBookmark(item.id);
+	}
 }
 
 
