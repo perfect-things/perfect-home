@@ -20,11 +20,7 @@ Just your own, predictable grid of links.
 - [x] docked folders
 
 ## BUGS
-- [x] svelte observers seem to be causing high CPU
-- [x] deleting items from docked folders is deleting twice
-- [x] sorting links triggers clicks
-- [x] fix palette clear on esc
-
+- [ ] docked folders do not recalc. height after deleting links
 
 
 ## TODO
