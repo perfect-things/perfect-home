@@ -2,7 +2,7 @@
 	{#if $options.folders.length && $options.folders[0] }
 		{#each $options.folders as folder}
 			{#if folder}
-				<Folder id="{folder}" />
+				<Folder folder="{folder}" />
 			{/if}
 		{/each}
 	{/if}

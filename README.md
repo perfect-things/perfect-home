@@ -25,7 +25,7 @@ Just your own, predictable grid of links.
 
 ## TODO
 - [x] confirm delete
-- [ ] remember folder open|close state
+- [x] remember folder open|close state
 - [ ] docs: customize tutorial
 - [ ] docs: troubleshooting
 - [x] favicons:

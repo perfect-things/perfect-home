@@ -66,7 +66,7 @@
 			{#each $options.folders as dockedFolder}
 				<div class="settings-row">
 					<div class="select-wrap">
-						<select bind:value="{dockedFolder}">
+						<select bind:value="{dockedFolder.id}">
 							<option value="">None</option>
 							{#each folders as folder}
 								<option value="{folder.id}">{folder.title}</option>
@@ -146,14 +146,15 @@ function setOptions (json) {
 
 function addFolder () {
 	const opts = $options;
-	opts.folders.push('');
+	opts.folders.push({id: '', open: false});
 	setOptions(opts);
 }
 
 
 function delFolder (id) {
 	const opts = $options;
-	opts.folders.splice(opts.folders.indexOf(id), 1);
+	const idx = opts.folders.findIndex(f => f.id === id);
+	opts.folders.splice(idx, 1);
 	setOptions(opts);
 }
 
