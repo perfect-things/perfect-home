@@ -98,7 +98,9 @@
 		<small>You can Export settings with thumbnails to a json file to backup your configuration. That file can then be imported in the same version of this Firefox extension.</small>
 		<div class="settings-row">
 
-			<a class="btn btn-half btn-export" download="perfect-home-settings.json" href="{settingsBlob}">Export</a>
+			<a href="#export" class="btn btn-half btn-export"
+				download="perfect-home-settings.json"
+				on:click="{exportSettings}">Export</a>
 			<div class="btn btn-half btn-import" on:click="{() => settingsInput.click()}">
 				Import
 				<input type="file" accept="application/json"
@@ -124,12 +126,7 @@ import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
 
 let isVisible = false;
 let folders = [];
-let settingsBlob, settingsInput;
-
-$: {
-	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
-	settingsBlob = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
-}
+let settingsInput;
 
 
 onMount(() => {
@@ -141,13 +138,19 @@ onMount(() => {
 
 	// backwards compatibility: array of strings -> array of objects
 	options.subscribe(_options => {
-		if (_options.folders.length) {
-			_options.folders = _options.folders
-				.map(f => (typeof f === 'string') ? {id: f} : f);
+		if (_options.folders.length && typeof _options.folders[0] === 'string') {
+			_options.folders = _options.folders.map(f => ({id: f}));
+			setOptions(_options);
 		}
 	});
 
 });
+
+
+function exportSettings (e) {
+	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
+	e.target.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
+}
 
 
 function setOptions (json) {
