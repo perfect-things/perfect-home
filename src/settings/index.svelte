@@ -126,18 +126,29 @@ let isVisible = false;
 let folders = [];
 let settingsBlob, settingsInput;
 
+$: {
+	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
+	settingsBlob = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
+}
+
+
 onMount(() => {
 	getAllItems().then(items => {
 		folders = items.filter(item => item.type === 'folder');
 	});
 	document.addEventListener('click', onDocClick);
+
+
+	// backwards compatibility: array of strings -> array of objects
+	options.subscribe(_options => {
+		if (_options.folders.length) {
+			_options.folders = _options.folders
+				.map(f => (typeof f === 'string') ? {id: f} : f);
+		}
+	});
+
 });
 
-
-$: {
-	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
-	settingsBlob = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
-}
 
 function setOptions (json) {
 	options.set(json);
@@ -150,14 +161,12 @@ function addFolder () {
 	setOptions(opts);
 }
 
-
 function delFolder (id) {
 	const opts = $options;
 	const idx = opts.folders.findIndex(f => f.id === id);
 	opts.folders.splice(idx, 1);
 	setOptions(opts);
 }
-
 
 function onSettingsSelect (e) {
 	const reader = new FileReader();
@@ -172,7 +181,6 @@ function onSettingsSelect (e) {
 	reader.readAsText(e.target.files[0]);
 }
 
-
 function reset () {
 	setOptions($defaultOptions);
 }
@@ -183,12 +191,10 @@ function onDocClick (e) {
 	isVisible = false;
 }
 
-
 function onchange () {
 	saveSettings($options)
 		.then(getSettings)
 		.then(res => res && options.set(res));
 }
-
 
 </script>
