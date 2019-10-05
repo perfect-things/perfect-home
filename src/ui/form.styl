@@ -4,6 +4,7 @@
 textarea
 input[type=text]
 input[type="color"]
+input[type="number"]
 	font inherit
 	height 34
 	border color-bg-dark
@@ -67,7 +68,7 @@ input[type=text]
 
 
 textarea
-	min-height 2.4em
+	min-height 4em
 	resize vertical
 	flex 1
 
@@ -87,6 +88,9 @@ input[type="color"]
 	border none
 	padding 0
 
+input[type="number"]
+	text-align center
+
 
 input[type=file]
 	position absolute
@@ -94,9 +98,10 @@ input[type=file]
 
 
 label
-	display inline-block
-	margin-top 1
-	vertical-align top
+	display block
+	height 34
+	line-height 16px
+	padding 9 5 0
 
 	&.disabled
 		opacity 0.3

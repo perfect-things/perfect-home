@@ -43,15 +43,15 @@
 			<div class="settings-row">
 				<label>Text color</label>
 				<div class="flex-spacer"></div>
-				<input type="text" bind:value="{$options.pageColor}">
 				<input type="color" bind:value="{$options.pageColor}">
+				<input type="text" bind:value="{$options.pageColor}">
 			</div>
 
 			<div class="settings-row">
 				<label>Background</label>
 				<div class="flex-spacer"></div>
-				<input type="text" bind:value="{$options.pageBg}">
 				<input type="color" bind:value="{$options.pageBg}">
+				<input type="text" bind:value="{$options.pageBg}">
 			</div>
 
 			<label>Custom CSS</label>
