@@ -18,11 +18,11 @@
 import Tile from '../tile';
 import {beforeUpdate, onMount} from 'svelte';
 import {options, wasSorted} from '../store';
-import {getSubTree, getFolderTitle, moveBookmark, saveSettings} from '../lib';
+import {EVENT, getSubTree, getFolderTitle, moveBookmark, saveSettings} from '../lib';
 import Sortable from 'sortablejs';
 
 export let folder;
-let folderId;
+let folderId;	// old Folder Id, FIXME
 let folderEl;
 let folderItemsEl;
 let items = [];
@@ -55,8 +55,13 @@ onMount(() => {
 		onRemove: addremove,
 	});
 	if (folder.open) initialExpand();
+	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 });
 
+
+function onBookmarkRemove (item) {
+	if (item.parentId === folder.id) toggle(true);
+}
 
 function addremove () {
 	toggle(true);

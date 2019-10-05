@@ -10,7 +10,7 @@ const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
 
 const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]);
 
-const delBookmark = async (id) => browser.bookmarks.remove(id);
+const deleteBookmark = async (id) => browser.bookmarks.remove(id);
 
 const moveBookmark = async (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
 
@@ -33,7 +33,7 @@ export {
 	getFolderTitle,
 	getSubTree,
 	getBookmark,
-	delBookmark,
+	deleteBookmark,
 	moveBookmark,
 	getAllItems,
 	clearCache,

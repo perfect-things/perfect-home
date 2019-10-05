@@ -12,14 +12,14 @@
 		</li>
 	{/if}
 	<li class="context-menu-item context-menu-separator"></li>
-	<li class="context-menu-item" on:click="{deleteBookmark}">Delete bookmark</li>
+	<li class="context-menu-item" on:click="{delBookmark}">Delete bookmark</li>
 </ul>
 
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
 
 <script>
 import {thumbs} from '../store';
-import {animate, getBookmark, delBookmark, getLetterThumbnail, getFavicon} from '../lib';
+import {EVENT, animate, getBookmark, deleteBookmark, getLetterThumbnail, getFavicon} from '../lib';
 
 let menuEl;
 let item, el, hasThumbnail = false;
@@ -27,14 +27,19 @@ let opened = false;
 let fileInput;
 
 
-function deleteBookmark () {
+function delBookmark () {
 	close();
 	const res = window.confirm(`Are you sure you wish to delete "${item.title}"`);
 	if (res) {
 		const from = {transform: 'scale(1)', opacity: 1};
 		const to = {transform: 'scale(0)', opacity: 0};
-		animate(el, from, to).then(() => el.remove());
-		delBookmark(item.id);
+		animate(el, from, to)
+			.then(() => {
+				el.remove();
+				deleteThumbForItem(item.id);
+				return deleteBookmark(item.id);
+			})
+			.then(() => EVENT.fire(EVENT.bookmark.removed, item));
 	}
 }
 
@@ -42,6 +47,14 @@ function deleteBookmark () {
 function customThumbnail () {
 	fileInput.click();
 	close();
+}
+
+function deleteThumbForItem (id) {
+	const _thumbs = $thumbs;
+	if (_thumbs[id]) {
+		delete _thumbs[id];
+		thumbs.set(_thumbs);
+	}
 }
 
 function clearThumbnail () {
@@ -59,11 +72,7 @@ function clearThumbnail () {
 	}
 	thumb.style = style;
 	thumb.innerText = text;
-
-	const _thumbs = $thumbs;
-	delete _thumbs[item.id];
-	thumbs.set(_thumbs);
-
+	deleteThumbForItem(item.id);
 	close();
 }
 
