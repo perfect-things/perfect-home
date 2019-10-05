@@ -8,7 +8,7 @@
 		{#if !$items.length && $itemsLoaded}
 		<p>
 			Add some links to
-			<b>{$rootFolderTitle}</b>
+			"<b>{$currentFolderTitle}</b>"
 			folder in your bookmarks.
 		</p>
 		{:else}
@@ -18,7 +18,7 @@
 </header>
 
 <script>
-import {items, options, currentFolder, rootFolderTitle, currentFolderTitle, itemsLoaded} from '../store';
+import {items, options, currentFolder, currentFolderTitle, itemsLoaded} from '../store';
 
 function goBack () {
 	history.back();

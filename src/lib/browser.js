@@ -22,6 +22,9 @@ const clearCache = async () => browser.storage.local.clear();
 const getThumbs = async () => browser.storage.local.get('thumbs').then(res => res && res.thumbs);
 const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
 
+const getDockedFolders = async () => browser.storage.local.get('dockedFolders').then(res => res && res.dockedFolders);
+const saveDockedFolders = async (dockedFolders) => browser.storage.local.set({ dockedFolders });
+
 
 export {
 	getSettings,
@@ -37,4 +40,6 @@ export {
 
 	getThumbs,
 	saveThumbs,
+	getDockedFolders,
+	saveDockedFolders,
 };

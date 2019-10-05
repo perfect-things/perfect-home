@@ -68,16 +68,20 @@ function onsort (e) {
 }
 
 function initialExpand () {
+	if (!folderEl) return;
 	// allow to render all children
 	setTimeout(() => {
-		folderEl.style.transitionDuration = '0s';
+		if (folderEl) folderEl.style.transitionDuration = '0s';
 		toggle(true);
 		// allow to expand fully before re-enabling transition
-		setTimeout(() => folderEl.style.transitionDuration = '.2s', 100);
+		setTimeout(() => {
+			if (folderEl) folderEl.style.transitionDuration = '.2s';
+		}, 100);
 	}, 200);
 }
 
 function toggle (recalc) {
+	if (!folderEl) return;
 	let marginTop = 42;
 	expanded = recalc === true ? true : !expanded;
 	if (expanded) marginTop = folderEl.getBoundingClientRect().height;

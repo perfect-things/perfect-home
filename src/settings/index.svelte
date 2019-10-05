@@ -8,83 +8,79 @@
 <div class="settings-pane {isVisible ? '' : 'hidden'}">
 	<h1>Settings</h1>
 	<div class="settings-form {isVisible ? '' : 'hidden'}">
-		<form on:change="{onchange}">
+		<h2>Main folder</h2>
+		<small>This is the primary navigable list of bookmarks.</small>
 
-			<h2>Main folder</h2>
-			<small>This is the primary navigable list of bookmarks.</small>
+		<div class="settings-row">
+			<div class="select-wrap">
+				<select name="rootfolder" bind:value="{$options.rootFolder}">
+					{#each folders as folder}
+						<option value="{folder.id}">{folder.title}</option>
+					{/each}
+				</select>
+			</div>
+		</div>
 
+		<div class="settings-row">
+			<label>Max number of columns</label>
+			<input type="number" bind:value="{$options.columns}">
+		</div>
+
+		<div class="settings-row">
+			<label>Gaps</label>
+			<input type="number" bind:value="{$options.gridGap}">
+		</div>
+
+		<div class="settings-row">
+			<label>Tile size</label>
+			<div class="flex-spacer"></div>
+			<input type="number" bind:value="{$options.iconWidth}">
+			<input type="number" bind:value="{$options.iconHeight}">
+		</div>
+
+		<div class="settings-row">
+			<label>Text color</label>
+			<div class="flex-spacer"></div>
+			<input type="color" bind:value="{$options.pageColor}">
+			<input type="text" bind:value="{$options.pageColor}">
+		</div>
+
+		<div class="settings-row">
+			<label>Background</label>
+			<div class="flex-spacer"></div>
+			<input type="color" bind:value="{$options.pageBg}">
+			<input type="text" bind:value="{$options.pageBg}">
+		</div>
+
+		<label>Custom CSS</label>
+		<div class="settings-row">
+			<textarea bind:value="{$options.css}"></textarea>
+		</div>
+
+
+		<h2>Docked folders</h2>
+		<small>These folders will be docked to the bottom.</small>
+
+		{#each $dockedFolders as dockedFolder}
 			<div class="settings-row">
 				<div class="select-wrap">
-					<select name="rootfolder" bind:value="{$options.rootFolder}">
+					<select bind:value="{dockedFolder.id}">
+						<option value="">None</option>
 						{#each folders as folder}
 							<option value="{folder.id}">{folder.title}</option>
 						{/each}
 					</select>
 				</div>
+				<button
+					class="btn xbtn"
+					type="button"
+					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
+				</button>
 			</div>
-
-			<div class="settings-row">
-				<label>Max number of columns</label>
-				<input type="number" bind:value="{$options.columns}">
-			</div>
-
-			<div class="settings-row">
-				<label>Gaps</label>
-				<input type="number" bind:value="{$options.gridGap}">
-			</div>
-
-			<div class="settings-row">
-				<label>Tile size</label>
-				<div class="flex-spacer"></div>
-				<input type="number" bind:value="{$options.iconWidth}">
-				<input type="number" bind:value="{$options.iconHeight}">
-			</div>
-
-			<div class="settings-row">
-				<label>Text color</label>
-				<div class="flex-spacer"></div>
-				<input type="color" bind:value="{$options.pageColor}">
-				<input type="text" bind:value="{$options.pageColor}">
-			</div>
-
-			<div class="settings-row">
-				<label>Background</label>
-				<div class="flex-spacer"></div>
-				<input type="color" bind:value="{$options.pageBg}">
-				<input type="text" bind:value="{$options.pageBg}">
-			</div>
-
-			<label>Custom CSS</label>
-			<div class="settings-row">
-				<textarea bind:value="{$options.css}"></textarea>
-			</div>
-
-
-			<h2>Docked folders</h2>
-			<small>These folders will be docked to the bottom.</small>
-
-			{#each $options.folders as dockedFolder}
-				<div class="settings-row">
-					<div class="select-wrap">
-						<select bind:value="{dockedFolder.id}">
-							<option value="">None</option>
-							{#each folders as folder}
-								<option value="{folder.id}">{folder.title}</option>
-							{/each}
-						</select>
-					</div>
-					<button
-						class="btn xbtn"
-						type="button"
-						on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
-					</button>
-				</div>
-			{/each}
-			<div class="settings-row">
-				<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
-			</div>
-
-		</form>
+		{/each}
+		<div class="settings-row">
+			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
+		</div>
 
 
 		<h2>Reset</h2>
@@ -105,7 +101,7 @@
 				Import
 				<input type="file" accept="application/json"
 					bind:this="{settingsInput}"
-					on:change="{onFileSelect}">
+					on:change="{importSettings}">
 			</div>
 		</div>
 
@@ -121,8 +117,8 @@
 
 <script>
 import {onMount} from 'svelte';
-import {options, defaultOptions, thumbs} from '../store';
-import {getAllItems, saveSettings, getSettings, clearCache} from '../lib';
+import {options, defaultOptions, thumbs, dockedFolders} from '../store';
+import {getAllItems, saveSettings, clearCache} from '../lib';
 
 let isVisible = false;
 let folders = [];
@@ -134,22 +130,32 @@ onMount(() => {
 		folders = items.filter(item => item.type === 'folder');
 	});
 	document.addEventListener('click', onDocClick);
-
-
-	// backwards compatibility: array of strings -> array of objects
-	options.subscribe(_options => {
-		if (_options.folders.length && typeof _options.folders[0] === 'string') {
-			_options.folders = _options.folders.map(f => ({id: f}));
-			setOptions(_options);
-		}
-	});
-
 });
 
 
 function exportSettings (e) {
-	const exp = JSON.stringify({ options: $options, thumbs: $thumbs });
+	const exp = JSON.stringify({
+		options: $options,
+		dockedFolders: $dockedFolders,
+		thumbs: $thumbs,
+	});
 	e.target.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
+}
+
+function importSettings (e) {
+	const reader = new FileReader();
+	reader.onload = ev => {
+		let json;
+		try { json = JSON.parse(ev.target.result); }
+		catch (er) {/* no-empty: 0 */ }
+		if (!json) alert('Incorrect settings file!');
+		else {
+			thumbs.set(json.thumbs);
+			dockedFolders.set(json.dockedFolder);
+			setOptions(json.options);
+		}
+	};
+	reader.readAsText(e.target.files[0]);
 }
 
 
@@ -171,19 +177,6 @@ function delFolder (id) {
 	setOptions(opts);
 }
 
-function onFileSelect (e) {
-	const reader = new FileReader();
-	reader.onload = ev => {
-		let json;
-		try { json = JSON.parse(ev.target.result); }
-		catch (er) {/* no-empty: 0 */ }
-		if (!json) alert('Incorrect settings file!');
-		thumbs.set(json.thumbs);
-		setOptions(json.options);
-	};
-	reader.readAsText(e.target.files[0]);
-}
-
 function reset () {
 	setOptions($defaultOptions);
 }
@@ -192,12 +185,6 @@ function onDocClick (e) {
 	if (e.target.closest('.settings-pane,.btn-settings')) return;
 	if (!isVisible) return;
 	isVisible = false;
-}
-
-function onchange () {
-	saveSettings($options)
-		.then(getSettings)
-		.then(res => res && options.set(res));
 }
 
 </script>
