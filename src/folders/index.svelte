@@ -24,6 +24,11 @@ onMount(() => {
 		foldersLoaded = true;
 		checkFolders();
 	});
+	EVENT.on(EVENT.settings.imported, () => {
+		settingsLoaded = true;
+		foldersLoaded = true;
+		checkFolders();
+	});
 });
 
 // backwards compatibility

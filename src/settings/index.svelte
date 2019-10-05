@@ -109,7 +109,7 @@
 		<h2>Purge</h2>
 		<small>This will clear all stored items: options and thumbnails cache.</small>
 		<div class="settings-row">
-			<button type="button" class="btn btn-clear danger" on:click="{clearCache}">Clear cache</button>
+			<button type="button" class="btn btn-clear danger" on:click="{purge}">Clear cache</button>
 		</div>
 
 	</div>
@@ -118,7 +118,7 @@
 <script>
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
-import {getAllItems, clearCache} from '../lib';
+import {EVENT, getAllItems, clearCache} from '../lib';
 
 let isVisible = false;
 let folders = [];
@@ -150,9 +150,10 @@ function importSettings (e) {
 		catch (er) {/* no-empty: 0 */ }
 		if (!json) alert('Incorrect settings file!');
 		else {
-			thumbs.set(json.thumbs);
-			dockedFolders.set(json.dockedFolder);
-			options.set(json.options);
+			if (json.thumbs) thumbs.set(json.thumbs);
+			if (json.dockedFolder) dockedFolders.set(json.dockedFolder);
+			if (json.options) options.set(json.options);
+			EVENT.fire(EVENT.settings.imported);
 		}
 	};
 	reader.readAsText(e.target.files[0]);
@@ -174,6 +175,12 @@ function delFolder (id) {
 
 function reset () {
 	options.set($defaultOptions);
+}
+
+
+function purge () {
+	const res = window.confirm('Are you sure you wish to purge all cache?\n(Make sure you backed up your settings)');
+	if (res) clearCache().then(() => location.reload());
 }
 
 function onDocClick (e) {

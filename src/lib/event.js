@@ -12,6 +12,7 @@ export const EVENT = {
 	},
 	settings: {
 		loaded: 'settings-loaded',
+		imported: 'settings-imported',
 	},
 	dockedFolders: {
 		loaded: 'docked-folders-loaded',
