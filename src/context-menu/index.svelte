@@ -92,8 +92,20 @@ function onThumbnailSelect (e) {
 }
 
 function updatePosition (e)  {
-	menuEl.style.left = e.pageX + 'px';
-	menuEl.style.top = e.pageY + 'px';
+	if (e) {	// update position to pointer
+		menuEl.style.left = e.pageX + 'px';
+		menuEl.style.top = e.pageY + 'px';
+	}
+	else {		// make sure it stays on screen
+		let {x, y, width, height} = menuEl.getBoundingClientRect();
+		const winH = window.innerHeight;
+		const winW = window.innerWidth;
+		const padding = 10;
+		if (winH - height - y < padding) y = winH - height - padding;
+		if (winW - width - x < padding) x = winW - width - padding;
+		menuEl.style.left = x + 'px';
+		menuEl.style.top = y + 'px';
+	}
 }
 
 function onContextMenu (e) {
@@ -105,7 +117,7 @@ function onContextMenu (e) {
 	getBookmark(el.dataset.id).then(i => {
 		item = i;
 		hasThumbnail = !!$thumbs[item.id];
-		if (item.type === 'bookmark') open();
+		open();
 	});
 }
 
@@ -116,6 +128,7 @@ function onDocumentClick (e) {
 
 function open () {
 	opened = true;
+	setTimeout(updatePosition, 100);
 }
 
 function close () {
