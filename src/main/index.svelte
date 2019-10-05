@@ -18,6 +18,25 @@ import Sortable from 'sortablejs';
 
 let folderSwitching = false;
 
+onMount(() => {
+	new Sortable(document.querySelector('.bookmarks'), {
+		group: 'bookmarks',
+		animation: 200,
+		ghostClass: 'sortable-ghost',
+		onStart: e => {
+			$wasSorted = true;
+			e.item.classList.add('sortable-plate');
+		},
+		onEnd: e => {
+			e.item.classList.remove('sortable-plate');
+			setTimeout(() => $wasSorted = false, 100);
+		},
+		onSort: onsort,
+	});
+	EVENT.on(EVENT.settings.loaded, init);
+});
+
+
 function optionsChanged (props) {
 	if (!props) return;
 	document.documentElement.style.setProperty('--columns', props.columns);
@@ -66,28 +85,11 @@ function readFolder (id) {
 		.catch(e => console.error(e));
 }
 
+
 function init () {
 	options.subscribe(optionsChanged);
 	currentFolder.subscribe(folderChanged);
 	onpopstate(history);
 }
 
-
-onMount(() => {
-	new Sortable(document.querySelector('.bookmarks'), {
-		group: 'bookmarks',
-		animation: 200,
-		ghostClass: 'sortable-ghost',
-		onStart: e => {
-			$wasSorted = true;
-			e.item.classList.add('sortable-plate');
-		},
-		onEnd: e => {
-			e.item.classList.remove('sortable-plate');
-			setTimeout(() => $wasSorted = false, 100);
-		},
-		onSort: onsort,
-	});
-	EVENT.on(EVENT.settings.loaded, init);
-});
 </script>

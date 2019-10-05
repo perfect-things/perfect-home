@@ -29,14 +29,16 @@ onMount(() => {
 // backwards compatibility
 function checkFolders () {
 	if (!settingsLoaded || !foldersLoaded) return;
-
 	// array of strings -> array of objects
 	if ($options.folders.length && typeof $options.folders[0] === 'string') {
 		$options.folders = $options.folders.map(f => ({id: f}));
 	}
 
 	if (!$dockedFolders.length && $options.folders && $options.folders.length) {
-		dockedFolders.set($options.folders);
+		const opts = $options;
+		dockedFolders.set(opts.folders);
+		delete opts.folders;
+		options.set(opts);
 	}
 }
 

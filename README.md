@@ -23,6 +23,7 @@ Just your own, predictable grid of links.
 - [x] docked folders do not recalc. height after deleting links
 - [x] delete thumb after bookmark removed
 - [x] context menu shows outside viewport
+- [x] settings: delete docked folder
 
 
 ## TODO

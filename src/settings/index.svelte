@@ -118,7 +118,7 @@
 <script>
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
-import {getAllItems, saveSettings, clearCache} from '../lib';
+import {getAllItems, clearCache} from '../lib';
 
 let isVisible = false;
 let folders = [];
@@ -152,33 +152,28 @@ function importSettings (e) {
 		else {
 			thumbs.set(json.thumbs);
 			dockedFolders.set(json.dockedFolder);
-			setOptions(json.options);
+			options.set(json.options);
 		}
 	};
 	reader.readAsText(e.target.files[0]);
 }
 
 
-function setOptions (json) {
-	options.set(json);
-	saveSettings(json);
-}
-
 function addFolder () {
-	const opts = $options;
-	opts.folders.push({id: '', open: false});
-	setOptions(opts);
+	const docked = $dockedFolders;
+	docked.push({id: '', open: false});
+	dockedFolders.set(docked);
 }
 
 function delFolder (id) {
-	const opts = $options;
-	const idx = opts.folders.findIndex(f => f.id === id);
-	opts.folders.splice(idx, 1);
-	setOptions(opts);
+	const docked = $dockedFolders;
+	const idx = docked.findIndex(f => f.id === id);
+	docked.splice(idx, 1);
+	dockedFolders.set(docked);
 }
 
 function reset () {
-	setOptions($defaultOptions);
+	options.set($defaultOptions);
 }
 
 function onDocClick (e) {
