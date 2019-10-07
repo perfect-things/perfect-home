@@ -128,7 +128,8 @@ function onDocumentClick (e) {
 
 function open () {
 	opened = true;
-	setTimeout(updatePosition, 100);
+	// needs to finish rendering first
+	setTimeout(updatePosition);
 }
 
 function close () {

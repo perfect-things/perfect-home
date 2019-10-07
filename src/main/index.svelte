@@ -29,7 +29,7 @@ onMount(() => {
 		},
 		onEnd: e => {
 			e.item.classList.remove('sortable-plate');
-			setTimeout(() => $wasSorted = false, 100);
+			$wasSorted = false;
 		},
 		onSort: onsort,
 	});
@@ -76,6 +76,7 @@ function readFolder (id) {
 	folderSwitching = true;
 	getSubTree(id)
 		.then(tree => {
+			// delay to finish the css transition
 			setTimeout(() => {
 				if (tree && tree.length) $items = tree[0].children;
 				folderSwitching = false;

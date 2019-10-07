@@ -44,7 +44,7 @@ onMount(() => {
 		},
 		onEnd: e => {
 			e.item.classList.remove('sortable-plate');
-			setTimeout(() => $wasSorted = false, 100);
+			$wasSorted = false;
 		},
 		onSort: onsort,
 		onAdd: addremove,
@@ -54,8 +54,8 @@ onMount(() => {
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 	EVENT.on(EVENT.dockedFolders.changed, onDockedFoldersChange);
 
-	if (folderEl) setTimeout(() => toggle(folder.open, true), 200);
 	if (folder.id) readFolder(folder.id);
+	if (folderEl) setTimeout(() => toggle(folder.open, true), 100);
 });
 
 
