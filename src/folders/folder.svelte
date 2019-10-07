@@ -46,11 +46,25 @@ onMount(() => {
 		onRemove: addremove,
 	});
 
-	if (!folder.title) getFolderTitle(folder.id).then(title => folder.title = title);
-	if (folder.id) readFolder(folder.id);
-	if (folder.open) initialExpand();
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
+	EVENT.on(EVENT.dockedFolders.changed, onDockedFoldersChange);
+
+	if (folderEl) setTimeout(() => toggle(folder.open, true), 200);
+	if (folder.id) readFolder(folder.id);
 });
+
+
+function onDockedFoldersChange (id) {
+	if (id !== folder.id) return;
+	getFolderTitle(folder.id).then(title => {
+		if (folder.title !== title) {
+			folder.title = title;
+			saveDockedFolders($dockedFolders);
+			readFolder(folder.id);
+			if (folder.open) toggle(false, true);
+		}
+	});
+}
 
 
 function onBookmarkRemove (item) {
@@ -66,27 +80,19 @@ function onsort (e) {
 	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: folder.id, index: e.newIndex});
 }
 
-function initialExpand () {
-	if (!folderEl) return;
-	// allow to render all children
-	setTimeout(() => toggle(true, true), 200);
-}
-
 function toggle (forceOpen, noAnim) {
 	if (!folderEl) return;
-	let from = '-42px', to = `-${folderEl.getBoundingClientRect().height}px`;
-	expanded = forceOpen === true ? true : !expanded;
+	const folderH = folderEl.getBoundingClientRect().height;
+	let from = 'translateY(-42px)';
+	let to = `translateY(-${folderH}px)`;
+	expanded = (typeof forceOpen === 'boolean') ? forceOpen : !expanded;
 	if (!expanded) [from, to] = [to, from];
-	if (noAnim) folderEl.style.marginTop = to;
-	else animate(folderEl, {marginTop: from}, {marginTop: to});
+
+	if (noAnim) folderEl.style.transform = to;
+	else animate(folderEl, {transform: from}, {transform: to});
 
 	folder.open = expanded;
-	if (forceOpen !== true) {
-		const docked = $dockedFolders;
-		const idx = docked.findIndex(d => d.id === folder.id);
-		docked[idx].open = expanded;
-		saveDockedFolders(docked);
-	}
+	if (forceOpen !== true) saveDockedFolders($dockedFolders);
 }
 
 

@@ -64,7 +64,7 @@
 		{#each $dockedFolders as dockedFolder}
 			<div class="settings-row">
 				<div class="select-wrap">
-					<select bind:value="{dockedFolder.id}">
+					<select bind:value="{dockedFolder.id}" on:change="{() => onDockedFoldersChange(dockedFolder.id)}">
 						<option value="">None</option>
 						{#each folders as folder}
 							<option value="{folder.id}">{folder.title}</option>
@@ -157,6 +157,10 @@ function importSettings (e) {
 		}
 	};
 	reader.readAsText(e.target.files[0]);
+}
+
+function onDockedFoldersChange (id) {
+	EVENT.fire(EVENT.dockedFolders.changed, id);
 }
 
 

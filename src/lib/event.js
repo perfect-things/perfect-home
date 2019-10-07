@@ -16,6 +16,7 @@ export const EVENT = {
 	},
 	dockedFolders: {
 		loaded: 'docked-folders-loaded',
+		changed: 'docked-folders-changed',
 	},
 
 
