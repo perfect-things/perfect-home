@@ -1,10 +1,5 @@
 @import "lib"
 
-
-button::-moz-focus-inner
-	padding 0 !important
-
-
 .btn
 	font inherit
 	display inline-block
@@ -20,33 +15,32 @@ button::-moz-focus-inner
 	vertical-align middle
 	text-decoration none
 	cursor default
-	border none
+	border transparent
 	border-radius 3
 	user-select none
 	box-shadow 0 1px 0 rgba(#000, .8)
-	color color-text
-
+	color dark-color-text3
+	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
 
 	// &.info
 	background color-info
 
 	&:focus
-		box-shadow 0 0 1px lighten(color-info, 50%)
+		border-color dark-color-accent
+		box-shadow 0 0 2px 1px dark-color-accent
+		outline none
 
 	&:active
 		outline none
 		box-shadow none
 		transform translateY(1px)
 		background darken(color-info, 15%)
-		color alpha(color-text, 50%)
+		color alpha(dark-color-text3, 50%)
 
 
 
 	&.success
 		background darken(color-success, 30%)
-
-		&:focus
-			box-shadow 0 0 1px lighten(color-success, 50%)
 
 		&:active
 			background darken(color-success, 15%)
@@ -55,18 +49,12 @@ button::-moz-focus-inner
 	&.warning
 		background color-warning
 
-		&:focus
-			box-shadow 0 0 1px lighten(color-warning, 50%)
-
 		&:active
 			background darken(color-warning, 15%)
 
 
 	&.danger
 		background color-danger
-
-		&:focus
-			box-shadow 0 0 1px lighten(color-danger, 50%)
 
 		&:active
 			background darken(color-danger, 15%)
@@ -78,17 +66,22 @@ button::-moz-focus-inner
 	position absolute
 	height 32px
 	width 32px
-	border none
+	border transparent
 	background none
 	text-align center
 	cursor pointer
 	z-index 10
-	color #888
+	color dark-color-text0
 	transition color .2s
 	display inline-block
 
+	&:focus
+		border-color dark-color-accent
+		box-shadow 0 0 2px 1px dark-color-accent
+		color dark-color-text2
+
 	&:hover
-		color #eee
+		color dark-color-text2
 
 
 .flex-spacer

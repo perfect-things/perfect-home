@@ -1,5 +1,10 @@
 @import "lib"
 
+*::-moz-focus-inner
+	padding 0 !important
+	border none !important
+
+
 .select-wrap
 textarea
 input[type=text]
@@ -7,9 +12,9 @@ input[type="color"]
 input[type="number"]
 	font inherit
 	height 34
-	border color-bg-dark
-	background-color color-bg-dark
-	color color-text
+	border dark-color-bg2
+	background-color dark-color-bg2
+	color dark-color-text3
 	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
 	border-radius 4px
 
@@ -23,8 +28,8 @@ input[type="number"]
 
 	&:focus
 	&:focus-within
-		border-color color-accent
-		box-shadow 0 0 2px 1px color-accent
+		border-color dark-color-accent
+		box-shadow 0 0 2px 1px dark-color-accent
 		outline none
 
 
@@ -60,6 +65,7 @@ select
 	text-indent -2px
 	-moz-appearance none
 	appearance none
+
 
 
 textarea

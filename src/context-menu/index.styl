@@ -2,16 +2,15 @@
 
 .context-menu
 	position absolute
-	background #222
 	padding 5 0
 	margin 0
 	display flex
 	flex-flow column
 	align-items stretch
 	list-style none
-	border #000
-	box-shadow 10px 10px 2px #000
 	z-index 20
+	background dark-color-bg3
+	box-shadow dark-shadow
 
 	&.hidden
 		display none
@@ -27,11 +26,11 @@
 		left -500px
 
 	&:hover
-		background-color #666
+		background-color dark-color-highlight
 
 
 .context-menu-separator
 	height 0
 	margin 5 0
 	padding 0
-	border-bottom: #000
+	border-bottom dark-color-bg1

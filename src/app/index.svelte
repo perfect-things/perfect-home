@@ -1,8 +1,8 @@
 <Header />
 <Main />
 <Folders />
-<ContextMenu />
 <Settings />
+<ContextMenu />
 <Palette />
 
 <script>
