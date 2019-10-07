@@ -52,11 +52,8 @@ afterUpdate(() => {
 		style = letterThumb.style;
 		innerText = letterThumb.innerText;
 
-		let url;
-		if ($thumbs && $thumbs[item.id]) url = $thumbs[item.id];
-		else url = getFavicon(item.url);
-		favicon.style = `background-image: url("${url}")`;
 	}
+	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;
 	thumb.style = style;
 	thumb.innerText = innerText;
 });
