@@ -16,25 +16,16 @@
 
 <script>
 import Tile from '../tile';
-import {beforeUpdate, onMount} from 'svelte';
-import {options, wasSorted} from '../store';
-import {getSubTree, getFolderTitle, moveBookmark, saveSettings} from '../lib';
+import {onMount} from 'svelte';
+import {wasSorted, dockedFolders} from '../store';
+import {EVENT, animate, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
 import Sortable from 'sortablejs';
 
 export let folder;
-let folderId;
 let folderEl;
 let folderItemsEl;
 let items = [];
 let expanded = false;
-
-
-beforeUpdate(() => {
-	if (folderId === folder.id) return;
-	folderId = folder.id;
-	if (!folder.title) getFolderTitle(folder.id).then(title => folder.title = title);
-	if (folder && folder.id) readFolder(folder.id);
-});
 
 
 onMount(() => {
@@ -54,9 +45,17 @@ onMount(() => {
 		onAdd: addremove,
 		onRemove: addremove,
 	});
+
+	if (!folder.title) getFolderTitle(folder.id).then(title => folder.title = title);
+	if (folder.id) readFolder(folder.id);
 	if (folder.open) initialExpand();
+	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 });
 
+
+function onBookmarkRemove (item) {
+	if (item.parentId === folder.id) toggle(true);
+}
 
 function addremove () {
 	toggle(true);
@@ -68,23 +67,28 @@ function onsort (e) {
 }
 
 function initialExpand () {
+	if (!folderEl) return;
 	// allow to render all children
-	setTimeout(() => {
-		folderEl.style.transitionDuration = '0s';
-		toggle(true);
-		// allow to expand fully before re-enabling transition
-		setTimeout(() => folderEl.style.transitionDuration = '.2s', 100);
-	}, 200);
+	setTimeout(() => toggle(true, true), 200);
 }
 
-function toggle (recalc) {
-	let marginTop = 42;
-	expanded = recalc === true ? true : !expanded;
-	if (expanded) marginTop = folderEl.getBoundingClientRect().height;
-	folderEl.style.marginTop = `-${marginTop}px`;
+function toggle (forceOpen, noAnim) {
+	if (!folderEl) return;
+	let from = '-42px', to = `-${folderEl.getBoundingClientRect().height}px`;
+	expanded = forceOpen === true ? true : !expanded;
+	if (!expanded) [from, to] = [to, from];
+	if (noAnim) folderEl.style.marginTop = to;
+	else animate(folderEl, {marginTop: from}, {marginTop: to});
+
 	folder.open = expanded;
-	if (recalc !== true) saveSettings($options);
+	if (forceOpen !== true) {
+		const docked = $dockedFolders;
+		const idx = docked.findIndex(d => d.id === folder.id);
+		docked[idx].open = expanded;
+		saveDockedFolders(docked);
+	}
 }
+
 
 function readFolder (id) {
 	return getSubTree(id)

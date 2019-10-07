@@ -7,7 +7,10 @@ function webpackLogger (err) {
 	const chalk = require('chalk');
 	let time = new Date().toTimeString().substr(0,8);
 	let message = 'Finished ' + chalk.green('webpack') + ' build';
-	if (err) { message = chalk.red(err); time = chalk.red(time); }
+	if (err) {
+		message = chalk.red(err) + '\x07';
+		time = chalk.red(time);
+	}
 	else time = chalk.grey(time);
 	console.log(`[${time}] ${message}`); /* eslint no-console: 0 */
 }
@@ -17,7 +20,10 @@ function eslint () {
 	const gulpEslint = require('gulp-eslint');
 	return src(['src/**/*.js', 'src/**/*.svelte', '*.js'])
 		.pipe(gulpEslint())
-		.pipe(gulpEslint.format());
+		.pipe(gulpEslint.format())
+		.pipe(gulpEslint.results(results => {
+			if (results.errorCount) console.log('\x07');
+		}));
 }
 
 

@@ -1,4 +1,6 @@
-import {readable, writable} from 'svelte/store';
+import {readable, writable, derived} from 'svelte/store';
+import {EVENT, getFolderTitle, getSettings, saveSettings, getThumbs, saveThumbs,
+	getDockedFolders, saveDockedFolders} from '../lib';
 
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu
@@ -11,20 +13,45 @@ const _options = {
 	pageBg     : '#333333',
 	css        : '',
 	rootFolder : ROOT_ID,
+	// to be removed in favour of dockedFolders
 	folders    : []
 };
 
-export const wasSorted = writable(false);
+export const currentFolder = writable(ROOT_ID);
+export const currentFolderTitle = derived(currentFolder, ($currentFolder, set) => {
+	getFolderTitle($currentFolder).then(set);
+});
 
 export const defaultOptions = readable(_options);
 export const options = writable(_options);
-
-export const rootFolderTitle = writable('');
-
-export const currentFolder = writable(ROOT_ID);
-export const currentFolderTitle = writable('');
-
-export const itemsLoaded = writable(false);
 export const items = writable([]);
 
+
+
+getSettings().then(stored => {
+	options.set(Object.assign({}, _options, stored));
+	options.subscribe(saveSettings);
+	EVENT.fire(EVENT.settings.loaded);
+});
+
+
+
+
 export const thumbs = writable({});
+getThumbs().then(_thumbs => {
+	if (_thumbs) thumbs.set(_thumbs);
+	thumbs.subscribe(saveThumbs);
+});
+
+
+export const dockedFolders = writable([]);
+getDockedFolders().then(folders => {
+	if (folders) dockedFolders.set(folders);
+	dockedFolders.subscribe(saveDockedFolders);
+	EVENT.fire(EVENT.dockedFolders.loaded);
+});
+
+
+export const itemsLoaded = writable(false);
+// when dragging links - temporarily prevent them from working
+export const wasSorted = writable(false);

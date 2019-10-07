@@ -15,28 +15,9 @@ Just your own, predictable grid of links.
 - [x] Command palette (filter flat list) (currently Cmd+P on mac - when focus is on page)
 - [x] Use custom images for tiles (right-click on a tile -> custom thumbnail)
 - [x] Style page with custom css - paste your css in settings
-- [x] Requires only 2 permissions: bookmarks & storage (to save settings & cache thumbnails)!
+- [x] Requires only 1 permissions (bookmarks)!
 - [x] Settings export/import
-- [x] docked folders
-
-## BUGS
-- [ ] docked folders do not recalc. height after deleting links
-
-
-## TODO
-- [ ] docs: customize tutorial
-- [ ] docs: troubleshooting
-- [x] favicons:
-  - [ ] fallback: if better quality exists - replace the crap from google's service
-  - [ ] cache url (or icon?)
-- [ ] Testing:
-  - [ ] https://github.com/pngwn/svelte-test
-  - [ ] https://github.com/testing-library/svelte-testing-library
-  - [ ] https://github.com/rspieker/jest-transform-svelte
-  - [ ] https://github.com/ktsn/svelte-jest
-- [ ] light/dark themes (css based on the OS?)
-- [ ] accessibility (keyboard support)
-
+- [x] Docked Folders
 
 
 ## Usage

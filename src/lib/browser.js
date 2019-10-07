@@ -10,7 +10,7 @@ const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
 
 const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]);
 
-const delBookmark = async (id) => browser.bookmarks.remove(id);
+const deleteBookmark = async (id) => browser.bookmarks.remove(id);
 
 const moveBookmark = async (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
 
@@ -22,6 +22,9 @@ const clearCache = async () => browser.storage.local.clear();
 const getThumbs = async () => browser.storage.local.get('thumbs').then(res => res && res.thumbs);
 const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
 
+const getDockedFolders = async () => browser.storage.local.get('dockedFolders').then(res => res && res.dockedFolders);
+const saveDockedFolders = async (dockedFolders) => browser.storage.local.set({ dockedFolders });
+
 
 export {
 	getSettings,
@@ -30,11 +33,13 @@ export {
 	getFolderTitle,
 	getSubTree,
 	getBookmark,
-	delBookmark,
+	deleteBookmark,
 	moveBookmark,
 	getAllItems,
 	clearCache,
 
 	getThumbs,
 	saveThumbs,
+	getDockedFolders,
+	saveDockedFolders,
 };
