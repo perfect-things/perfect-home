@@ -83,7 +83,7 @@ function toggle (forceOpen, noAnim) {
 	folder.open = expanded;
 	if (forceOpen !== true) {
 		const docked = $dockedFolders;
-		const idx = docked.findIndex(d => d.id = folder.id);
+		const idx = docked.findIndex(d => d.id === folder.id);
 		docked[idx].open = expanded;
 		saveDockedFolders(docked);
 	}
