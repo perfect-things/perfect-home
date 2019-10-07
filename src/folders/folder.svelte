@@ -30,7 +30,12 @@ let expanded = false;
 
 onMount(() => {
 	new Sortable(folderItemsEl, {
-		group: 'bookmarks',
+		group: {
+			name: 'bookmarks',
+			put: (to, from, item) => {
+				return !item.classList.contains('item-folder');
+			}
+		},
 		animation: 200,
 		ghostClass: 'sortable-ghost',
 		onStart: e => {
