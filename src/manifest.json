@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Perfect Home",
-	"version": "0.3.2",
+	"version": "0.4.0",
 	"author": "Tom",
 	"chrome_url_overrides": {
 		"newtab": "index.html"
@@ -10,7 +10,10 @@
 		"homepage": "index.html"
 	},
 	"description": "New tab replacement",
-	"permissions": ["bookmarks", "storage"],
+	"permissions": [
+		"bookmarks",
+		"storage"
+	],
 	"icons": {
 		"48": "assets/icon48.png",
 		"96": "assets/icon96.png"
