@@ -36,13 +36,10 @@
 		"svelte-loader": "^2.13.6",
 		"through2": "^3.0.1",
 		"web-ext": "^3.2.0",
-		"webextensions-geckodriver": "^0.6.1",
 		"webpack": "^4.41.0",
 		"webpack-stream": "^5.2.1"
 	},
-	"dependencies": {
-		"jest": "^24.9.0"
-	},
+	"dependencies": {},
 	"webExt": {
 		"sourceDir": "dist/"
 	}
