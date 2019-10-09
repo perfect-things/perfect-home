@@ -106,5 +106,5 @@ function watchTask (done) {
 }
 
 
-exports.build = parallel(js, css, assets, htmls, eslint);
-exports.default = series(cleanup, exports.build, watchTask);
+exports.build = series(cleanup, parallel(js, css, assets, htmls, eslint));
+exports.default = series(exports.build, watchTask);

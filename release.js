@@ -124,7 +124,7 @@ function release () {
 
 			spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
 			spinner.start();
-			return run('gulp --prod');
+			return run('gulp build --prod');
 		})
 		.then(() => {
 			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';

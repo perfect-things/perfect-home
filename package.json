@@ -4,10 +4,11 @@
 	"version": "0.4.0",
 	"author": "Tom",
 	"scripts": {
-		"start": "web-ext run --no-reload -s ./dist -p test-profile --keep-profile-changes",
-		"lint": "web-ext lint -s ./dist",
-		"build": "web-ext build --overwrite-dest -s ./dist",
-		"test": "jest"
+		"ext:start": "web-ext run --no-reload -s ./dist -p test-profile --keep-profile-changes",
+		"ext:lint": "web-ext lint -s ./dist",
+		"ext:build": "web-ext build --overwrite-dest -s ./dist",
+		"start": "gulp",
+		"build": "gulp build --prod"
 	},
 	"license": "GPL-3.0-or-later",
 	"devDependencies": {
