@@ -96,8 +96,10 @@
 		<div class="settings-row">
 
 			<a href="#export" class="btn btn-half btn-export"
+				tabindex="0"
 				download="perfect-home-settings.json"
 				on:click="{exportSettings}">Export</a>
+
 			<div class="btn btn-half btn-import"
 				tabindex="0"
 				on:click="{() => settingsInput.click()}">

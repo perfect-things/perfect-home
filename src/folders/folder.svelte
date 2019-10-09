@@ -1,6 +1,6 @@
 <div class="folder folder-{folder.id}" data-id="{folder.id}" bind:this="{folderEl}">
 
-	<h2 class="folder-title" on:click="{toggle}">{folder.title}</h2>
+	<h2 class="folder-title" on:click="{() => toggle()}">{folder.title}</h2>
 
 	<div class="folder-items" bind:this="{folderItemsEl}">
 		{#if items && items.length}
@@ -18,7 +18,7 @@
 import Tile from '../tile';
 import {onMount} from 'svelte';
 import {wasSorted, dockedFolders} from '../store';
-import {EVENT, animate, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
+import {EVENT, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
 import Sortable from 'sortablejs';
 
 export let folder;
@@ -47,37 +47,32 @@ onMount(() => {
 			$wasSorted = false;
 		},
 		onSort: onsort,
-		onAdd: addremove,
-		onRemove: addremove,
+		onAdd: open,
+		onRemove: open,
 	});
 
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 	EVENT.on(EVENT.dockedFolders.changed, onDockedFoldersChange);
 
-	if (folder.id) readFolder(folder.id);
-	if (folderEl) setTimeout(() => toggle(folder.open, true), 100);
+	if (folder.id) onDockedFoldersChange(folder.id);
 });
 
 
 function onDockedFoldersChange (id) {
-	if (id !== folder.id) return;
+	if (id !== folder.id && folder.title) return;
 	getFolderTitle(folder.id).then(title => {
 		if (folder.title !== title) {
 			folder.title = title;
 			saveDockedFolders($dockedFolders);
-			readFolder(folder.id);
-			if (folder.open) toggle(false, true);
 		}
+		if (id === folder.id) readFolder(folder.id);
+		setTimeout(() => (folder.open ? open() : close()), 100);
 	});
 }
 
 
 function onBookmarkRemove (item) {
-	if (item.parentId === folder.id) toggle(true);
-}
-
-function addremove () {
-	toggle(true);
+	if (item.parentId === folder.id) open();
 }
 
 function onsort (e) {
@@ -85,19 +80,22 @@ function onsort (e) {
 	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: folder.id, index: e.newIndex});
 }
 
-function toggle (forceOpen, noAnim) {
+function toggle () {
+	expanded ? close() : open();
+	saveDockedFolders($dockedFolders);
+}
+
+function open () {
 	if (!folderEl) return;
 	const folderH = folderEl.getBoundingClientRect().height;
-	let from = 'translateY(-42px)';
-	let to = `translateY(-${folderH}px)`;
-	expanded = (typeof forceOpen === 'boolean') ? forceOpen : !expanded;
-	if (!expanded) [from, to] = [to, from];
+	folderEl.style.transform = `translateY(-${folderH}px)`;
+	expanded = folder.open = true;
+}
 
-	if (noAnim) folderEl.style.transform = to;
-	else animate(folderEl, {transform: from}, {transform: to});
-
-	folder.open = expanded;
-	if (forceOpen !== true) saveDockedFolders($dockedFolders);
+function close () {
+	if (!folderEl) return;
+	folderEl.style.transform = 'translateY(-42px)';
+	expanded = folder.open = false;
 }
 
 

@@ -1,7 +1,7 @@
 <div class="autocomplete {opened ? '' : 'hidden'}">
 	<input type="text" class="autocomplete-input"
 		bind:this="{input}"
-		on:input="{oninput}"
+		on:input="{filter}"
 		on:focus="{open}"
 		on:keydown="{onkeydown}"
 		on:keypress="{onkeypress}"
@@ -25,15 +25,14 @@
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
-import {fuzzy, emphasize, getAllItems} from '../lib';
+import {clone, fuzzy, emphasize, getAllItems} from '../lib';
 
 
 let data = [];
-let value = null;
 let text = '';
 let opened = false;
 let highlightIndex = 0;
-let input, list, filteredData;
+let input, list, filteredData = [];
 
 
 
@@ -41,8 +40,13 @@ onMount(() => {
 	close();
 	clear();
 	document.addEventListener('keydown', onDocumentKeydown);
-	getAllItems().then(all => data = all);
 });
+
+
+function load () {
+	console.log('loading');
+	getAllItems().then(all => data = all).then(filter);
+}
 
 
 function gotoItem (item) {
@@ -60,21 +64,11 @@ function onDocumentKeydown (e) {
 }
 
 
-$: {
-	const q = text.toLowerCase();
-	let filtered = data.filter(item => item.type !== 'separator');
-	if (text) filtered = filtered
-		.filter(item => fuzzy(item.title, q))
-		.map(item => (item.highlightedTitle = emphasize(item.title, q), item));
-	filteredData = filtered;
-}
-
-
 function selectItem () {
-	value = filteredData[highlightIndex];
-	text = value.title;
+	const item = filteredData[highlightIndex];
+	text = item.title;
 	close();
-	gotoItem(value);
+	gotoItem(item);
 }
 
 function up () {
@@ -94,7 +88,6 @@ function highlight () {
 
 
 function onclick (item) {
-	value = item;
 	text = item.title;
 	close();
 	gotoItem(item);
@@ -121,10 +114,19 @@ function onkeydown (e) {
 	}
 }
 
-function oninput (e) {
-	text = e.target.value;
+function filter () {
+	text = input.value || '';
 	highlightIndex = 0;
+
+	const q = text.toLowerCase();
+	let filtered = clone(data).filter(item => item.type !== 'separator');
+	if (text) filtered = filtered
+		.filter(item => fuzzy(item.title, q))
+		.map(item => (item.highlightedTitle = emphasize(item.title, q), item));
+
+	filteredData = filtered;
 }
+
 
 function onkeypress (e) {
 	if (e.key === 'Enter') {
@@ -145,11 +147,13 @@ function onEsc (e) {
 function clear () {
 	text = '';
 	input.value = '';
+	filter();
 	setTimeout(() => input.focus());
 }
 
 function open () {
 	if (opened) return;
+	if (!data.length) load();
 	opened = true;
 	setTimeout(() => input.select(), 100);
 }
@@ -157,10 +161,11 @@ function open () {
 function close () {
 	if (!opened) return;
 	opened = false;
+	setTimeout(clear, 300);
 }
 
 function toggle () {
-	return opened ? close() : open();
+	opened ? close() : open();
 }
 
 </script>

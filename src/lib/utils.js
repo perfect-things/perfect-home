@@ -5,7 +5,7 @@ function injectCss (css) {
 
 	style = document.createElement('STYLE');
 	style.id = 'CustomStyle';
-	style.innerHTML = css;
+	style.innerText = css;
 	document.head.appendChild(style);
 }
 
@@ -66,6 +66,7 @@ function fuzzy (hay = '', s = '') {
 
 
 function emphasize (str, q) {
+	if (!q) return str;
 	let idx = 0;
 	let low = str.toLowerCase();
 	let stra = str.split('');
@@ -73,7 +74,10 @@ function emphasize (str, q) {
 	for (let l of q) {
 		idx = low.indexOf(l, idx);
 		let letter = stra[idx];
-		if (letter) stra.splice(idx, 1, `<b>${letter}</b>`);
+		if (letter) {
+			stra.splice(idx, 1, `<b>${letter}</b>`);
+			idx += 1;
+		}
 	}
 	return stra.join('');
 }
@@ -102,6 +106,10 @@ function getFavicon (url) {
 }
 
 
+function clone (obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+
 export {
 	injectCss,
 	getLetterThumbnail,
@@ -109,4 +117,5 @@ export {
 	emphasize,
 	animate,
 	getFavicon,
+	clone,
 };

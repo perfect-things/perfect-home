@@ -81,7 +81,7 @@ function onThumbnailSelect (e) {
 	const thumb = el.querySelector('.item-thumb');
 	reader.onload = ev => {
 		const dataUri = ev.target.result;
-		thumb.innerHTML = '';
+		thumb.innerText = '';
 		thumb.style.backgroundColor = 'unset';
 		thumb.style.backgroundImage = `url("${dataUri}")`;
 		const _thumbs = $thumbs;
