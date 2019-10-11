@@ -88,13 +88,13 @@ function toggle () {
 function open () {
 	if (!folderEl) return;
 	const folderH = folderEl.getBoundingClientRect().height;
-	folderEl.style.transform = `translateY(-${folderH}px)`;
+	folderEl.style.marginTop = -folderH + 'px';
 	expanded = folder.open = true;
 }
 
 function close () {
 	if (!folderEl) return;
-	folderEl.style.transform = 'translateY(-42px)';
+	folderEl.style.marginTop = '-42px';
 	expanded = folder.open = false;
 }
 
