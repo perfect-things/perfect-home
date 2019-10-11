@@ -4,11 +4,11 @@
 const getSettings = async () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = async (settings) => browser.storage.local.set({ settings });
 
-const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title);
+const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title).catch(() => {});
 
-const getSubTree = async (id) => browser.bookmarks.getSubTree(id);
+const getSubTree = async (id) => browser.bookmarks.getSubTree(id).catch(() => {});
 
-const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]);
+const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]).catch(() => {});
 
 const deleteBookmark = async (id) => browser.bookmarks.remove(id);
 

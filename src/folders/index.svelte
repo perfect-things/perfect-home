@@ -10,7 +10,7 @@
 <script>
 import {onMount} from 'svelte';
 import Folder from './folder';
-import {EVENT} from '../lib';
+import {EVENT, getBookmark} from '../lib';
 import {options, dockedFolders} from '../store';
 let settingsLoaded = false;
 let foldersLoaded = false;
@@ -32,6 +32,7 @@ onMount(() => {
 });
 
 // backwards compatibility
+/*eslint require-atomic-updates: 0 */
 function checkFolders () {
 	if (!settingsLoaded || !foldersLoaded) return;
 	// array of strings -> array of objects
@@ -44,6 +45,22 @@ function checkFolders () {
 		dockedFolders.set(opts.folders);
 		delete opts.folders;
 		options.set(opts);
+	}
+
+	// remove from docked folders if doesn't exist in bookmarks
+	if ($dockedFolders.length) {
+		let folders = $dockedFolders.map(async item => {
+			let bkm;
+			try { bkm = await getBookmark(item.id); }
+			catch (e) {/**/}
+			item.exists = !!bkm;
+			return item;
+		});
+		Promise.all(folders).then(res => {
+			folders = res.filter(item => item.exists);
+			dockedFolders.set(folders);
+		});
+
 	}
 }
 
