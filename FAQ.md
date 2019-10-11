@@ -4,7 +4,7 @@
 Please first read through the common problems/issues:
 
 
-<details><summary>**[MacOS] Links (tiles on the main screen, items in docked folders) are not focusable using keyboard**</summary>
+<details><summary><b>[MacOS] Links (tiles on the main screen, items in docked folders) are not focusable using keyboard</b></summary>
 
 1. In System Preferences → Keyboard, in the Shortcuts pane, check the “all controls” radio at the bottom.
 2. In Firefox, type `about:config` in the URL bar,
@@ -14,7 +14,7 @@ Please first read through the common problems/issues:
 </details>
 
 
-<details><summary>**Bookmarks reordering problems**</summary>
+<details><summary><b>Bookmarks reordering problems</b></summary>
 <p>
 Sometimes it may happen that when using drag&drop to reorder bookmarks - after a reload - they get messed up.
 This is due to firefox bookmark reordering issues, i.e.:
