@@ -4,17 +4,17 @@
 Please first read through the common problems/issues:
 
 
-<details><summary>[MacOS] Links (tiles on the main screen, items in docked folders) are not focusable using keyboard</summary>
-<p>
+<details><summary>**[MacOS] Links (tiles on the main screen, items in docked folders) are not focusable using keyboard**</summary>
+
 1. In System Preferences → Keyboard, in the Shortcuts pane, check the “all controls” radio at the bottom.
 2. In Firefox, type `about:config` in the URL bar,
 3. Create new **integer** entry called: `accessibility.tabfocus`, and set the value to `7`.
 4. Reopen/refresh the Perfect Home page.
-</p>
+
 </details>
 
 
-<details><summary>Bookmarks reordering problems</summary>
+<details><summary>**Bookmarks reordering problems**</summary>
 <p>
 Sometimes it may happen that when using drag&drop to reorder bookmarks - after a reload - they get messed up.
 This is due to firefox bookmark reordering issues, i.e.:
