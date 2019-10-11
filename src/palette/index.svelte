@@ -11,7 +11,8 @@
 			<div
 				class="autocomplete-list-item autocomplete-list-item-{item.type} {i === highlightIndex ? 'selected' : ''}"
 				on:click="{() => onclick(item)}">
-				<div class="autocomplete-list-item-icon"></div>
+				<div class="autocomplete-list-item-icon"
+					style="{item.favicon ? `background-image: url(${item.favicon})` : ''}"></div>
 				<span class="autocomplete-list-item-text">
 					{@html item.highlightedTitle || item.title}
 				</span>
@@ -25,7 +26,7 @@
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
-import {clone, fuzzy, emphasize, getAllItems} from '../lib';
+import {clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
 
 
 let data = [];
@@ -45,7 +46,16 @@ onMount(() => {
 
 function load () {
 	console.log('loading');
-	getAllItems().then(all => data = all).then(filter);
+	getAllItems()
+		.then(all => {
+			data = all
+				.filter(item => item.type !== 'separator')
+				.map(item => {
+					if (item.type === 'bookmark') item.favicon = getFavicon(item.url);
+					return item;
+				});
+		})
+		.then(filter);
 }
 
 
