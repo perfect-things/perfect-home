@@ -14,7 +14,7 @@ const config = require('./config-prod.json');
 const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
-const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/edit';
+const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
 const dryrun = false;
 const faker = () => new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -146,6 +146,7 @@ function release () {
 
 			console.log(chalk.cyan('All done!'));
 			if (!dryrun) open(addonUrl);
+			process.exit(0);
 		})
 		.catch(e => {
 			spinner.text = e;
