@@ -9,6 +9,11 @@ export const EVENT = {
 		added: 'bookmark-added',
 		moved: 'bookmark-moved',
 		removed: 'bookmark-removed',
+		edit: 'bookmark-edit',
+		delete: 'bookmark-delete',
+		deleteThumb: 'bookmark-thumb-del',
+		clearThumb: 'bookmark-thumb-clear',
+		changeThumb: 'bookmark-thumb-change',
 	},
 	settings: {
 		loaded: 'settings-loaded',

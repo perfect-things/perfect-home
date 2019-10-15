@@ -1,0 +1,55 @@
+@import "lib"
+
+.editor-contents
+	display flex
+	flex-flow row
+	align-items stretch
+	justify-content stretch
+	min-width 500
+	padding 0 10 10 0
+
+	.thumb
+		align-items center
+		justify-content center
+		width 131
+		margin-right 20
+		overflow hidden
+		position relative
+
+
+	.item-thumb
+		width 100%
+		height calc(100% - 30px)
+		display flex
+		align-items center
+		justify-content center
+		background-color #333
+		border-radius 10
+		margin-bottom 10
+		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
+		background-size cover
+		padding-top 10
+		font 600 4em/1 helvetica, arial, sans-serif
+		justify-content center
+		align-items center
+		color #555
+		overflow hidden
+
+
+
+	.details
+		flex 1
+		display flex
+		flex-flow column
+		align-items stretch
+		justify-content flex-start
+
+
+.modal .buttons
+	margin-top 20
+	display flex
+	align-items center
+	justify-content space-between
+
+	.btn.success
+		margin-left 10

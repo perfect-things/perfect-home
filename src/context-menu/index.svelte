@@ -1,16 +1,5 @@
 <ul class="context-menu {opened ? '' : 'hidden'}" bind:this="{menuEl}">
-	{#if hasThumbnail}
-		<li class="context-menu-item" on:click="{customThumbnail}">
-			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
-			Change thumbnail
-		</li>
-		<li class="context-menu-item" on:click="{clearThumbnail}">Clear thumbnail</li>
-	{:else}
-		<li class="context-menu-item" on:click="{customThumbnail}">
-			<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
-			Set thumbnail
-		</li>
-	{/if}
+	<li class="context-menu-item" on:click="{editBookmark}">Edit bookmark</li>
 	<li class="context-menu-item context-menu-separator"></li>
 	<li class="context-menu-item" on:click="{delBookmark}">Delete bookmark</li>
 </ul>
@@ -18,77 +7,20 @@
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
 
 <script>
-import {thumbs} from '../store';
-import {EVENT, animate, getBookmark, deleteBookmark, getLetterThumbnail, getFavicon} from '../lib';
+import {EVENT, getBookmark} from '../lib';
 
 let menuEl;
-let item, el, hasThumbnail = false;
+let item, el;
 let opened = false;
-let fileInput;
 
+function editBookmark () {
+	close();
+	setTimeout(() => EVENT.fire(EVENT.bookmark.edit, item, el));
+}
 
 function delBookmark () {
 	close();
-	const res = window.confirm(`Are you sure you wish to delete "${item.title}"`);
-	if (res) {
-		const from = {transform: 'scale(1)', opacity: 1};
-		const to = {transform: 'scale(0)', opacity: 0};
-		animate(el, from, to)
-			.then(() => {
-				el.remove();
-				deleteThumbForItem(item.id);
-				return deleteBookmark(item.id);
-			})
-			.then(() => EVENT.fire(EVENT.bookmark.removed, item));
-	}
-}
-
-
-function customThumbnail () {
-	fileInput.click();
-	close();
-}
-
-function deleteThumbForItem (id) {
-	const _thumbs = $thumbs;
-	if (_thumbs[id]) {
-		delete _thumbs[id];
-		thumbs.set(_thumbs);
-	}
-}
-
-function clearThumbnail () {
-	let style, text;
-	const thumb = el.querySelector('.item-thumb');
-	const isTile = el.closest('main.bookmarks');
-	if (isTile) {
-		const letterThumb = getLetterThumbnail(item);
-		style = letterThumb.style;
-		text = letterThumb.innerText;
-	}
-	else {
-		style = `background-image: url("${getFavicon(item.url)}")`;
-		text = '';
-	}
-	thumb.style = style;
-	thumb.innerText = text;
-	deleteThumbForItem(item.id);
-	close();
-}
-
-function onThumbnailSelect (e) {
-	const reader = new FileReader();
-	const thumb = el.querySelector('.item-thumb');
-	reader.onload = ev => {
-		const dataUri = ev.target.result;
-		thumb.innerText = '';
-		thumb.style.backgroundColor = 'unset';
-		thumb.style.backgroundImage = `url("${dataUri}")`;
-		const _thumbs = $thumbs;
-		_thumbs[item.id] = dataUri;
-		thumbs.set(_thumbs);
-	};
-	reader.readAsDataURL(e.target.files[0]);
+	setTimeout(() => EVENT.fire(EVENT.bookmark.delete, item, el));
 }
 
 function updatePosition (e)  {
@@ -116,7 +48,6 @@ function onContextMenu (e) {
 	updatePosition(e);
 	getBookmark(el.dataset.id).then(i => {
 		item = i;
-		hasThumbnail = !!$thumbs[item.id];
 		open();
 	});
 }
