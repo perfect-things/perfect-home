@@ -47,15 +47,13 @@ function delBookmark (_item, _el) {
 		_el = _el || targetEl;
 		const res = window.confirm(`Are you sure you wish to delete "${_item.title}"`);
 		if (res) {
-			const from = {transform: 'scale(1)', opacity: 1};
-			const to = {transform: 'scale(0)', opacity: 0};
-			animate(_el, from, to)
+			animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
 				.then(() => {
 					_el.remove();
 					deleteThumbForItem(_item.id);
 					return deleteBookmark(_item.id);
 				})
-				.then(() => EVENT.fire(EVENT.bookmark.removed, item));
+				.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
 		}
 	});
 }
