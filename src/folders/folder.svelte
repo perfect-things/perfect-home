@@ -4,7 +4,7 @@
 
 	<div class="folder-items" bind:this="{folderItemsEl}">
 		{#if items && items.length}
-			{#each items as item}
+			{#each items as item (item.id)}
 				<Tile item="{item}" />
 			{/each}
 		{:else}

@@ -1,8 +1,8 @@
 <svelte:window on:popstate={onpopstate}/>
 
-<main class="bookmarks {folderSwitching ? 'folder-switching' : ''}">
+<main class="bookmarks" class:folder-switching="{folderSwitching}">
 	{#if $items.length}
-		{#each $items as item}
+		{#each $items as item (item.id)}
 			<Tile item="{item}" />
 		{/each}
 	{/if}

@@ -1,4 +1,4 @@
-<ul class="context-menu {opened ? '' : 'hidden'}" bind:this="{menuEl}">
+<ul class="context-menu" class:hidden="{!opened}" bind:this="{menuEl}">
 	<li class="context-menu-item" on:click="{editBookmark}">Edit bookmark</li>
 	<li class="context-menu-item context-menu-separator"></li>
 	<li class="context-menu-item" on:click="{delBookmark}">Delete bookmark</li>

@@ -1,4 +1,4 @@
-<div class="autocomplete {opened ? '' : 'hidden'}">
+<div class="autocomplete" class:hidden="{!opened}">
 	<input type="text" class="autocomplete-input"
 		bind:this="{input}"
 		on:input="{filter}"
@@ -7,16 +7,19 @@
 		on:keypress="{onkeypress}"
 		>
 	<div class="autocomplete-list" bind:this="{list}">
-		{#each filteredData as item, i}
-			<div
-				class="autocomplete-list-item autocomplete-list-item-{item.type} {i === highlightIndex ? 'selected' : ''}"
-				on:click="{() => onclick(item)}">
-				<div class="autocomplete-list-item-icon"
-					style="{item.favicon ? `background-image: url(${item.favicon})` : ''}"></div>
-				<span class="autocomplete-list-item-text">
-					{@html item.highlightedTitle || item.title}
-				</span>
+		{#each filteredData as item, i (item.id)}
+		<div
+			class="autocomplete-list-item autocomplete-list-item-{item.type}"
+			class:selected="{i === highlightIndex}"
+			on:click="{() => onclick(item)}">
+
+			<div class="autocomplete-list-item-icon"
+				style="{item.favicon ? `background-image: url(${item.favicon})` : ''}">
 			</div>
+			<span class="autocomplete-list-item-text">
+				{@html item.highlightedTitle || item.title}
+			</span>
+		</div>
 		{/each}
 	</div>
 </div>
