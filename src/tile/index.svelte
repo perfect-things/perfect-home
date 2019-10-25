@@ -7,6 +7,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click|preventDefault="{() => $currentFolder = item.id}"
+		in:fade={{delay: 200, duration: 250}}
+		out:fade={{duration: 200}}
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-title">{item.title || ''}</span>
@@ -18,6 +20,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click="{onclick}"
+		in:fade={{delay: 200, duration: 250}}
+		out:fade={{duration: 200}}
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-favicon" bind:this={favicon}></span>
@@ -30,11 +34,12 @@
 import {currentFolder, thumbs, wasSorted} from '../store';
 import {getLetterThumbnail, getFavicon} from '../lib';
 import {afterUpdate} from 'svelte';
-
+import {fade} from 'svelte/transition';
 
 export let item;
 let thumb;
 let favicon;
+
 
 function onclick (e) {
 	if ($wasSorted) e.preventDefault();

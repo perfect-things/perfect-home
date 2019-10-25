@@ -1,6 +1,6 @@
 <svelte:window on:popstate={onpopstate}/>
 
-<main class="bookmarks" class:folder-switching="{folderSwitching}">
+<main class="bookmarks">
 	{#if $items.length}
 		{#each $items as item (item.id)}
 			<Tile item="{item}" />
@@ -15,8 +15,6 @@ import {onMount} from 'svelte';
 import {options, items, currentFolder, itemsLoaded,	wasSorted} from '../store';
 import {getSubTree, moveBookmark, injectCss, EVENT} from '../lib';
 import Sortable from 'sortablejs';
-
-let folderSwitching = false;
 
 onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
@@ -73,15 +71,10 @@ function folderChanged (folderId) {
 
 
 function readFolder (id) {
-	folderSwitching = true;
 	getSubTree(id)
 		.then(tree => {
-			// delay to finish the css transition
-			setTimeout(() => {
-				if (tree && tree.length) $items = tree[0].children;
-				folderSwitching = false;
-				$itemsLoaded = true;
-			}, 150);
+			if (tree && tree.length) $items = tree[0].children;
+			$itemsLoaded = true;
 		})
 		.catch(e => console.error(e));
 }
