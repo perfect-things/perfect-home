@@ -50,7 +50,7 @@ function getLetterThumbnail (item) {
 
 	const host = getHost(item.url);
 	const title = item.title || host || '';
-	const letter = title.replace(/^\W+|\W+$/gi, '')[0] || '';
+	const letter = title.trim()[0] || '';
 	const innerText = letter.toUpperCase();
 	return {style, innerText};
 }

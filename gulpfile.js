@@ -105,6 +105,6 @@ function watchTask (done) {
 	watch('src/assets/**/*.*', assets);
 }
 
-
-exports.build = series(cleanup, parallel(js, css, assets, htmls, eslint));
-exports.default = series(exports.build, watchTask);
+const build = parallel(js, css, assets, htmls, eslint);
+exports.build = series(cleanup, build);
+exports.default = series(build, watchTask);

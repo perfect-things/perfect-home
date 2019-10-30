@@ -7,8 +7,10 @@
 		"ext:start": "web-ext run --no-reload -s ./dist -p test-profile --keep-profile-changes",
 		"ext:lint": "web-ext lint -s ./dist",
 		"ext:build": "web-ext build --overwrite-dest -s ./dist",
-		"gulp:start": "gulp",
-		"start": "run-p ext:start gulp:start",
+		"src:start": "gulp",
+		"src:build": "gulp build",
+		"start:all": "run-p ext:start src:start",
+		"start": "run-s src:build start:all",
 		"build": "gulp build --prod"
 	},
 	"license": "GPL-3.0-or-later",
