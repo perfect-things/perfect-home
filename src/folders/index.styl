@@ -41,8 +41,14 @@
 		color #fff
 
 
-.folder-empty
+
+.folder-items:empty
 	color #888
 	text-align center
-	padding 30 0 20
+	padding 30 20 20
 	display block
+
+	&::after
+		content 'Folder is empty'
+		font-size 14px
+		display block

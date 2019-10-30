@@ -3,13 +3,9 @@
 	<h2 class="folder-title" on:click="{() => toggle()}">{folder.title}</h2>
 
 	<div class="folder-items" bind:this="{folderItemsEl}">
-		{#if items && items.length}
-			{#each items as item (item.id)}
-				<Tile item="{item}" />
-			{/each}
-		{:else}
-			<span class="folder-empty">Folder is empty</span>
-		{/if}
+		{#each items as item (item.id)}
+			<Tile item="{item}" />
+		{/each}
 	</div>
 </div>
 
@@ -32,11 +28,10 @@ onMount(() => {
 	new Sortable(folderItemsEl, {
 		group: {
 			name: 'bookmarks',
-			put: (to, from, item) => {
-				return !item.classList.contains('item-folder');
-			}
+			put: (to, from, item) => !item.classList.contains('item-folder')
 		},
 		animation: 200,
+		emptyInsertThreshold: 100,
 		ghostClass: 'sortable-ghost',
 		onStart: e => {
 			$wasSorted = true;
@@ -49,6 +44,8 @@ onMount(() => {
 		onSort: onsort,
 		onAdd: open,
 		onRemove: open,
+		onMove: open,
+		onChange: open,
 	});
 
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
@@ -58,6 +55,7 @@ onMount(() => {
 });
 
 
+
 function onDockedFoldersChange (id) {
 	if (id !== folder.id && folder.title) return;
 	getFolderTitle(folder.id).then(title => {
@@ -65,7 +63,7 @@ function onDockedFoldersChange (id) {
 			folder.title = title;
 			saveDockedFolders($dockedFolders);
 		}
-		if (id === folder.id) readFolder(folder.id);
+		if (id === folder.id) readFolder();
 		setTimeout(() => (folder.open ? open() : close()), 100);
 	});
 }
@@ -99,11 +97,12 @@ function close () {
 }
 
 
-function readFolder (id) {
+function readFolder (id = folder.id) {
 	return getSubTree(id)
 		.then(tree => {
 			if (!tree || !tree.length) return;
 			items = tree[0].children.filter(i => i.type !== 'folder');
+			return items;
 		})
 		.catch(e => console.error(e));
 }
