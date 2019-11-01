@@ -3,18 +3,23 @@
 		<div class="editor-contents" bind:this="{itemEl}">
 			<div class="thumb">
 				<div class="item-thumb" bind:this={thumb}></div>
-				<button type="button" on:click="{changeThumb}">Change</button>
-				<button type="button" on:click="{() => clearThumb(item, itemEl)}">Clear</button>
-				<input type="file" accept="image/png, image/jpeg" bind:this="{fileInput}" on:change="{onThumbnailSelect}">
 			</div>
 			<div class="details">
 				<label for="title">Title</label>
 				<input id="title" type="text" bind:value="{item.title}">
 				<label for="url">URL</label>
 				<input id="url" type="text" bind:value="{item.url}">
+
+				<label for="thumb_url" class="thumbnail-label">
+					Thumbnail URL
+					<button type="button" on:click="{() => clearThumb(item, itemEl)}">Clear</button>
+					<button type="button" on:click="{changeThumb}">Browse</button>
+					<input type="file" tabindex="-1" accept="image/png, image/jpeg"
+						bind:this="{fileInput}"
+						on:change="{onThumbnailSelect}">
+				</label>
+				<textarea id="thumb_url" on:input="{onThumbUrlChange}">{thumbnail || ''}</textarea>
 			</div>
-		</div>
-		<div>
 		</div>
 		<div class="buttons">
 			<button type="button" class="btn danger" on:click="{() => delBookmark(item)}">Delete</button>
@@ -31,7 +36,7 @@ import {onMount} from 'svelte';
 import {items, thumbs} from '../store';
 import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark} from '../lib';
 
-let modal, item = {}, thumb, itemEl, fileInput, targetEl;
+let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnail;
 
 
 onMount(() => {
@@ -39,6 +44,11 @@ onMount(() => {
 	EVENT.on(EVENT.bookmark.delete, delBookmark);
 });
 
+function onThumbUrlChange (ev) {
+	const url = ev.target.value;
+	if (url) thumbChangedTo(ev.target.value);
+	else clearThumb(item, itemEl);
+}
 
 
 function delBookmark (_item, _el) {
@@ -50,12 +60,32 @@ function delBookmark (_item, _el) {
 			animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
 				.then(() => {
 					_el.remove();
-					deleteThumbForItem(_item.id);
+					saveThumbnail(_item.id);
 					return deleteBookmark(_item.id);
 				})
 				.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
 		}
 	});
+}
+
+
+
+function saveThumbnail (_item, url = '') {
+	const _thumbs = $thumbs;
+	const id = _item.id;
+	if (url) _thumbs[id] = url;
+	else if (_thumbs[id]) delete _thumbs[id];
+	thumbs.set(_thumbs);
+}
+
+
+
+function thumbChangedTo (url) {
+	thumbnail = url;
+	const _thumb = itemEl.querySelector('.item-thumb');
+	_thumb.innerText = '';
+	_thumb.style.backgroundColor = 'unset';
+	_thumb.style.backgroundImage = `url("${url}")`;
 }
 
 
@@ -66,27 +96,10 @@ function changeThumb () {
 
 function onThumbnailSelect (e) {
 	const reader = new FileReader();
-	const _thumb = itemEl.querySelector('.item-thumb');
-	reader.onload = ev => {
-		const dataUri = ev.target.result;
-		_thumb.innerText = '';
-		_thumb.style.backgroundColor = 'unset';
-		_thumb.style.backgroundImage = `url("${dataUri}")`;
-		const _thumbs = $thumbs;
-		_thumbs[item.id] = dataUri;
-		thumbs.set(_thumbs);
-	};
+	reader.onload = ev => thumbChangedTo(ev.target.result);
 	reader.readAsDataURL(e.target.files[0]);
 }
 
-
-function deleteThumbForItem (id) {
-	const _thumbs = $thumbs;
-	if (_thumbs[id]) {
-		delete _thumbs[id];
-		thumbs.set(_thumbs);
-	}
-}
 
 function clearThumb (_item, el) {
 	let style, text;
@@ -103,7 +116,7 @@ function clearThumb (_item, el) {
 	}
 	itemThumb.style = style;
 	itemThumb.innerText = text;
-	deleteThumbForItem(_item.id);
+	thumbnail = '';
 }
 
 
@@ -126,6 +139,7 @@ function showThumb () {
 function editBookmark (_item, _el) {
 	item = _item;
 	targetEl = _el;
+	thumbnail = $thumbs[item.id] || '';
 	showThumb();
 	modal.open();
 }
@@ -138,6 +152,7 @@ function cancel () {
 function save (e) {
 	if (e instanceof Event) e.preventDefault();
 	saveBookmark(item);
+	saveThumbnail(item, thumbnail);
 	const idx = $items.findIndex(i => i.id === item.id);
 	$items[idx] = item;
 	items.set($items);
