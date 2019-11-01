@@ -5,21 +5,18 @@
 	flex-flow row
 	align-items stretch
 	justify-content stretch
-	min-width 500
+	min-width 600
 	padding 0 10 10 0
 
 	.thumb
 		align-items center
 		justify-content center
-		width 148
 		margin-right 20
-		overflow hidden
-		position relative
 
 
 	.item-thumb
-		width 100%
-		height calc(100% - 30px)
+		width var(--icon-width)
+		height var(--icon-height)
 		display flex
 		align-items center
 		justify-content center
@@ -36,6 +33,11 @@
 		overflow hidden
 
 
+	.thumbnail-label
+		overflow hidden
+		position relative
+		button
+			float right
 
 	.details
 		flex 1
@@ -44,12 +46,22 @@
 		align-items stretch
 		justify-content flex-start
 
+	label
+		padding 0
+		height initial
+
+	input
+	textarea
+		margin-bottom 15
+
 
 .modal .buttons
-	margin-top 20
 	display flex
 	align-items center
 	justify-content space-between
+	border-top #111
+	margin 10 0 -5
+	padding-top 15
 
 	.btn.success
 		margin-left 10
