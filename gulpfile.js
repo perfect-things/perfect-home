@@ -1,19 +1,10 @@
 const { series, parallel, src, dest, watch } = require('gulp');
 const del = require('del');
+const noop = require('through2').obj;
+const sourcemaps = require('gulp-sourcemaps');
+
 const isProd = require('minimist')(process.argv.slice(2)).prod;
 const DIST_PATH = 'dist/';
-
-function webpackLogger (err) {
-	const chalk = require('chalk');
-	let time = new Date().toTimeString().substr(0,8);
-	let message = 'Finished ' + chalk.green('webpack') + ' build';
-	if (err) {
-		message = chalk.red(err) + '\x07';
-		time = chalk.red(time);
-	}
-	else time = chalk.grey(time);
-	console.log(`[${time}] ${message}`); /* eslint no-console: 0 */
-}
 
 
 function eslint () {
@@ -28,53 +19,36 @@ function eslint () {
 
 
 function js () {
-	const path = require('path');
-	const webpack = require('webpack');
-	const webpackStream = require('webpack-stream');
-	const webpackConfig = {
-		entry: { index: './src/index.js' },
-		output: {
-			filename: 'index.js',
-			path: path.join(__dirname, DIST_PATH),
-		},
-		resolve: { extensions: ['.mjs', '.js', '.json', '.svelte'] },
-		module: {
-			rules: [
-				{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
-				{
-					test: /\.svelte$/,
-					exclude: /node_modules/,
-					use: { loader: 'svelte-loader', options: { css: false } },
-				},
-			]
-		}
+	const rollup = require('gulp-rollup-lightweight');
+	const source = require('vinyl-source-stream');
+	const buffer = require('vinyl-buffer');
+	const svelte = require('rollup-plugin-svelte');
+	const resolve = require('rollup-plugin-node-resolve');
+	const {terser} = require('rollup-plugin-terser');
+
+	const rollupConfig = {
+		input: './src/index.js',
+		output: { file: DIST_PATH + 'index.js', format: 'iife', },
+		plugins: [
+			svelte({ dev: !isProd, css: false }),
+			resolve({ extensions: ['.mjs', '.js', '.svelte', '.json'] }),
+			isProd && terser()
+		]
 	};
 
-	if (!isProd) {
-		webpackConfig.mode = 'development';
-		webpackConfig.devtool = 'inline-source-map';
-	}
-	else {
-		const MinifyPlugin = require('babel-minify-webpack-plugin');
-		webpackConfig.plugins = [ new MinifyPlugin() ];
-	}
-
-	return src(['src/index.js'])
-		.pipe(webpackStream(webpackConfig, webpack, webpackLogger))
-		.on('error', function (e) {
-			console.log(e.message);
-			this.emit('end');
-		})
+	return rollup(rollupConfig)
+		.pipe(source('index.js', './src'))
+		.pipe(isProd ? noop() : buffer())
+		.pipe(isProd ? noop() : sourcemaps.init({ loadMaps: true }))
+		.pipe(isProd ? noop() : sourcemaps.write('.'))
 		.pipe(dest(DIST_PATH));
 }
 
 
 function css () {
 	const cssmin = require('gulp-clean-css');
-	const sourcemaps = require('gulp-sourcemaps');
 	const concat = require('gulp-concat');
 	const stylus = require('gulp-stylus');
-	const noop = require('through2').obj;
 
 	return src(['src/**/*.styl'])
 		.pipe(isProd ? noop() : sourcemaps.init())

@@ -11,6 +11,7 @@ export const EVENT = {
 		removed: 'bookmark-removed',
 		edit: 'bookmark-edit',
 		delete: 'bookmark-delete',
+		saved: 'bookmark-saved',
 		deleteThumb: 'bookmark-thumb-del',
 		clearThumb: 'bookmark-thumb-clear',
 		changeThumb: 'bookmark-thumb-change',

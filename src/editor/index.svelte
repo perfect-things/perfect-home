@@ -153,6 +153,7 @@ function save (e) {
 	if (e instanceof Event) e.preventDefault();
 	saveBookmark(item);
 	saveThumbnail(item, thumbnail);
+	EVENT.fire(EVENT.bookmark.saved, item);
 	const idx = $items.findIndex(i => i.id === item.id);
 	$items[idx] = item;
 	items.set($items);

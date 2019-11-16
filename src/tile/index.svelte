@@ -32,8 +32,8 @@
 
 <script>
 import {currentFolder, thumbs, wasSorted} from '../store';
-import {getLetterThumbnail, getFavicon} from '../lib';
-import {afterUpdate} from 'svelte';
+import {EVENT, getLetterThumbnail, getFavicon} from '../lib';
+import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
 
 export let item;
@@ -44,6 +44,14 @@ let favicon;
 function onclick (e) {
 	if ($wasSorted) e.preventDefault();
 }
+
+function onBookmarkSave (bookmark) {
+	if (item.id === bookmark.id) item = bookmark;
+}
+
+onMount(() => {
+	EVENT.on(EVENT.bookmark.saved, onBookmarkSave);
+});
 
 afterUpdate(() => {
 	if (!thumb) return;
