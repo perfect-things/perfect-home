@@ -9,7 +9,8 @@
 	</div>
 </div>
 <script>
-export let title = '', backdropEl, contentEl, triggerEl, opened = false;
+export let title = '';
+let backdropEl, contentEl, triggerEl, opened = false;
 
 function focusFirst () {
 	const focusable = getFocusableElements().shift();

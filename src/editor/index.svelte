@@ -34,7 +34,8 @@
 import Modal from '../modal';
 import {onMount} from 'svelte';
 import {items, thumbs} from '../store';
-import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark} from '../lib';
+import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
+import {showToast, hideToast} from '../toaster';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnail;
 
@@ -50,24 +51,42 @@ function onThumbUrlChange (ev) {
 	else clearThumb(item, itemEl);
 }
 
-
 function delBookmark (_item, _el) {
 	cancel();
+
 	setTimeout(() => {
 		_el = _el || targetEl;
-		const res = window.confirm(`Are you sure you wish to delete "${_item.title}"`);
-		if (res) {
-			animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
-				.then(() => {
-					_el.remove();
-					saveThumbnail(_item.id);
-					return deleteBookmark(_item.id);
-				})
-				.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
-		}
+		animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
+			.then(() => {
+				_el.remove();
+				const undo = undoDelete(_item, $thumbs[_item.id]);
+				showToast('Bookmark has been removed. <button>Undo</button>', 'info', 10000, (e, id) => {
+					if (e.target.closest('button')) {
+						hideToast(id);
+						undo();
+					}
+				});
+				saveThumbnail(_item.id);
+				return deleteBookmark(_item.id);
+			})
+			// update docked folder height
+			.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
+
 	});
 }
 
+
+function undoDelete (_item, _thumb) {
+	return () => {
+		delete _item.id;
+		delete _item.dateAdded;
+		createBookmark(_item)
+			.then(node => {
+				if (_thumb) saveThumbnail(node, _thumb);
+				EVENT.fire(EVENT.bookmark.added, node);
+			});
+	};
+}
 
 
 function saveThumbnail (_item, url = '') {

@@ -32,8 +32,13 @@ onMount(() => {
 		onSort: onsort,
 	});
 	EVENT.on(EVENT.settings.loaded, init);
+	EVENT.on(EVENT.bookmark.added, refresh);
 });
 
+
+function refresh () {
+	readFolder($currentFolder);
+}
 
 function optionsChanged (props) {
 	if (!props) return;

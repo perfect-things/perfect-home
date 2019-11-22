@@ -28,10 +28,17 @@ function js () {
 
 	const rollupConfig = {
 		input: './src/index.js',
-		output: { file: DIST_PATH + 'index.js', format: 'iife', },
+		output: {
+			file: DIST_PATH + 'index.js',
+			format: 'iife',
+			sourcemap: true,
+		},
 		plugins: [
 			svelte({ dev: !isProd, css: false }),
-			resolve({ extensions: ['.mjs', '.js', '.svelte', '.json'] }),
+			resolve({
+				extensions: ['.mjs', '.js', '.svelte', '.json'],
+				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+			}),
 			isProd && terser()
 		]
 	};

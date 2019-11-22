@@ -6,28 +6,39 @@
 			out:fly="{{ y: -100, duration: 400 }}"
 			on:outrostart="{e => e.target.style.zIndex = 5}"
 			animate:flip="{{ duration: 200 }}"
-			on:click="{() => hideToast(toast.id)}">{toast.msg}</div>
+			on:click|preventDefault="{e => toast.cb(e, toast.id)}">
+				<div class="toast-msg">{@html toast.msg}</div>
+				<div class="toast-close" on:click="{hideToast(toast.id)}">&times;</div>
+				<div class="toast-progressbar">
+					<div class="toast-progress" style="width: {progress[toast.id]}%;"></div>
+				</div>
+			</div>
 	{/each}
 </div>
 
 
 <script context="module">
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { fly } from 'svelte/transition';
 import { flip } from 'svelte/animate';
 
-let _toasts = writable([]);
+const _toasts = writable({});
 
-export function showToast (msg, type = 'info', timeout = 5000) {
+export function showToast (msg, type = 'info', timeout = 5000, cb = () => {}) {
 	const id = guid();
-	_toasts.set([...get(_toasts), { type, msg, id }]);
 	if (typeof timeout === 'number') setTimeout(() => hideToast(id), timeout);
+	_toasts.update(list => {
+		list[id] = { type, msg, id, timeout: timeout - 500, cb };
+		return list;
+	});
 	return id;
 }
 
 export function hideToast (id) {
-	const filtered = get(_toasts).filter(t => t.id !== id);
-	_toasts.set(filtered);
+	_toasts.update(list => {
+		delete list[id];
+		return list;
+	});
 }
 
 function guid () {
@@ -39,6 +50,19 @@ function guid () {
 }
 </script>
 <script>
-let toasts = [];
-_toasts.subscribe(val => toasts = val);
+let toasts = [], timers = {}, progress = {};
+_toasts.subscribe(val => {
+	toasts = Object.values(val);
+	toasts.forEach(t => {
+		if (!timers[t.id]) createTimer(t.id, t.timeout);
+	});
+});
+
+function createTimer (id, timeout) {
+	progress[id] = 0;
+	timers[id] = setInterval(() => {
+		progress[id] += 1;
+		if (progress[id] >= 100) clearInterval(timers[id]);
+	}, timeout / 100);
+}
 </script>
