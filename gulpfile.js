@@ -1,7 +1,5 @@
 const { series, parallel, src, dest, watch } = require('gulp');
 const del = require('del');
-const noop = require('through2').obj;
-const sourcemaps = require('gulp-sourcemaps');
 
 const isProd = require('minimist')(process.argv.slice(2)).prod;
 const DIST_PATH = 'dist/';
@@ -21,7 +19,6 @@ function eslint () {
 function js () {
 	const rollup = require('gulp-rollup-lightweight');
 	const source = require('vinyl-source-stream');
-	const buffer = require('vinyl-buffer');
 	const svelte = require('rollup-plugin-svelte');
 	const resolve = require('rollup-plugin-node-resolve');
 	const {terser} = require('rollup-plugin-terser');
@@ -31,7 +28,7 @@ function js () {
 		output: {
 			file: DIST_PATH + 'index.js',
 			format: 'iife',
-			sourcemap: true,
+			sourcemap: !isProd,
 		},
 		plugins: [
 			svelte({ dev: !isProd, css: false }),
@@ -45,24 +42,21 @@ function js () {
 
 	return rollup(rollupConfig)
 		.pipe(source('index.js', './src'))
-		.pipe(isProd ? noop() : buffer())
-		.pipe(isProd ? noop() : sourcemaps.init({ loadMaps: true }))
-		.pipe(isProd ? noop() : sourcemaps.write('.'))
 		.pipe(dest(DIST_PATH));
 }
 
 
 function css () {
-	const cssmin = require('gulp-clean-css');
-	const concat = require('gulp-concat');
+	const noop = require('through2').obj;
+	const sourcemap = require('gulp-sourcemaps');
 	const stylus = require('gulp-stylus');
+	const concat = require('gulp-concat');
 
 	return src(['src/**/*.styl'])
-		.pipe(isProd ? noop() : sourcemaps.init())
-		.pipe(stylus({ paths: ['src/ui'], 'include css': true }))
-		.pipe(isProd ? cssmin({ keepSpecialComments: 0 }) : noop())
+		.pipe(isProd ? noop() : sourcemap.init())
+		.pipe(stylus({ paths: ['src/ui'], compress: isProd, 'include css': true }))
 		.pipe(concat('index.css'))
-		.pipe(isProd ? noop() : sourcemaps.write())
+		.pipe(isProd ? noop() : sourcemap.write())
 		.pipe(dest(DIST_PATH));
 }
 
