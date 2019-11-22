@@ -1,0 +1,37 @@
+@import "lib"
+
+.toaster
+	position fixed
+	top 0
+	width 300px
+	left 50%
+	transform translateX(-50%)
+	padding-top 5px
+	display flex
+	flex-flow column
+	align-items stretch
+	user-select none
+	z-index 90
+
+.toast
+	flex 1
+	margin-top 5px
+	margin-bottom 5px
+	padding 20px 50px
+	text-align center
+	box-shadow 0 10px 20px 2px #0003
+	z-index 10
+	cursor pointer
+	font-size 15px
+	color dark-color-text2
+
+
+.toast
+.toast-info
+	background color-info
+
+.toast-warning
+	background color-warning
+
+.toast-error
+	background color-danger

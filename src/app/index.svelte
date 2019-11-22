@@ -5,6 +5,7 @@
 <ContextMenu />
 <Palette />
 <Editor />
+<Toaster />
 
 <script>
 import Header from '../header';
@@ -14,5 +15,6 @@ import ContextMenu from '../context-menu';
 import Settings from '../settings';
 import Palette from '../palette';
 import Editor from '../editor';
+import Toaster from '../toaster';
 
 </script>
