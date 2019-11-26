@@ -2,7 +2,6 @@
 
 .toaster
 	position fixed
-	top 0
 	width 400
 	left 50%
 	transform translateX(-50%)
@@ -13,13 +12,17 @@
 	user-select none
 	z-index 90
 
+.toaster-top
+	top 0
+.toaster-bottom
+	bottom 0
+
 .toast
 	position relative
 	overflow hidden
 	flex 1
 	margin-top 5
 	margin-bottom 5
-	padding 15 20
 	text-align center
 	box-shadow 0 10px 20px 2px #0003
 	z-index 10
@@ -27,16 +30,38 @@
 	display flex
 	align-items center
 	justify-content space-between
-	border-radius 5
+	min-height 30
+	border-radius 25
 
-.toast-close
-	font-size 22px
-	font-weight 200
-	color dark-color-text2
-	&:hover
-		color dark-color-text3
-	&:active
-		color dark-color-text1
+	button
+		font inherit
+		background none
+		border none
+		height 30px
+		min-width 38px
+		padding 0 10px
+		display flex
+		align-items center
+		justify-content center
+		transition background-color .2s
+		color dark-color-text2
+
+		&:hover
+			color dark-color-text3
+			background #3338
+		&:active
+			color dark-color-text1
+			background #0008
+
+	.toast-msg
+		color dark-color-text2
+		flex 1
+
+	.toast-close
+		font-size 22px
+		font-weight 200
+		border-radius 0 25px 25px 0
+		position relative
 
 
 .toast
@@ -49,50 +74,19 @@
 .toast-error
 	background color-danger
 
-
-
-
-.toast-msg
-	color dark-color-text2
-	flex 1
-	a
-		color inherit
-		font-weight 600
-
-		&:hover
-			color dark-color-text3
-			text-decoration none
-
-	button
-		border dark-color-text1
-		color dark-color-text1
-		background none
-		border-radius 5
-		padding 4 10
-		font-size 14px
-		transition background-color .2s, color .2s
-		margin-left 15
-
-		&:hover
-			background dark-color-text1
-			color dark-color-bg2
-
-		&:active
-			background dark-color-text0
-			color dark-color-text1
-
-
 .toast-progressbar
 	position absolute
 	bottom 1
-	left 0
-	right 0
-	height 3
-	border-radius 5
+	left 1
+	right 1
+	top 1
+	border-radius 25
+	overflow hidden
+	z-index -1
 
 .toast-progress
 	height 100%
-	border-radius 5
-	background-color dark-color-text2
+	border-radius 25
+	background-color #fff1
 	width 0
 	transition width .2s

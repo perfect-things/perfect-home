@@ -1,17 +1,18 @@
-<div class="toaster">
+<div class="toaster toaster-{position}">
 	{#each toasts as toast (toast.id)}
 		<div class="toast toast-{toast.type}"
-			class:gone="{toast.gone}"
-			in:fly="{{y: -100, duration: 200 }}"
-			out:fly="{{ y: -100, duration: 400 }}"
-			on:outrostart="{e => e.target.style.zIndex = 5}"
-			animate:flip="{{ duration: 200 }}"
+			transition:scale="{{ start: 0.5 }}"
 			on:click|preventDefault="{e => toast.cb(e, toast.id)}">
 				<div class="toast-msg">{@html toast.msg}</div>
-				<div class="toast-close" on:click="{hideToast(toast.id)}">&times;</div>
-				<div class="toast-progressbar">
-					<div class="toast-progress" style="width: {progress[toast.id]}%;"></div>
-				</div>
+				{#if toast.btn}
+					<button>{toast.btn}</button>
+				{/if}
+				<button class="toast-close" on:click|stopPropagation="{() => hideToast(toast.id)}">&times;</button>
+				{#if toast.showProgress}
+					<div class="toast-progressbar">
+						<div class="toast-progress" style="width: {progress[toast.id]}%"></div>
+					</div>
+				{/if}
 			</div>
 	{/each}
 </div>
@@ -19,16 +20,20 @@
 
 <script context="module">
 import { writable } from 'svelte/store';
-import { fly } from 'svelte/transition';
-import { flip } from 'svelte/animate';
+import { scale } from 'svelte/transition';
 
 const _toasts = writable({});
 
-export function showToast (msg, type = 'info', timeout = 5000, cb = () => {}) {
+export function showToast (msg, type = 'info', timeout = 5000, btn, cb = () => {}) {
 	const id = guid();
-	if (typeof timeout === 'number') setTimeout(() => hideToast(id), timeout);
+	let showProgress = false;
+	if (typeof timeout === 'number') {
+		setTimeout(() => hideToast(id), timeout);
+		showProgress = true;
+		timeout = timeout - 500;
+	}
 	_toasts.update(list => {
-		list[id] = { type, msg, id, timeout: timeout - 500, cb };
+		list[id] = { type, msg, id, timeout, cb, showProgress, btn };
 		return list;
 	});
 	return id;
@@ -49,8 +54,11 @@ function guid () {
 	});
 }
 </script>
+
 <script>
+export let position = 'bottom';
 let toasts = [], timers = {}, progress = {};
+
 _toasts.subscribe(val => {
 	toasts = Object.values(val);
 	toasts.forEach(t => {

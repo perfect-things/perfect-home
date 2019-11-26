@@ -60,7 +60,7 @@ function delBookmark (_item, _el) {
 			.then(() => {
 				_el.remove();
 				const undo = undoDelete(_item, $thumbs[_item.id]);
-				showToast('Bookmark has been removed. <button>Undo</button>', 'info', 10000, (e, id) => {
+				showToast('Bookmark has been removed.', 'info', 10000, 'Undo', (e, id) => {
 					if (e.target.closest('button')) {
 						hideToast(id);
 						undo();
