@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Perfect Home",
-	"version": "0.4.4",
+	"version": "0.5.0",
 	"author": "Tom",
 	"chrome_url_overrides": {
 		"newtab": "index.html"
