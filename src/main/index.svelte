@@ -67,7 +67,6 @@ function onpopstate (e) {
 
 function folderChanged (folderId) {
 	let id = folderId || $options.rootFolder;
-
 	if (!history.state || !history.state.id || history.state.id !== folderId) {
 		const fn = (id === $options.rootFolder) ? 'replaceState' : 'pushState';
 		window.history[fn]({ id }, document.title, '');
@@ -87,9 +86,12 @@ function readFolder (id) {
 
 
 function init () {
+	const f = history.state && history.state.id;
 	options.subscribe(optionsChanged);
 	currentFolder.subscribe(folderChanged);
-	onpopstate(history);
+	setTimeout(() =>  {
+		if (f) $currentFolder = f;
+	},  100);
 }
 
 </script>
