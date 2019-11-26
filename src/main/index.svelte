@@ -33,6 +33,7 @@ onMount(() => {
 	});
 	EVENT.on(EVENT.settings.loaded, init);
 	EVENT.on(EVENT.bookmark.added, refresh);
+	EVENT.on(EVENT.bookmark.removed, refresh);
 });
 
 

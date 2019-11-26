@@ -58,7 +58,6 @@ function delBookmark (_item, _el) {
 		_el = _el || targetEl;
 		animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
 			.then(() => {
-				_el.remove();
 				const undo = undoDelete(_item, $thumbs[_item.id]);
 				showToast('Bookmark has been removed.', 'info', 10000, 'Undo', (e, id) => {
 					if (e.target.closest('button')) {

@@ -7,8 +7,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click|preventDefault="{() => $currentFolder = item.id}"
-		in:fade={{delay: 200, duration: 250}}
-		out:fade={{duration: 200}}
+		in:fade={onIn()}
+		out:fade={onOut()}
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-title">{item.title || ''}</span>
@@ -20,8 +20,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click="{onclick}"
-		in:fade={{delay: 200, duration: 250}}
-		out:fade={{duration: 200}}
+		in:fade={onIn()}
+		out:fade={onOut()}
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-favicon" bind:this={favicon}></span>
@@ -39,6 +39,10 @@ import {fade} from 'svelte/transition';
 export let item;
 let thumb;
 let favicon;
+
+const ANIM_DURATION = 150;
+const onIn = () => ({ delay: ANIM_DURATION, duration: ANIM_DURATION + 50 });
+const onOut = () => ({ duration: ANIM_DURATION });
 
 
 function onclick (e) {

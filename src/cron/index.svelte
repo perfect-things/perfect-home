@@ -24,8 +24,10 @@ async function purgeThumbs () {
 		delete thumbs[thumb];
 		count += 1;
 	}
-	await saveThumbs(thumbs);
-	if (count) console.log(`Purged ${count} unused thumbnail${count > 1 ? 's' : ''}.`);
+	if (count) {
+		await saveThumbs(thumbs);
+		console.log(`Purged ${count} unused thumbnail${count > 1 ? 's' : ''}.`);
+	}
 }
 
 </script>
