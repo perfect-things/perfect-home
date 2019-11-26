@@ -22,6 +22,9 @@ Just your own, predictable grid of links.
 - Enjoy!
 
 
+## Customization
+See [a tutorial here](customization-tutorial.md)
+
 ## Build locally
 1. `npm i`
 2. To test the extension in a temporary firefox profile, use the test script:
