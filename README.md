@@ -5,9 +5,7 @@ Just your own, predictable grid of links.
 
 **Download from [mozilla addons page](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
 
-
-![Screen1](_stuff/screen-main.png)
-
+**[![Screenshot][_stuff/screen-main.png]][[hyperlink](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)]**
 
 ## FEATURES
 - [x] Drag & drop tiles to reorder
