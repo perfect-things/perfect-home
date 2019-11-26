@@ -6,6 +6,7 @@
 <Palette />
 <Editor />
 <Toaster />
+<Cron />
 
 <script>
 import Header from '../header';
@@ -16,5 +17,6 @@ import Settings from '../settings';
 import Palette from '../palette';
 import Editor from '../editor';
 import Toaster from '../toaster';
+import Cron from '../cron';
 
 </script>
