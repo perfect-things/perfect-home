@@ -54,24 +54,22 @@ function onThumbUrlChange (ev) {
 function delBookmark (_item, _el) {
 	cancel();
 
-	setTimeout(() => {
-		_el = _el || targetEl;
-		animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
-			.then(() => {
-				const undo = undoDelete(_item, $thumbs[_item.id]);
-				showToast('Bookmark has been removed.', 'info', 10000, 'Undo', (e, id) => {
-					if (e.target.closest('button')) {
-						hideToast(id);
-						undo();
-					}
-				});
-				saveThumbnail(_item.id);
-				return deleteBookmark(_item.id);
-			})
-			// update docked folder height
-			.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
+	_el = _el || targetEl;
+	animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
+		.then(() => {
+			const undo = undoDelete(_item, $thumbs[_item.id]);
+			showToast('Bookmark has been removed.', 'info', 10000, 'Undo', (e, id) => {
+				if (e.target.closest('button')) {
+					hideToast(id);
+					undo();
+				}
+			});
+			saveThumbnail(_item.id);
+			return deleteBookmark(_item.id);
+		})
+		// update docked folder height
+		.then(() => EVENT.fire(EVENT.bookmark.removed, _item));
 
-	});
 }
 
 

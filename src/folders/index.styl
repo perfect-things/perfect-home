@@ -28,9 +28,14 @@
 	display flex
 	align-items center
 	justify-content center
-	padding 15 20 10
+	padding 5 20 0
 	margin-bottom 5
+	background none
+	border none
 	border-bottom #000
+	height 41
+	font inherit
+	font-size 16px
 	cursor pointer
 	color #888
 	transition color .2s
@@ -40,15 +45,32 @@
 	&:hover
 		color #fff
 
+	&:focus
+		outline 1px solid #ffa500
+		box-shadow 0 0 2px 1px #ffa500
 
 
-.folder-items:empty
-	color #888
-	text-align center
-	padding 30 20 20
-	display block
+.folder-items
+	overflow-y auto
+	flex 1
+	padding 1 0
+	max-height 50vh
+	visibility visible
+	opacity 1
+	transition visibility 0s, opacity .5s
 
-	&::after
-		content 'Folder is empty'
-		font-size 14px
+	&.hidden
+		opacity 0
+		visibility hidden
+		transition visibility 0s .5s, opacity .5s
+
+	&:empty
+		color #888
+		text-align center
+		padding 30 20 20
 		display block
+
+		&::after
+			content 'Folder is empty'
+			font-size 14px
+			display block

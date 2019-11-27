@@ -1,6 +1,6 @@
 <div class="folder folder-{folder.id}" data-id="{folder.id}" bind:this="{folderEl}">
 
-	<h2 class="folder-title" on:click="{() => toggle()}">{folder.title}</h2>
+	<button class="folder-title" on:click="{toggle}">{folder.title}</button>
 
 	<div class="folder-items" bind:this="{folderItemsEl}">
 		{#each items as item (item.id)}
@@ -12,7 +12,7 @@
 
 <script>
 import Tile from '../tile';
-import {onMount} from 'svelte';
+import {onMount, tick} from 'svelte';
 import {wasSorted, dockedFolders} from '../store';
 import {EVENT, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
 import Sortable from 'sortablejs';
@@ -48,6 +48,7 @@ onMount(() => {
 		onChange: open,
 	});
 
+	EVENT.on(EVENT.bookmark.added, onBookmarkRemove);
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 	EVENT.on(EVENT.dockedFolders.changed, onDockedFoldersChange);
 
@@ -70,7 +71,14 @@ function onDockedFoldersChange (id) {
 
 
 function onBookmarkRemove (item) {
-	if (item.parentId === folder.id) open();
+	if (item.parentId === folder.id) {
+		readFolder()
+			.then(tick)
+			.then(() => {
+				open();
+				setTimeout(open, 300);    // thank you svelte
+			});
+	}
 }
 
 function onsort (e) {
@@ -85,6 +93,7 @@ function toggle () {
 
 function open () {
 	if (!folderEl) return;
+	folderItemsEl.classList.remove('hidden');
 	const folderH = folderEl.getBoundingClientRect().height;
 	folderEl.style.marginTop = -folderH + 'px';
 	expanded = folder.open = true;
@@ -93,6 +102,7 @@ function open () {
 function close () {
 	if (!folderEl) return;
 	folderEl.style.marginTop = '-42px';
+	folderItemsEl.classList.add('hidden');
 	expanded = folder.open = false;
 }
 
