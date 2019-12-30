@@ -2,9 +2,9 @@
 
 
 header
-	width 100%
 	height 60px
 	margin 20px auto 30px
+	padding 0 10px
 	font-size 13px
 	text-align center
 	font-weight normal
@@ -12,18 +12,15 @@ header
 	display flex
 	align-items center
 	justify-content center
-	max-width var(--grid-width)
+	width 90%
+	max-width var(--grid-max-width, 1000px)
 
 	.title
 		opacity .2
 
-@media (max-width 840px)
-	header
-		max-width 100%
-
 
 .btn-back
-	left 0
+	left 10px
 
 .btn-back svg
 	height 16px
