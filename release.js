@@ -3,7 +3,7 @@
 const {exec} = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const SemVer = require('semver');
+const semver = require('semver');
 const ora = require('ora');
 const chalk = require('chalk');
 const indent = require('detect-indent');
@@ -29,14 +29,14 @@ function run (cmd) {
 function getVersion (manifest) {
 	const pkgPath = path.join(cwd, manifest || manifests[0]);
 	const pkg = require(pkgPath);
-	const current = new SemVer(pkg.version || '0.0.0');
+	const current = pkg.version || '0.0.0';
 
 	return {
 		name: pkg.name,
-		current: current.version,
-		nextMajor: SemVer.inc(current.version, 'major'),
-		nextMinor: SemVer.inc(current.version, 'minor'),
-		nextPatch: SemVer.inc(current.version, 'patch')
+		current: current,
+		nextMajor: semver.inc(current, 'major'),
+		nextMinor: semver.inc(current, 'minor'),
+		nextPatch: semver.inc(current, 'patch')
 	};
 }
 
@@ -95,8 +95,8 @@ function release () {
 				message: 'Enter the new version number:',
 				default: app.current,
 				when: answers => answers.version === 'custom',
-				filter: SemVer.clean,
-				validate: answer => SemVer.valid(answer) ? true : 'That\'s not a valid version number',
+				filter: semver.clean,
+				validate: answer => semver.valid(answer) ? true : 'That\'s not a valid version number',
 			},
 			{
 				type: 'input',
