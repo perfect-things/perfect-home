@@ -23,7 +23,10 @@
 		in:fade={onIn()}
 		out:fade={onOut()}
 	>
-		<span class="item-thumb" bind:this={thumb}></span>
+		<span class="item-thumb" bind:this={thumb}>
+			<TextFit>{letterThumb}</TextFit>
+			<span class="item-thumb-suffix">{letterThumbSuff}</span>
+		</span>
 		<span class="item-favicon" bind:this={favicon}></span>
 		<span class="item-title">{item.title || ''}</span>
 	</a>
@@ -31,6 +34,7 @@
 
 
 <script>
+import TextFit from '../text-fit';
 import {currentFolder, thumbs, wasSorted} from '../store';
 import {EVENT, getLetterThumbnail, getFavicon} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
@@ -39,6 +43,7 @@ import {fade} from 'svelte/transition';
 export let item;
 let thumb;
 let favicon;
+let letterThumb = '', letterThumbSuff = '';
 
 const ANIM_DURATION = 150;
 const onIn = () => ({ delay: ANIM_DURATION, duration: ANIM_DURATION + 50 });
@@ -60,19 +65,19 @@ onMount(() => {
 afterUpdate(() => {
 	if (!thumb) return;
 
-	let style = '', innerText = '';
+	let style = '';
 	if ($thumbs && $thumbs[item.id]) {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const letterThumb = getLetterThumbnail(item);
-		style = letterThumb.style;
-		innerText = letterThumb.innerText;
+		const letterThumbnail = getLetterThumbnail(item);
+		style = letterThumbnail.style;
+		letterThumb = letterThumbnail.text;
+		letterThumbSuff = letterThumbnail.suf;
 
 	}
 	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;
 	thumb.style = style;
-	thumb.innerText = innerText;
 });
 
 </script>

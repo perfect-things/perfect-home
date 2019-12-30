@@ -45,14 +45,14 @@ function isDark (color) {
 
 function getLetterThumbnail (item) {
 	const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
-	const color = isDark(bg) ? '#ccc' : '#333';
+	const color = isDark(bg) ? '#fffd' : '#000d';
 	const style = `background-color: ${bg}; color: ${color};`;
-
 	const host = getHost(item.url);
-	const title = item.title || host || '';
-	const letter = title.trim()[0] || '';
-	const innerText = letter.toUpperCase();
-	return {style, innerText};
+	let text = (host || '');
+	const ar = text.split(/[.:]/g);
+	if (ar.length > 1) text = text.replace(ar[0] + '.', ar[0] + '\n');
+	let [_text, suf] = text.split('\n');
+	return {style, text: _text, suf};
 }
 
 
