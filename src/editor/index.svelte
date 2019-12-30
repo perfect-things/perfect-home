@@ -2,7 +2,11 @@
 	<form on:submit="{save}">
 		<div class="editor-contents" bind:this="{itemEl}">
 			<div class="thumb">
-				<div class="item-thumb" bind:this={thumb}></div>
+				<div class="item-thumb" bind:this={thumb}>
+					<TextFit>{letterThumb}</TextFit>
+					<span class="item-thumb-suffix">{letterThumbSuff}</span>
+				</div>
+
 			</div>
 			<div class="details">
 				<label for="title">Title</label>
@@ -18,7 +22,7 @@
 						bind:this="{fileInput}"
 						on:change="{onThumbnailSelect}">
 				</label>
-				<textarea id="thumb_url" on:input="{onThumbUrlChange}">{thumbnail || ''}</textarea>
+				<textarea id="thumb_url" on:input="{onThumbUrlChange}">{thumbnailUrl || ''}</textarea>
 			</div>
 		</div>
 		<div class="buttons">
@@ -32,12 +36,14 @@
 
 <script>
 import Modal from '../modal';
+import TextFit from '../text-fit';
 import {onMount} from 'svelte';
 import {items, thumbs} from '../store';
 import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
 import {showToast, hideToast} from '../toaster';
 
-let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnail;
+let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
+let letterThumb = '', letterThumbSuff = '';
 
 
 onMount(() => {
@@ -97,9 +103,10 @@ function saveThumbnail (_item, url = '') {
 
 
 function thumbChangedTo (url) {
-	thumbnail = url;
+	thumbnailUrl = url;
+	letterThumb = '';
+	letterThumbSuff = '';
 	const _thumb = itemEl.querySelector('.item-thumb');
-	_thumb.innerText = '';
 	_thumb.style.backgroundColor = 'unset';
 	_thumb.style.backgroundImage = `url("${url}")`;
 }
@@ -118,44 +125,48 @@ function onThumbnailSelect (e) {
 
 
 function clearThumb (_item, el) {
-	let style, text;
+	let style = '', text = '', suf = '';
 	const itemThumb = el.querySelector('.item-thumb');
 	const isTile = el.closest('main.bookmarks') || el.closest('.modal');
 	if (isTile) {
-		const letterThumb = getLetterThumbnail(item);
-		style = letterThumb.style;
-		text = letterThumb.innerText;
+		const letterThumbnail = getLetterThumbnail(item);
+		style = letterThumbnail.style;
+		text = letterThumbnail.text;
+		suf = letterThumbnail.suf;
+		console.log(text);
 	}
 	else {
 		style = `background-image: url("${getFavicon(item.url)}")`;
-		text = '';
 	}
 	itemThumb.style = style;
-	itemThumb.innerText = text;
-	thumbnail = '';
+	letterThumb = text;
+	letterThumbSuff = suf;
+	thumbnailUrl = '';
 }
 
 
 
 function showThumb () {
-	let style = '', innerText = '';
+	let style = '', text = '', suf = '';
 	if ($thumbs && $thumbs[item.id]) {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const letterThumb = getLetterThumbnail(item);
-		style = letterThumb.style;
-		innerText = letterThumb.innerText;
+		const letterThumbnail = getLetterThumbnail(item);
+		style = letterThumbnail.style;
+		text = letterThumbnail.text;
+		suf = letterThumbnail.suf;
 	}
 	thumb.style = style;
-	thumb.innerText = innerText;
+	letterThumb = text;
+	letterThumbSuff = suf;
 }
 
 
 function editBookmark (_item, _el) {
 	item = _item;
 	targetEl = _el;
-	thumbnail = $thumbs[item.id] || '';
+	thumbnailUrl = $thumbs[item.id] || '';
 	showThumb();
 	modal.open();
 }
@@ -168,7 +179,7 @@ function cancel () {
 function save (e) {
 	if (e instanceof Event) e.preventDefault();
 	saveBookmark(item);
-	saveThumbnail(item, thumbnail);
+	saveThumbnail(item, thumbnailUrl);
 	EVENT.fire(EVENT.bookmark.saved, item);
 	const idx = $items.findIndex(i => i.id === item.id);
 	$items[idx] = item;

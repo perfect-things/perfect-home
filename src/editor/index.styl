@@ -16,21 +16,33 @@
 
 	.item-thumb
 		width var(--icon-width)
-		height var(--icon-height)
+		height calc(var(--icon-height) - 22px)
+		border-radius 10
+
+		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
+		background-size cover
 		display flex
+		flex-flow column
+
+		font 400 4em/1 helvetica, arial, sans-serif
 		align-items center
 		justify-content center
 		background-color #333
-		border-radius 10
 		margin-bottom 10
-		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
-		background-size cover
 		padding-top 10
-		font 600 4em/1 helvetica, arial, sans-serif
-		justify-content center
-		align-items center
 		color #555
 		overflow hidden
+
+	.item-thumb-suffix
+		font-size 13px
+		font-weight 200
+		text-align right
+		display block
+		width 100%
+		padding 0 10
+		opacity .7
+		overflow hidden
+		text-overflow ellipsis
 
 
 	.thumbnail-label

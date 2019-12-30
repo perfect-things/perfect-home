@@ -66,6 +66,9 @@ afterUpdate(() => {
 	if (!thumb) return;
 
 	let style = '';
+	letterThumb = '';
+	letterThumbSuff = '';
+
 	if ($thumbs && $thumbs[item.id]) {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
