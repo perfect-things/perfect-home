@@ -1,17 +1,30 @@
 <ul class="context-menu" class:hidden="{!opened}" bind:this="{menuEl}">
-	<li class="context-menu-item" on:click="{editBookmark}">Edit bookmark</li>
+	<li class="context-menu-item" on:click="{() => newTab()}">Open in New Tab</li>
+	<li class="context-menu-item" on:click="{() => newTab(true)}">Open in Background Tab</li>
+	<li class="context-menu-item" on:click="{newWin}">Open in New Window</li>
 	<li class="context-menu-item context-menu-separator"></li>
-	<li class="context-menu-item" on:click="{delBookmark}">Delete bookmark</li>
+	<li class="context-menu-item" on:click="{editBookmark}">Edit</li>
+	<li class="context-menu-item" on:click="{delBookmark}">Delete</li>
 </ul>
 
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
 
 <script>
-import {EVENT, getBookmark} from '../lib';
+import {EVENT, getBookmark, newtab, newwindow} from '../lib';
 
 let menuEl;
 let item, el;
 let opened = false;
+
+function newTab (bg) {
+	close();
+	newtab({ active: !bg, url: item.url });
+}
+
+function newWin () {
+	close();
+	newwindow({ url: item.url });
+}
 
 function editBookmark () {
 	close();
@@ -43,8 +56,8 @@ function updatePosition (e)  {
 function onContextMenu (e) {
 	el = e.target.closest('.item');
 	if (!el) return;
-	if (el.classList.contains('item-folder')) return;
 	e.preventDefault();
+	if (el.classList.contains('item-folder')) return;
 	updatePosition(e);
 	getBookmark(el.dataset.id).then(i => {
 		item = i;

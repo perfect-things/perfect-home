@@ -26,6 +26,8 @@ const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
 const getDockedFolders = async () => browser.storage.local.get('dockedFolders').then(res => res && res.dockedFolders);
 const saveDockedFolders = async (dockedFolders) => browser.storage.local.set({ dockedFolders });
 
+const newtab = async (cfg) => browser.tabs.create(cfg);
+const newwindow = async (cfg) => browser.windows.create(cfg);
 
 export {
 	getSettings,
@@ -46,4 +48,7 @@ export {
 	saveThumbs,
 	getDockedFolders,
 	saveDockedFolders,
+
+	newtab,
+	newwindow,
 };
