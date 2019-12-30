@@ -5,16 +5,14 @@ import {EVENT, getFolderTitle, getSettings, saveSettings, getThumbs, saveThumbs,
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu
 const _options = {
-	columns    : 6,
-	iconWidth  : 170,
-	iconHeight : 160,
-	gridGap    : 35,
-	pageColor  : '#eeeeee',
-	pageBg     : '#333333',
-	css        : '',
-	rootFolder : ROOT_ID,
-	// to be removed in favour of dockedFolders
-	folders    : []
+	gridMaxWidth : 1000,
+	iconWidth    : 150,
+	iconHeight   : 140,
+	gridGap      : 30,
+	pageColor    : '#eeeeee',
+	pageBg       : '#333333',
+	css          : '',
+	rootFolder   : ROOT_ID,
 };
 
 export const currentFolder = writable(ROOT_ID);

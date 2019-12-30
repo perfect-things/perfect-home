@@ -25,8 +25,8 @@
 		</div>
 
 		<div class="settings-row">
-			<label>Max number of columns</label>
-			<input type="number" bind:value="{$options.columns}">
+			<label>Max grid width</label>
+			<input type="number" bind:value="{$options.gridMaxWidth}">
 		</div>
 
 		<div class="settings-row">

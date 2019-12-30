@@ -29,13 +29,24 @@
 		background #f9f9f9 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)) center no-repeat
 		background-size cover
 		display flex
+		flex-flow column
 
-		font 600 4em/1 helvetica, arial, sans-serif
+		font 600 3em/1 helvetica, arial, sans-serif
 		text-align center
 		justify-content center
 		align-items center
 		color #555
 		overflow hidden
+
+	.item-thumb-suffix
+		font-size 13px
+		text-align right
+		display block
+		width 100%
+		padding 0 10
+		opacity .7
+		overflow hidden
+		text-overflow ellipsis
 
 	.item-favicon
 		display none
@@ -46,7 +57,7 @@
 		mask-size cover
 
 	.item-bookmark .item-thumb
-		padding-top .25em
+		padding-top .4em
 
 
 	.separator .item-thumb
@@ -112,18 +123,3 @@
 
 	.item-title
 		visibility hidden
-
-
-
-@media (max-width 1280px)
-	.bookmarks .item
-		width 100%
-		height 100%
-
-@media (max-width 960px)
-	.bookmarks .item-thumb
-		font-size 3em
-
-@media (max-width 590px)
-	.bookmarks .item-folder .item-thumb
-		mask-size auto

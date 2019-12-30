@@ -43,7 +43,7 @@ function refresh () {
 
 function optionsChanged (props) {
 	if (!props) return;
-	document.documentElement.style.setProperty('--columns', props.columns);
+	document.documentElement.style.setProperty('--grid-max-width', props.gridMaxWidth + 'px');
 	document.documentElement.style.setProperty('--icon-width', props.iconWidth + 'px');
 	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
 	document.documentElement.style.setProperty('--grid-gap', props.gridGap + 'px');

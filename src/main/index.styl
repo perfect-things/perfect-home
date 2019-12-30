@@ -1,48 +1,14 @@
 @import "lib"
 
 
-:root
-	--grid-width calc((var(--icon-width) + var(--grid-gap)) * var(--columns))
-
 .bookmarks
 	width 100%
 	margin 20px auto
 	display grid
 
-	max-width var(--grid-width)
+	width 90%
+	max-width var(--grid-max-width, 1000px)
 	padding 0 10px 60px
 	grid-gap var(--grid-gap)
 	grid-auto-rows var(--icon-height)
-	grid-template-columns repeat(var(--columns), var(--icon-width))
-
-
-
-@media (max-width 1280px)
-	:root
-		--icon-w calc(var(--icon-width) / 4 * 3)
-		--icon-h calc(var(--icon-height) / 4 * 3)
-		--grid-width calc((var(--icon-w) + var(--grid-gap)) * var(--columns))
-
-	.bookmarks
-		max-width var(--grid-width)
-		grid-auto-rows var(--icon-h)
-		grid-template-columns repeat(var(--columns), var(--icon-w))
-
-
-@media (max-width 960px)
-	:root
-		--icon-w calc(var(--icon-width) / 2)
-		--icon-h calc(var(--icon-height) / 2)
-		--grid-width calc((var(--icon-w) + var(--grid-gap)) * var(--columns))
-
-	.bookmarks
-		max-width var(--grid-width)
-		grid-auto-rows var(--icon-h)
-		grid-template-columns repeat(var(--columns), var(--icon-w))
-
-
-@media (max-width 600px)
-	.bookmarks
-		max-width 100%
-		grid-auto-rows minmax(var(--icon-h), auto)
-		grid-template-columns repeat(auto-fill, minmax(var(--icon-w), .5fr))
+	grid-template-columns repeat(auto-fill, minmax(var(--icon-width), 1fr))
