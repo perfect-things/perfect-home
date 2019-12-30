@@ -11,7 +11,7 @@
 import {onMount} from 'svelte';
 import Folder from './folder';
 import {EVENT, getBookmark} from '../lib';
-import {options, dockedFolders} from '../store';
+import {dockedFolders} from '../store';
 let settingsLoaded = false;
 let foldersLoaded = false;
 
@@ -31,21 +31,9 @@ onMount(() => {
 	});
 });
 
-// backwards compatibility
 /*eslint require-atomic-updates: 0 */
 function checkFolders () {
 	if (!settingsLoaded || !foldersLoaded) return;
-	// array of strings -> array of objects
-	if ($options.folders.length && typeof $options.folders[0] === 'string') {
-		$options.folders = $options.folders.map(f => ({id: f}));
-	}
-
-	if (!$dockedFolders.length && $options.folders && $options.folders.length) {
-		const opts = $options;
-		dockedFolders.set(opts.folders);
-		delete opts.folders;
-		options.set(opts);
-	}
 
 	// remove from docked folders if doesn't exist in bookmarks
 	if ($dockedFolders.length) {
