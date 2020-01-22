@@ -1,12 +1,22 @@
 
 function injectCss (css) {
-	let style = document.querySelector('#CustomStyle');
+	let style = document.querySelector('[title=CustomStyle]');
 	if (style) style.remove();
 
 	style = document.createElement('STYLE');
-	style.id = 'CustomStyle';
+	style.title = 'CustomStyle';
 	style.innerText = css;
 	document.head.appendChild(style);
+}
+
+function validateCustomCss (css = '') {
+	const styl = Array.from(document.styleSheets).find(s => s.title === 'CustomStyle');
+	if (css.length < 3) return true;
+	if (!styl.rules.length) return false;
+	const lt = css.split('{').length;
+	const gt = css.split('}').length;
+	if (!lt || !gt || lt !== gt) return false;
+	return true;
 }
 
 
@@ -119,6 +129,7 @@ function clone (obj) {
 
 export {
 	injectCss,
+	validateCustomCss,
 	getLetterThumbnail,
 	fuzzy,
 	emphasize,

@@ -18,11 +18,6 @@ input[type="number"]
 	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
 	border-radius 4px
 
-	&:invalid
-		border-color color-danger
-		box-shadow 0 0 2px 1px color-danger
-		outline none
-
 	&:disabled
 		opacity 0.5
 
@@ -30,6 +25,11 @@ input[type="number"]
 	&:focus-within
 		border-color dark-color-accent
 		box-shadow 0 0 2px 1px dark-color-accent
+		outline none
+
+	&:invalid
+		border-color color-danger
+		box-shadow 0 0 2px 1px color-danger
 		outline none
 
 

@@ -55,9 +55,19 @@
 			<input type="text" bind:value="{$options.pageBg}">
 		</div>
 
-		<label>Custom CSS</label>
+
+		<h2>Custom CSS</h2>
+		<small>This allows you to fully customize the page.
+			See <a href="https://github.com/tborychowski/perfect-home/blob/master/customization-tutorial.md" target="_blank">
+				this tutorial</a> for some examples.
+		</small>
+
+		<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
+			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">here</a>.
+		</small>
+
 		<div class="settings-row">
-			<textarea bind:value="{$options.css}"></textarea>
+			<textarea bind:value="{$options.css}" on:input="{validateCss}"></textarea>
 		</div>
 
 
@@ -130,7 +140,8 @@
 <script>
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
-import {EVENT, getAllItems, clearCache} from '../lib';
+import {EVENT, getAllItems, clearCache, validateCustomCss} from '../lib';
+
 
 let isVisible = false;
 let folders = [];
@@ -233,6 +244,15 @@ function trapfocus (e, how) {
 	if (how === 'last' && e.shiftKey) return;
 	e.preventDefault();
 	e.target.focus();
+}
+
+
+function validateCss (ev) {
+	const el = ev.target;
+	const text = el.value || '';
+
+	const res = validateCustomCss(text);
+	el.setCustomValidity(res ? '' : 'Check your CSS!');
 }
 
 </script>
