@@ -66,6 +66,8 @@ function onDockedFoldersChange (id) {
 		}
 		if (id === folder.id) readFolder();
 		setTimeout(() => (folder.open ? open() : close()), 100);
+		setTimeout(() => (folder.open ? open() : close()), 300);
+		setTimeout(() => (folder.open ? open() : close()), 500);
 	});
 }
 
