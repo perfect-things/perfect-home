@@ -48,11 +48,18 @@ function getLetterThumbnail (item) {
 	const color = isDark(bg) ? '#fffd' : '#000d';
 	const style = `background-color: ${bg}; color: ${color};`;
 	const host = getHost(item.url);
-	let text = (host || '');
-	const ar = text.split(/[.:]/g);
-	if (ar.length > 1) text = text.replace(ar[0] + '.', ar[0] + '\n');
-	let [_text, suf] = text.split('\n');
-	return {style, text: _text, suf};
+	const isIP = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,7})?$/g;
+	let text = (host || ''), suf;
+	if (isIP.test(text)) {
+		suf = text;
+		text = item.title;
+	}
+	else {
+		const ar = text.split(/[.:]/g);
+		if (ar.length > 1) text = text.replace(ar[0] + '.', ar[0] + '\n');
+		[text, suf] = text.split('\n');
+	}
+	return {style, text, suf};
 }
 
 
