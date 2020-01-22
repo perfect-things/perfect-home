@@ -23,17 +23,23 @@
 	margin-top -42px
 	transition margin .3s ease-out
 
-
-.folder-title
+.folder-header
 	display flex
 	align-items center
 	justify-content center
-	padding 5 20 0
+	border-bottom #000
 	margin-bottom 5
+	height 40
+	min-height 40
+
+.folder-title
+	flex 1
+	display flex
+	align-items center
+	justify-content center
+	padding 5 10
 	background none
 	border none
-	border-bottom #000
-	height 41
 	font inherit
 	font-size 16px
 	cursor pointer
@@ -41,13 +47,33 @@
 	transition color .2s
 	font-weight 600
 	letter-spacing 1px
-
-	&:hover
-		color #fff
+	margin-left 0
+	margin-right 20
 
 	&:focus
 		outline 1px solid #ffa500
 		box-shadow 0 0 2px 1px #ffa500
+
+
+.folder-pin
+	size 12
+	background none
+	border none
+	padding 0
+	border-radius 25
+	margin-left 8
+	cursor pointer
+	opacity 0
+	box-shadow 0 0 2px #000
+	background linear-gradient(#fff7, #0007)
+	background-color #888
+	transition opacity .3s ease-out
+
+	.folder-expanded &
+		opacity 1
+
+	.folder-pinned &
+		background-color dark-color-accent
 
 
 .folder-items

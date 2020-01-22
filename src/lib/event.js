@@ -4,6 +4,9 @@ export const EVENT = {
 	off,
 	fire,
 
+	document: {
+		clicked: 'document-clicked'
+	},
 
 	bookmark: {
 		added: 'bookmark-added',

@@ -18,5 +18,8 @@ import Palette from '../palette';
 import Editor from '../editor';
 import Toaster from '../toaster';
 import Cron from '../cron';
+import {EVENT} from '../lib';
+
+document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
 
 </script>

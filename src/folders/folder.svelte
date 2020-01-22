@@ -1,6 +1,17 @@
-<div class="folder folder-{folder.id}" data-id="{folder.id}" bind:this="{folderEl}">
+<div class="folder folder-{folder.id}"
+	class:folder-expanded="{expanded}"
+	class:folder-pinned="{folder.pinned}"
+	data-id="{folder.id}" bind:this="{folderEl}">
 
-	<button class="folder-title" on:click="{toggle}">{folder.title}</button>
+	<h2 class="folder-header">
+		<button class="folder-pin"
+			on:click="{togglePin}"
+			title="{folder.pinned ? 'Unpin' : 'Pin'}"></button>
+
+		<button class="folder-title"
+			on:click="{toggle}"
+			title="{expanded ? 'Close' : 'Open'}">{folder.title}</button>
+	</h2>
 
 	<div class="folder-items" bind:this="{folderItemsEl}">
 		{#each items as item (item.id)}
@@ -48,6 +59,7 @@ onMount(() => {
 		onChange: open,
 	});
 
+	EVENT.on(EVENT.document.clicked, onDocClick);
 	EVENT.on(EVENT.bookmark.added, onBookmarkRemove);
 	EVENT.on(EVENT.bookmark.removed, onBookmarkRemove);
 	EVENT.on(EVENT.dockedFolders.changed, onDockedFoldersChange);
@@ -55,6 +67,12 @@ onMount(() => {
 	if (folder.id) onDockedFoldersChange(folder.id);
 });
 
+
+function onDocClick (e) {
+	if (e.target.closest(`.folder-${folder.id}`)) return;
+	if (folder.pinned) return;
+	close();
+}
 
 
 function onDockedFoldersChange (id) {
@@ -65,9 +83,9 @@ function onDockedFoldersChange (id) {
 			saveDockedFolders($dockedFolders);
 		}
 		if (id === folder.id) readFolder();
-		setTimeout(() => (folder.open ? open() : close()), 100);
-		setTimeout(() => (folder.open ? open() : close()), 300);
-		setTimeout(() => (folder.open ? open() : close()), 500);
+		setTimeout(() => (folder.pinned ? open() : close()), 100);
+		setTimeout(() => (folder.pinned ? open() : close()), 300);
+		setTimeout(() => (folder.pinned ? open() : close()), 500);
 	});
 }
 
@@ -88,9 +106,13 @@ function onsort (e) {
 	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: folder.id, index: e.newIndex});
 }
 
+function togglePin () {
+	folder.pinned = !folder.pinned;
+	saveDockedFolders($dockedFolders);
+}
+
 function toggle () {
 	expanded ? close() : open();
-	saveDockedFolders($dockedFolders);
 }
 
 function open () {
@@ -98,14 +120,14 @@ function open () {
 	folderItemsEl.classList.remove('hidden');
 	const folderH = folderEl.getBoundingClientRect().height;
 	folderEl.style.marginTop = -folderH + 'px';
-	expanded = folder.open = true;
+	expanded = true;
 }
 
 function close () {
 	if (!folderEl) return;
 	folderEl.style.marginTop = '-42px';
 	folderItemsEl.classList.add('hidden');
-	expanded = folder.open = false;
+	expanded = false;
 }
 
 

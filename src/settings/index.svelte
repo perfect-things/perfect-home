@@ -153,7 +153,7 @@ onMount(() => {
 		folders = items.filter(item => item.type === 'folder');
 	});
 	settingsPane.addEventListener('transitionend', ontransitionend);
-	document.addEventListener('click', onDocClick);
+	EVENT.on(EVENT.document.clicked, onDocClick);
 });
 
 
