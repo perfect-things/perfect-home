@@ -21,8 +21,11 @@ You can manually enable your browser to handle such links:
 To do that, open `about:config` page and add these 3 properties:
 1. `capability.policy.policynames`, and set it to a string value: `localfilelinks`
 2. `capability.policy.localfilelinks.checkloaduri.enabled`, and set it to a string value: `allAccess`
-3. `capability.policy.localfilelinks.sites`, and set to `moz-extension://<EXTENSION ID>/index.html` (the long ID number is the ID of this extension, which is different on every computer).
-You can find yours if you open the Perfect Home in a new tab, then open `Dev Tools` and `Console` tab, and enter: `location.href` and hit <kbd>Enter</kbd>.
+3. `capability.policy.localfilelinks.sites`, and set to `moz-extension://<EXTENSION ID>/index.html` 
+    
+	The long ID number is the ID of this extension, which is different on every computer.
+
+    You can find yours if you open the Perfect Home in a new tab, then open `Dev Tools` and `Console` tab, and enter: `location.href` and hit <kbd>Enter</kbd>.
 
 After this is done, refresh the Perfect Home tab and your local links should work.
 
