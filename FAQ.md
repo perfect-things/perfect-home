@@ -10,6 +10,7 @@ Please first read through the common problems/issues:
 3. Create new **integer** entry called: `accessibility.tabfocus`, and set the value to `7`.
 4. Reopen/refresh the Perfect Home page.
 
+---
 
 ### Can't open a bookmark to a local file (starting with `file://`)
 Firefox prevents bookmarks/lings to local files for security reasons.
@@ -29,7 +30,7 @@ To do that, open `about:config` page and add these 3 properties:
 
 After this is done, refresh the Perfect Home tab and your local links should work.
 
-
+---
 
 ### Bookmarks reordering problems
 
@@ -49,7 +50,7 @@ If you are seeing this issue, there's an easy (albeit laborious) fix - in bookma
 - this will correctly set the index of every bookmark you reorder - eventually fixing all indexes in this folder
 - from now on - everything should work as expected.
 
-
+---
 
 
 # Issues
