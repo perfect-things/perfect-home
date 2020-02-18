@@ -5,7 +5,8 @@ export const EVENT = {
 	fire,
 
 	document: {
-		clicked: 'document-clicked'
+		clicked: 'document-clicked',
+		localLink: 'opening-local-link'
 	},
 
 	bookmark: {

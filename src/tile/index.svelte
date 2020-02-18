@@ -52,6 +52,10 @@ const onOut = () => ({ duration: ANIM_DURATION });
 
 function onclick (e) {
 	if ($wasSorted) e.preventDefault();
+	if (item.url.startsWith('file://')) {
+		try { location.href = item.url; }
+		catch { EVENT.fire(EVENT.document.localLink); }
+	}
 }
 
 function onBookmarkSave (bookmark) {

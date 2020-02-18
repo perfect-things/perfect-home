@@ -8,6 +8,22 @@
 <Toaster />
 <Cron />
 
+<Modal title="Error" bind:this="{modal}">
+	<p>
+		Unfortunately, due to Firefox security restrictions,<br>
+		Perfect Home is unable to open links to local files.<br><br>
+		You can change that yourself in your browser settings.<br>
+		See <a href="https://github.com/perfect-things/perfect-home/blob/master/FAQ.md" target="_blank">FAQ</a> on how to do that.<br>
+		Your extension URL is:<br>
+		<input class="ext-url" type="text" readonly value="{location.href}" on:focus="{e => e.target.select()}">
+	</p>
+	<div class="buttons">
+		<div class="flex-spacer"></div>
+		<button type="button" class="btn" on:click="{modal.close()}">Close</button>
+	</div>
+</Modal>
+
+
 <script>
 import Header from '../header';
 import Main from '../main';
@@ -18,8 +34,16 @@ import Palette from '../palette';
 import Editor from '../editor';
 import Toaster from '../toaster';
 import Cron from '../cron';
+import Modal from '../modal';
 import {EVENT} from '../lib';
 
-document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
+let modal;
 
+document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
+EVENT.on(EVENT.document.localLink, showLocalLinkWarning);
+
+function showLocalLinkWarning () {
+	modal.open();
+
+}
 </script>
