@@ -3,6 +3,8 @@
 	<li class="context-menu-item" on:click="{() => newTab(true)}">Open in Background Tab</li>
 	<li class="context-menu-item" on:click="{newWin}">Open in New Window</li>
 	<li class="context-menu-item context-menu-separator"></li>
+	<li class="context-menu-item" on:click="{copyUrl}">Copy URL</li>
+	<li class="context-menu-item context-menu-separator"></li>
 	<li class="context-menu-item" on:click="{editBookmark}">Edit</li>
 	<li class="context-menu-item" on:click="{delBookmark}">Delete</li>
 </ul>
@@ -10,7 +12,8 @@
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
 
 <script>
-import {EVENT, getBookmark, newtab, newwindow} from '../lib';
+import {EVENT, getBookmark, newtab, newwindow, copyToClipboard} from '../lib';
+import {showToast} from '../toaster';
 
 let menuEl;
 let item, el;
@@ -24,6 +27,12 @@ function newTab (bg) {
 function newWin () {
 	close();
 	newwindow({ url: item.url });
+}
+
+function copyUrl () {
+	close();
+	copyToClipboard(item.url);
+	showToast('URL copied to the Clipboard.', 'info', 2000);
 }
 
 function editBookmark () {

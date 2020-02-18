@@ -52,16 +52,28 @@ function isDark (color) {
 	return brightness < 80;
 }
 
+function isIP (url) {
+	const reg = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,7})?$/g;
+	return reg.test(url);
+}
+
+function isLocalFile (url) {
+	return url.startsWith('file://');
+}
+
 
 function getLetterThumbnail (item) {
 	const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 	const color = isDark(bg) ? '#fffd' : '#000d';
 	const style = `background-color: ${bg}; color: ${color};`;
 	const host = getHost(item.url);
-	const isIP = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,7})?$/g;
 	let text = (host || ''), suf;
-	if (isIP.test(text)) {
+	if (isIP(text)) {
 		suf = text;
+		text = item.title;
+	}
+	else if (isLocalFile(item.url)) {
+		suf = item.url.replace('file://', '').split(/[/\\]/).slice(-2).join('/');
 		text = item.title;
 	}
 	else {
@@ -127,6 +139,21 @@ function clone (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+
+
+function copyToClipboard (text) {
+	close();
+	const inp = document.createElement('INPUT');
+	inp.value = text;
+	inp.style = 'position: fixed; left: -1000px; top: -1000px;';
+	document.body.appendChild(inp);
+	inp.select();
+	inp.setSelectionRange(0, 99999); // For mobile devices
+	document.execCommand('copy');
+	setTimeout(() => inp.remove());
+
+}
+
 export {
 	injectCss,
 	validateCustomCss,
@@ -136,4 +163,5 @@ export {
 	animate,
 	getFavicon,
 	clone,
+	copyToClipboard,
 };
