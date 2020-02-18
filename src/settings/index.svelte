@@ -11,6 +11,7 @@
 <div class="settings-pane" class:hidden="{!isVisible}" tabindex="-1" bind:this="{settingsPane}">
 	<h1>Settings</h1>
 	<div class="settings-form" style="display: none" bind:this="{settingsForm}">
+
 		<h2>Main folder</h2>
 		<small>This is the primary navigable list of bookmarks.</small>
 
@@ -23,6 +24,36 @@
 				</select>
 			</div>
 		</div>
+
+
+
+		<h2>Docked folders</h2>
+		<small>These folders will be docked to the bottom.</small>
+
+		{#each $dockedFolders as dockedFolder}
+			<div class="settings-row">
+				<div class="select-wrap">
+					<select bind:value="{dockedFolder.id}" on:change="{() => onDockedFoldersChange(dockedFolder.id)}">
+						<option value="">None</option>
+						{#each folders as folder}
+							<option value="{folder.id}">{folder.title}</option>
+						{/each}
+					</select>
+				</div>
+				<button
+					class="btn xbtn"
+					type="button"
+					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
+				</button>
+			</div>
+		{/each}
+		<div class="settings-row">
+			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
+		</div>
+
+
+
+		<h2>Customize</h2>
 
 		<div class="settings-row">
 			<label>Max grid width</label>
@@ -58,7 +89,7 @@
 
 		<h2>Custom CSS</h2>
 		<small>This allows you to fully customize the page.
-			See <a href="https://github.com/tborychowski/perfect-home/blob/master/customization-tutorial.md" target="_blank">
+			See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
 				this tutorial</a> for some examples.
 		</small>
 
@@ -71,33 +102,8 @@
 		</div>
 
 
-		<h2>Docked folders</h2>
-		<small>These folders will be docked to the bottom.</small>
-
-		{#each $dockedFolders as dockedFolder}
-			<div class="settings-row">
-				<div class="select-wrap">
-					<select bind:value="{dockedFolder.id}" on:change="{() => onDockedFoldersChange(dockedFolder.id)}">
-						<option value="">None</option>
-						{#each folders as folder}
-							<option value="{folder.id}">{folder.title}</option>
-						{/each}
-					</select>
-				</div>
-				<button
-					class="btn xbtn"
-					type="button"
-					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
-				</button>
-			</div>
-		{/each}
-		<div class="settings-row">
-			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
-		</div>
-
-
 		<h2>Reset</h2>
-		<small>This will reset the above settings to their default values. It will not change the thumbnails cache.</small>
+		<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
 		<div class="settings-row">
 			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
 		</div>
