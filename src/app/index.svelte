@@ -40,6 +40,11 @@ import {EVENT} from '../lib';
 let modal;
 
 document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
+
+// don't open a file when dropped on the page
+window.addEventListener('dragover', e => e.preventDefault(),false);
+window.addEventListener('drop', e => e.preventDefault(), true);
+
 EVENT.on(EVENT.document.localLink, showLocalLinkWarning);
 
 function showLocalLinkWarning () {

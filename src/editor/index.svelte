@@ -49,6 +49,7 @@ let letterThumb = '', letterThumbSuff = '';
 onMount(() => {
 	EVENT.on(EVENT.bookmark.edit, editBookmark);
 	EVENT.on(EVENT.bookmark.delete, delBookmark);
+	EVENT.on(EVENT.bookmark.thumbDropped, thumbDropped);
 });
 
 function onThumbUrlChange (ev) {
@@ -133,7 +134,6 @@ function clearThumb (_item, el) {
 		style = letterThumbnail.style;
 		text = letterThumbnail.text;
 		suf = letterThumbnail.suf;
-		console.log(text);
 	}
 	else {
 		style = `background-image: url("${getFavicon(item.url)}")`;
@@ -185,6 +185,27 @@ function save (e) {
 	$items[idx] = item;
 	items.set($items);
 	cancel();
+}
+
+
+function undoThumbChange (_item, _thumb) {
+	return () => {
+		thumbnailUrl = _thumb || '';
+		save();
+	};
+}
+
+function thumbDropped (_item, _url) {
+	item = _item;
+	thumbnailUrl = _url;
+	const undo = undoThumbChange(_item, $thumbs[_item.id]);
+	showToast('Thumbnail changed.', 'info', 10000, 'Undo', (e, id) => {
+		if (e.target.closest('button')) {
+			hideToast(id);
+			undo();
+		}
+	});
+	save();
 }
 
 </script>

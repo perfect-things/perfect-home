@@ -23,7 +23,12 @@
 		in:fade={onIn()}
 		out:fade={onOut()}
 	>
-		<span class="item-thumb" bind:this={thumb}>
+		<span class="item-thumb" bind:this={thumb}
+			class:img-drag="{imgDrag}"
+			on:dragenter|preventDefault|stopPropagation|capture="{() => imgDrag = true}"
+			on:dragleave|preventDefault|stopPropagation|capture="{() => imgDrag = false}"
+			on:drop|preventDefault|stopPropagation|capture="{ondrop}"
+		>
 			<TextFit>{letterThumb}</TextFit>
 			<span class="item-thumb-suffix">{letterThumbSuff}</span>
 		</span>
@@ -44,11 +49,23 @@ export let item;
 let thumb;
 let favicon;
 let letterThumb = '', letterThumbSuff = '';
+let imgDrag = false;
 
 const ANIM_DURATION = 150;
 const onIn = () => ({ delay: ANIM_DURATION, duration: ANIM_DURATION + 50 });
 const onOut = () => ({ duration: ANIM_DURATION });
 
+function ondrop (e) {
+	imgDrag = false;
+	const dt = e.dataTransfer;
+	const files = dt.files;
+	const file = files.length && files[0];
+	if (!file) return;
+
+	const reader = new FileReader();
+	reader.onload = ev => EVENT.fire(EVENT.bookmark.thumbDropped, item, ev.target.result);
+	reader.readAsDataURL(file);
+}
 
 function onclick (e) {
 	if ($wasSorted) e.preventDefault();
@@ -57,6 +74,7 @@ function onclick (e) {
 		catch { EVENT.fire(EVENT.document.localLink); }
 	}
 }
+
 
 function onBookmarkSave (bookmark) {
 	if (item.id === bookmark.id) item = bookmark;
