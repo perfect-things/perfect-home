@@ -19,6 +19,7 @@ export const EVENT = {
 		deleteThumb: 'bookmark-thumb-del',
 		clearThumb: 'bookmark-thumb-clear',
 		changeThumb: 'bookmark-thumb-change',
+		thumbDropped: 'bookmark-thumb-dropped',
 	},
 	settings: {
 		loaded: 'settings-loaded',
