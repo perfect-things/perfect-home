@@ -11,6 +11,7 @@ const _options = {
 	gridGap      : 30,
 	pageColor    : '#eeeeee',
 	pageBg       : '#333333',
+	showLabels   : true,
 	css          : '',
 	rootFolder   : ROOT_ID,
 };

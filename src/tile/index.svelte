@@ -39,7 +39,7 @@
 
 
 <script>
-import TextFit from '../text-fit';
+import TextFit from '../svelte-text-fit';
 import {currentFolder, thumbs, wasSorted} from '../store';
 import {EVENT, getLetterThumbnail, getFavicon} from '../lib';
 import {onMount, afterUpdate} from 'svelte';

@@ -1,6 +1,6 @@
 <svelte:window on:popstate={onpopstate}/>
 
-<main class="bookmarks">
+<main class="bookmarks" class:no-labels="{!$options.showLabels}">
 	{#if $items.length}
 		{#each $items as item (item.id)}
 			<Tile item="{item}" />

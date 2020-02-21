@@ -35,12 +35,12 @@
 </Modal>
 
 <script>
-import Modal from '../modal';
-import TextFit from '../text-fit';
+import Modal from '../svelte-modal';
+import TextFit from '../svelte-text-fit';
+import {showToast, hideToast} from '../svelte-toaster';
 import {onMount} from 'svelte';
 import {items, thumbs} from '../store';
 import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
-import {showToast, hideToast} from '../toaster';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';

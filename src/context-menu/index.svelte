@@ -13,7 +13,7 @@
 
 <script>
 import {EVENT, getBookmark, newtab, newwindow, copyToClipboard} from '../lib';
-import {showToast} from '../toaster';
+import {showToast} from '../svelte-toaster';
 
 let menuEl;
 let item, el;

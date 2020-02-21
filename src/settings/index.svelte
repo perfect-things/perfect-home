@@ -86,6 +86,12 @@
 			<input type="text" bind:value="{$options.pageBg}">
 		</div>
 
+		<div class="settings-row">
+			<label>Show labels</label>
+			<div class="flex-spacer"></div>
+			<Toggle bind:value="{$options.showLabels}"/>
+		</div>
+
 
 		<h2>Custom CSS</h2>
 		<small>This allows you to fully customize the page.
@@ -147,7 +153,7 @@
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
 import {EVENT, getAllItems, clearCache, validateCustomCss} from '../lib';
-
+import Toggle from '../svelte-toggle';
 
 let isVisible = false;
 let folders = [];

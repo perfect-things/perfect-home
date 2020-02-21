@@ -32,9 +32,9 @@ import ContextMenu from '../context-menu';
 import Settings from '../settings';
 import Palette from '../palette';
 import Editor from '../editor';
-import Toaster from '../toaster';
 import Cron from '../cron';
-import Modal from '../modal';
+import Toaster from '../svelte-toaster';
+import Modal from '../svelte-modal';
 import {EVENT} from '../lib';
 
 let modal;
