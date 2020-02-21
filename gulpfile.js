@@ -20,7 +20,7 @@ function js () {
 	const rollup = require('gulp-rollup-lightweight');
 	const source = require('vinyl-source-stream');
 	const svelte = require('rollup-plugin-svelte');
-	const resolve = require('rollup-plugin-node-resolve');
+	const resolve = require('@rollup/plugin-node-resolve');
 	const {terser} = require('rollup-plugin-terser');
 
 	const rollupConfig = {
