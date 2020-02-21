@@ -125,7 +125,7 @@ function open () {
 
 function close () {
 	if (!folderEl) return;
-	folderEl.style.marginTop = '-42px';
+	folderEl.style.marginTop = '-41px';
 	folderItemsEl.classList.add('hidden');
 	expanded = false;
 }
