@@ -50,16 +50,16 @@ function bump (manifest, newVersion) {
 }
 
 
-function commit (version, notes) {
+function commit (version) {
 	if (dryrun) return faker();
 	return new Promise((resolve, reject) => {
 		git
 			.silent(true)
 			.add('./*')
-			.commit(notes || 'version bump')
+			.commit('Release v' + version)
 			.push(['origin', 'master'], err => {
 				if (err) reject(err);
-				else resolve({version, notes});
+				else resolve({version});
 			});
 	});
 }
@@ -97,15 +97,9 @@ function release () {
 				when: answers => answers.version === 'custom',
 				filter: semver.clean,
 				validate: answer => semver.valid(answer) ? true : 'That\'s not a valid version number',
-			},
-			{
-				type: 'input',
-				name: 'notes',
-				message: 'Enter a release/commit comment:',
-				default: prev => 'bump version to ' + prev.version
 			}
 		])
-		.then(({version, notes}) => {
+		.then(({version}) => {
 			spinner = ora('').start();
 			// update package & manifest
 			manifests.forEach(m => {
@@ -116,10 +110,10 @@ function release () {
 			});
 			spinner.text = 'Committing to GitHub...';
 			spinner.start();
-			return commit(version, notes);              // commit code changes to  github
+			return commit(version);              // commit code changes to  github
 		})
 		.then(() => {
-			spinner.text = `Update ${chalk.cyan('committed')} to Github.`;
+			spinner.text = `Update ${chalk.cyan('pushed')} to Github.`;
 			spinner.succeed();
 
 			spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
@@ -141,7 +135,22 @@ function release () {
 			return run(signCmd).catch(() => {});
 		})
 		.then(() => {
-			spinner.text = 'Signed & published!';
+			spinner.text = 'Signed & published to ' + chalk.cyan('mozilla') + '!';
+			spinner.succeed();
+
+			spinner.text = 'Zipping source...';
+			spinner.start();
+
+			const cmd = 'mkdir ~/Desktop/source && ' +
+				'cp -R src ~/Desktop/source && ' +
+				'cp package.json ~/Desktop/source && ' +
+				'cp gulpfile.js ~/Desktop/source && ' +
+				'7z a ~/Desktop/source.zip ~/Desktop/source/ > /dev/null && ' +
+				'rm -rf ~/Desktop/source';
+			return run(cmd).catch(() => {});
+		})
+		.then (() => {
+			spinner.text = 'Source zipped to ' + chalk.cyan('Desktop') + '!';
 			spinner.succeed();
 
 			console.log(chalk.cyan('All done!'));
