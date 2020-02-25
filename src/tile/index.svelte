@@ -69,7 +69,7 @@ function ondrop (e) {
 
 function onclick (e) {
 	if ($wasSorted) e.preventDefault();
-	if (item.url.startsWith('file://')) {
+	if (item.url && item.url.startsWith('file://')) {
 		try { location.href = item.url; }
 		catch { EVENT.fire(EVENT.document.localLink); }
 	}

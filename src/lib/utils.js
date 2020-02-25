@@ -130,8 +130,9 @@ function getFavicon (url) {
 	// const fallback = 'https://besticon-demo.herokuapp.com/icon?size=64&url=';
 	let urlObj;
 	try { urlObj = new URL(url); }
-	catch (e) {/**/}
-	return favIconService + (urlObj.host || '');
+	catch {}
+	if (!urlObj || !urlObj.host) return '';
+	return favIconService + urlObj.host;
 }
 
 
@@ -154,6 +155,26 @@ function copyToClipboard (text) {
 
 }
 
+
+function flattenTree (list = []) {
+	const flatList = [];
+	for (let i = 0; i < list.length; i++) {
+		const bookmark = list[i];
+		if (bookmark.children) {
+			const children = flattenTree(bookmark.children);
+			flatList.push(...children);
+			bookmark.type = 'folder';
+		}
+		else bookmark.type = 'bookmark';
+		flatList.push(bookmark);
+	}
+	return flatList;
+}
+
+function isFirefox () {
+	return typeof browser !== 'undefined';
+}
+
 export {
 	injectCss,
 	validateCustomCss,
@@ -164,4 +185,6 @@ export {
 	getFavicon,
 	clone,
 	copyToClipboard,
+	flattenTree,
+	isFirefox,
 };

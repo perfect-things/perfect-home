@@ -41,6 +41,7 @@ function rollupBuild (inputOptions = {}, outputOptions = {}) {
 
 
 function js () {
+	const commonjs = require('@rollup/plugin-commonjs');
 	const source = require('vinyl-source-stream');
 	const svelte = require('rollup-plugin-svelte');
 	const resolve = require('@rollup/plugin-node-resolve');
@@ -48,6 +49,7 @@ function js () {
 	const inputOptions = {
 		input: './src/index.js',
 		plugins: [
+			commonjs(),
 			resolve({
 				extensions: ['.mjs', '.js', '.svelte', '.json'],
 				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')

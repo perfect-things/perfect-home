@@ -38,9 +38,11 @@
 		"svelte": "^3.18.2",
 		"through2": "^3.0.1",
 		"vinyl-source-stream": "^2.0.0",
-		"web-ext": "^4.1.0"
+		"web-ext": "^4.1.0",
+		"webextension-polyfill": "^0.6.0"
 	},
 	"dependencies": {
+		"@rollup/plugin-commonjs": "^11.0.2",
 		"sortablejs": "^1.10.2"
 	},
 	"webExt": {
