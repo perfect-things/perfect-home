@@ -16,32 +16,49 @@ function eslint () {
 }
 
 
+
+function rollupBuild (inputOptions = {}, outputOptions = {}) {
+	const stream = require('stream');
+	const rollup = require('rollup');
+	const readable = new stream.Readable();
+
+	readable._read = function () { };
+	rollup
+		.rollup(inputOptions)
+		.then(bundle => bundle.generate(outputOptions))
+		.then(out => {
+			if (!out.code) out = out.output[0];
+			readable.push(out.code);
+			if (outputOptions.sourcemap) {
+				readable.push('\n//# sourceMappingURL=');
+				readable.push(out.map.toUrl());
+			}
+			readable.push(null);
+		})
+		.catch(error => setTimeout(() => readable.emit('error', error)));
+	return readable;
+}
+
+
 function js () {
-	const rollup = require('gulp-rollup-lightweight');
 	const source = require('vinyl-source-stream');
 	const svelte = require('rollup-plugin-svelte');
 	const resolve = require('@rollup/plugin-node-resolve');
 	const {terser} = require('rollup-plugin-terser');
-
-	const rollupConfig = {
+	const inputOptions = {
 		input: './src/index.js',
-		output: {
-			file: DIST_PATH + 'index.js',
-			format: 'iife',
-			sourcemap: !isProd,
-		},
 		plugins: [
-			svelte({ dev: !isProd, css: false }),
 			resolve({
 				extensions: ['.mjs', '.js', '.svelte', '.json'],
 				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 			}),
+			svelte({ dev: !isProd, css: false }),
 			isProd && terser()
 		]
 	};
-
-	return rollup(rollupConfig)
-		.pipe(source('index.js', './src'))
+	const outputOptions = {output: {format: 'iife', sourcemap: !isProd}};
+	return rollupBuild(inputOptions, outputOptions)
+		.pipe(source('index.js'))
 		.pipe(dest(DIST_PATH));
 }
 
