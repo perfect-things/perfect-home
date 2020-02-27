@@ -14,7 +14,7 @@
 
 .folder
 	background-color #333
-	border #000
+	border dark-color-bg1
 	border-width 1px 1px 0 1px
 	padding 0 0 10
 	display flex
@@ -27,7 +27,7 @@
 	display flex
 	align-items center
 	justify-content center
-	border-bottom #000
+	border-bottom dark-color-bg1
 	margin-bottom 5
 	height 40
 	min-height 40
@@ -43,7 +43,7 @@
 	font inherit
 	font-size 16px
 	cursor pointer
-	color #888
+	color dark-color-text1
 	transition color .2s
 	font-weight 600
 	letter-spacing 1px
@@ -66,6 +66,11 @@
 	border #000
 	background-color #3333
 	transition opacity .3s ease-out
+
+	&:focus
+		border-color dark-color-accent
+		box-shadow 0 0 2px 1px dark-color-accent
+		color dark-color-text2
 
 	.folder-expanded &
 		opacity 1

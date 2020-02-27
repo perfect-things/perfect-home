@@ -3,6 +3,7 @@
 		bind:this="{el}"
 		on:change="{onchange}"
 		on:keydown="{onkeydown}"
+		on:keypress="{onkeypress}"
 	>
 </div>
 
@@ -24,7 +25,11 @@ function onchange () {
 function onkeydown (e) {
 	if (e.key === 'ArrowRight') el.value = 100;
 	else if (e.key === 'ArrowLeft') el.value = 0;
-	else if (e.key === ' ') el.value = +el.value ? 0 : 100;
+	value = !!+el.value;
+}
+
+function onkeypress (e) {
+	if (e.key === ' ' || e.key === 'Enter') el.value = +el.value ? 0 : 100;
 	value = !!+el.value;
 }
 

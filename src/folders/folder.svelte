@@ -5,6 +5,7 @@
 
 	<h2 class="folder-header">
 		<button class="folder-pin"
+			aria-hidden="{expanded ? null : true}"
 			on:click="{togglePin}"
 			title="{folder.pinned ? 'Unpin' : 'Pin'}"></button>
 

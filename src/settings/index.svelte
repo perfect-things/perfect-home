@@ -27,13 +27,14 @@
 
 
 
-		<h2>Docked folders</h2>
+		<h2 id="docked-folders">Docked folders</h2>
 		<small>These folders will be docked to the bottom.</small>
 
 		{#each $dockedFolders as dockedFolder}
 			<div class="settings-row">
 				<div class="select-wrap">
-					<select aria-label="Select a docked folder"
+					<select title="Select a docked folder"
+						aria-labelledby="docked-folders"
 						bind:value="{dockedFolder.id}"
 						on:change="{() => onDockedFoldersChange(dockedFolder.id)}"
 					>
@@ -43,7 +44,8 @@
 						{/each}
 					</select>
 				</div>
-				<button aria-label="Remove a docked folder"
+				<button
+					title="Remove a docked folder"
 					class="btn xbtn"
 					type="button"
 					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
@@ -69,10 +71,10 @@
 		</div>
 
 		<div class="settings-row">
-			<label>Tile size</label>
+			<label id="tile-size">Tile size</label>
 			<div class="flex-spacer"></div>
-			<input aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
-			<input aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
+			<input aria-labelledby="tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
+			<input aria-labelledby="tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
 		</div>
 
 		<div class="settings-row">
@@ -96,18 +98,18 @@
 		</div>
 
 
-		<h2>Custom CSS</h2>
+		<h2 id="custom-css">Custom CSS</h2>
 		<small>This allows you to fully customize the page.
 			See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
 				this tutorial</a> for some examples.
 		</small>
 
 		<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
-			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" aria-label="CSS Validator">here</a>.
+			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" title="CSS Validator">here</a>.
 		</small>
 
 		<div class="settings-row">
-			<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-label="Enter custom CSS"></textarea>
+			<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-labelledby="custom-css"></textarea>
 		</div>
 
 
@@ -130,7 +132,8 @@
 
 			<div class="btn btn-half btn-import"
 				tabindex="0"
-				on:click="{() => settingsInput.click()}">
+				on:keypress="{importClick}"
+				on:click="{importClick}">
 					Import
 					<input type="file" accept="application/json"
 						tabindex="-1"
@@ -270,4 +273,7 @@ function validateCss (ev) {
 	el.setCustomValidity(res ? '' : 'Check your CSS!');
 }
 
+function importClick (e) {
+	if (e.key === 'Enter' || e.key === ' ' || e.type === 'click') settingsInput.click();
+}
 </script>
