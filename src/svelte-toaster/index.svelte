@@ -1,6 +1,7 @@
 <div class="toaster toaster-{position}">
 	{#each toasts as toast (toast.id)}
-		<div class="toast toast-{toast.type}"
+		<div aria-live="{toast.ariaLive}" role="status"
+			class="toast toast-{toast.type}"
 			transition:scale="{{ start: 0.5 }}"
 			on:click|preventDefault="{e => toast.cb(e, toast.id)}">
 				<div class="toast-msg">{toast.msg}</div>
@@ -32,8 +33,9 @@ export function showToast (msg, type = 'info', timeout = 5000, btn, cb = () => {
 		showProgress = true;
 		timeout = timeout - 500;
 	}
+	const ariaLive = type === 'alert' || type === 'error' ? 'assertive' : 'polite';
 	_toasts.update(list => {
-		list[id] = { type, msg, id, timeout, cb, showProgress, btn };
+		list[id] = { type, msg, id, ariaLive, timeout, cb, showProgress, btn };
 		return list;
 	});
 	return id;

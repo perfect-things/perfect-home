@@ -12,12 +12,12 @@
 	<h1>Settings</h1>
 	<div class="settings-form" style="display: none" bind:this="{settingsForm}">
 
-		<h2>Main folder</h2>
+		<h2 id="main-folder">Main folder</h2>
 		<small>This is the primary navigable list of bookmarks.</small>
 
 		<div class="settings-row">
 			<div class="select-wrap">
-				<select name="rootfolder" bind:value="{$options.rootFolder}">
+				<select name="rootfolder" bind:value="{$options.rootFolder}" aria-labelledby="main-folder">
 					{#each folders as folder}
 						<option value="{folder.id}">{folder.title}</option>
 					{/each}
@@ -33,14 +33,17 @@
 		{#each $dockedFolders as dockedFolder}
 			<div class="settings-row">
 				<div class="select-wrap">
-					<select bind:value="{dockedFolder.id}" on:change="{() => onDockedFoldersChange(dockedFolder.id)}">
+					<select aria-label="Select a docked folder"
+						bind:value="{dockedFolder.id}"
+						on:change="{() => onDockedFoldersChange(dockedFolder.id)}"
+					>
 						<option value="">None</option>
 						{#each folders as folder}
 							<option value="{folder.id}">{folder.title}</option>
 						{/each}
 					</select>
 				</div>
-				<button
+				<button aria-label="Remove a docked folder"
 					class="btn xbtn"
 					type="button"
 					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
@@ -56,40 +59,40 @@
 		<h2>Customize</h2>
 
 		<div class="settings-row">
-			<label>Max grid width</label>
-			<input type="number" bind:value="{$options.gridMaxWidth}">
+			<label for="gridMaxWidth">Max grid width</label>
+			<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
 		</div>
 
 		<div class="settings-row">
-			<label>Gaps</label>
-			<input type="number" bind:value="{$options.gridGap}">
+			<label for="gridGap">Gaps</label>
+			<input id="gridGap" type="number" bind:value="{$options.gridGap}">
 		</div>
 
 		<div class="settings-row">
 			<label>Tile size</label>
 			<div class="flex-spacer"></div>
-			<input type="number" bind:value="{$options.iconWidth}">
-			<input type="number" bind:value="{$options.iconHeight}">
+			<input aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
+			<input aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
 		</div>
 
 		<div class="settings-row">
-			<label>Text color</label>
+			<label for="pageColor">Text color</label>
 			<div class="flex-spacer"></div>
-			<input type="color" bind:value="{$options.pageColor}">
-			<input type="text" bind:value="{$options.pageColor}">
+			<input aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
+			<input aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
 		</div>
 
 		<div class="settings-row">
-			<label>Background</label>
+			<label for="pageBg">Background</label>
 			<div class="flex-spacer"></div>
-			<input type="color" bind:value="{$options.pageBg}">
-			<input type="text" bind:value="{$options.pageBg}">
+			<input aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
+			<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
 		</div>
 
 		<div class="settings-row">
-			<label>Show labels</label>
+			<label for="showLabels">Show labels</label>
 			<div class="flex-spacer"></div>
-			<Toggle bind:value="{$options.showLabels}"/>
+			<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
 		</div>
 
 
@@ -100,11 +103,11 @@
 		</small>
 
 		<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
-			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank">here</a>.
+			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" aria-label="CSS Validator">here</a>.
 		</small>
 
 		<div class="settings-row">
-			<textarea bind:value="{$options.css}" on:input="{validateCss}"></textarea>
+			<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-label="Enter custom CSS"></textarea>
 		</div>
 
 

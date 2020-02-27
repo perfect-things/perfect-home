@@ -1,5 +1,5 @@
 <div>
-	<input type="range" min="0" max="100" value="0" class="toggle"
+	<input {id} type="range" min="0" max="100" value="0" class="toggle"
 		bind:this="{el}"
 		on:change="{onchange}"
 		on:keydown="{onkeydown}"
@@ -8,6 +8,7 @@
 
 <script>
 import {afterUpdate} from 'svelte';
+export let id;
 export let value = false;
 let el;
 
