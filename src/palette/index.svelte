@@ -29,7 +29,7 @@
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
-import {clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
+import {EVENT, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
 
 
 let data = [];
@@ -44,11 +44,11 @@ onMount(() => {
 	close();
 	clear();
 	document.addEventListener('keydown', onDocumentKeydown);
+	EVENT.on(EVENT.palette.toggle, toggle);
 });
 
 
 function load () {
-	console.log('loading');
 	getAllItems()
 		.then(all => {
 			data = all

@@ -9,6 +9,11 @@ export const EVENT = {
 		localLink: 'opening-local-link'
 	},
 
+	palette: {
+		toggle: 'palette-toggle',
+		open: 'palette-open'
+	},
+
 	bookmark: {
 		added: 'bookmark-added',
 		moved: 'bookmark-moved',

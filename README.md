@@ -35,3 +35,8 @@ See [a tutorial here](customization-tutorial.md)
     ```sh
     npm run ext-build
     ```
+
+## Creating test-profile in Firefox
+1. Open `about:profiles`
+2. Create `test-profile`
+3. Set your previous profile as "default" again
