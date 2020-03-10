@@ -1,4 +1,8 @@
-<div class="modal-backdrop" class:visible="{opened}" bind:this="{backdropEl}" on:click="{onBackdropClick}">
+<div class="modal-backdrop"
+	class:visible="{opened}"
+	bind:this="{backdropEl}"
+	on:click="{onBackdropClick}">
+
 	<div class="modal">
 		<h1>{title}</h1>
 		<div class="modal-content" bind:this="{contentEl}">
@@ -52,7 +56,7 @@ export function close () {
 		backdropEl.style.display = 'none';
 		if (triggerEl) triggerEl.focus();
 		document.removeEventListener('keydown', onDocKeydown);
-	}, 300);
+	}, 150);
 
 }
 

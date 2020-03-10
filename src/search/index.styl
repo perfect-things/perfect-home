@@ -17,9 +17,14 @@
 	background dark-color-bg3
 	color dark-color-text3
 	box-shadow dark-shadow
+	opacity 0
+	transform scale(0.9)
+	display none
+	transition opacity anim-speed, transform anim-speed
 
-	&.hidden
-		display none
+	&.visible
+		opacity 1
+		transform scale(1)
 
 
 .autocomplete .autocomplete-input[type="text"]

@@ -1,4 +1,4 @@
-<div class="autocomplete" class:hidden="{!opened}">
+<div class="autocomplete" class:visible="{opened}" bind:this="{el}">
 	<input type="text" class="autocomplete-input"
 		bind:this="{input}"
 		on:input="{filter}"
@@ -31,7 +31,7 @@ import {onMount} from 'svelte';
 import {currentFolder} from '../store';
 import {EVENT, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
 
-
+let el;
 let data = [];
 let text = '';
 let opened = false;
@@ -95,8 +95,8 @@ function down () {
 }
 
 function highlight () {
-	const el = list.querySelector('.selected');
-	if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	const hlelem = list.querySelector('.selected');
+	if (hlelem) hlelem.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 
@@ -167,14 +167,20 @@ function clear () {
 function open () {
 	if (opened) return;
 	if (!data.length) load();
-	opened = true;
-	setTimeout(() => input.select(), 100);
+	el.style.display = 'block';
+	setTimeout(() => {
+		opened = true;
+		input.select();
+	}, 100);
 }
 
 function close () {
 	if (!opened) return;
-	opened = false;
-	setTimeout(clear, 300);
+	setTimeout(() => opened = false);
+	setTimeout(() => {
+		el.style.display = 'none';
+		clear();
+	}, 150);
 }
 
 function toggle () {

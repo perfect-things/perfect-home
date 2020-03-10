@@ -3,7 +3,7 @@
 <Folders />
 <Settings />
 <ContextMenu />
-<Palette />
+<Search />
 <Editor />
 <Toaster />
 <Cron />
@@ -30,7 +30,7 @@ import Main from '../main';
 import Folders from '../folders';
 import ContextMenu from '../context-menu';
 import Settings from '../settings';
-import Palette from '../palette';
+import Search from '../search';
 import Editor from '../editor';
 import Cron from '../cron';
 import Toaster from '../svelte-toaster';
