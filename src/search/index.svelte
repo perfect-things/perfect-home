@@ -1,40 +1,41 @@
-<div class="autocomplete" class:visible="{opened}" bind:this="{el}">
-	<input type="text" class="autocomplete-input"
-		bind:this="{input}"
-		on:input="{filter}"
-		on:focus="{open}"
-		on:keydown="{onkeydown}"
-		on:keypress="{onkeypress}"
-		>
-	<div class="autocomplete-list" bind:this="{list}">
-		{#each filteredData as item, i (item.id)}
-		<div
-			class="autocomplete-list-item autocomplete-list-item-{item.type}"
-			class:selected="{i === highlightIndex}"
-			on:click="{() => onclick(item)}">
+<Modal bind:this="{modal}" cssClass="search-modal">
+	<div class="autocomplete">
+		<input type="text" class="autocomplete-input"
+			bind:this="{input}"
+			on:input="{filter}"
+			on:focus="{open}"
+			on:keydown="{onkeydown}"
+			on:keypress="{onkeypress}"
+			>
+		<div class="autocomplete-list" bind:this="{list}">
+			{#each filteredData as item, i (item.id)}
+			<div
+				class="autocomplete-list-item autocomplete-list-item-{item.type}"
+				class:selected="{i === highlightIndex}"
+				on:click="{() => onclick(item)}">
 
-			<div class="autocomplete-list-item-icon"
-				style="{item.favicon ? `background-image: url(${item.favicon})` : ''}">
+				<div class="autocomplete-list-item-icon"
+					style="{item.favicon ? `background-image: url(${item.favicon})` : ''}">
+				</div>
+				<span class="autocomplete-list-item-text">
+					{@html item.highlightedTitle || item.title}
+				</span>
 			</div>
-			<span class="autocomplete-list-item-text">
-				{@html item.highlightedTitle || item.title}
-			</span>
+			{/each}
 		</div>
-		{/each}
 	</div>
-</div>
+</Modal>
 
-<svelte:window on:click={onDocumentClick}/>
 
 <script>
 import {onMount} from 'svelte';
 import {currentFolder} from '../store';
+import Modal from '../svelte-modal';
 import {EVENT, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
 
-let el;
+let modal;
 let data = [];
 let text = '';
-let opened = false;
 let highlightIndex = 0;
 let input, list, filteredData = [];
 
@@ -44,7 +45,7 @@ onMount(() => {
 	close();
 	clear();
 	document.addEventListener('keydown', onDocumentKeydown);
-	EVENT.on(EVENT.palette.toggle, toggle);
+	EVENT.on(EVENT.search.toggle, toggle);
 });
 
 
@@ -106,16 +107,13 @@ function onclick (item) {
 	gotoItem(item);
 }
 
-function onDocumentClick (e) {
-	if (!e.target.closest('.autocomplete')) close();
-}
 
 function onkeydown (e) {
 	let key = e.key;
 	if (key === 'Tab' && e.shiftKey) key = 'ShiftTab';
 	const fnmap = {
-		Tab: opened ? down.bind(this) : null,
-		ShiftTab: opened ? up.bind(this) : null,
+		Tab: modal.opened ? down.bind(this) : null,
+		ShiftTab: modal.opened ? up.bind(this) : null,
 		ArrowDown: down.bind(this),
 		ArrowUp: up.bind(this),
 		Escape: onEsc.bind(this),
@@ -149,9 +147,9 @@ function onkeypress (e) {
 }
 
 function onEsc (e) {
-	if (text) return clear();
 	e.stopPropagation();
-	if (opened) {
+	if (text) return clear();
+	if (modal.opened) {
 		input.focus();
 		close();
 	}
@@ -165,26 +163,18 @@ function clear () {
 }
 
 function open () {
-	if (opened) return;
+	modal.open();
 	if (!data.length) load();
-	el.style.display = 'block';
-	setTimeout(() => {
-		opened = true;
-		input.select();
-	}, 100);
+	setTimeout(() => input.select(), 100);
 }
 
 function close () {
-	if (!opened) return;
-	setTimeout(() => opened = false);
-	setTimeout(() => {
-		el.style.display = 'none';
-		clear();
-	}, 150);
+	modal.close();
+	setTimeout(clear, 150);
 }
 
 function toggle () {
-	opened ? close() : open();
+	modal.opened ? close() : open();
 }
 
 </script>

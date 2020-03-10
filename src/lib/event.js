@@ -9,9 +9,9 @@ export const EVENT = {
 		localLink: 'opening-local-link'
 	},
 
-	palette: {
-		toggle: 'palette-toggle',
-		open: 'palette-open'
+	search: {
+		toggle: 'search-toggle',
+		open: 'search-open'
 	},
 
 	bookmark: {

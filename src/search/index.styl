@@ -1,56 +1,53 @@
 @import "lib"
 
+.modal-backdrop.search-modal
+	align-items flex-start
+
+	.modal
+		margin-top 15vh
+		max-width 70vw
+		min-width 300px
+		width 45vw
+		min-height 120px
+
 
 .autocomplete
 	flex 1
 	display flex
-	flex-wrap wrap
-	min-width 200px
-	max-width 60%
-	position fixed
-	left 30%
-	right 30%
-	top 15%
-	border-radius 4px
-	z-index 999
+	flex-flow column
+	width calc(100% + 40px)
+	margin -20px
+	max-height 60vh
+	min-height 120px
 	font-size 14px
-	background dark-color-bg3
-	color dark-color-text3
-	box-shadow dark-shadow
-	opacity 0
-	transform scale(0.9)
-	display none
-	transition opacity anim-speed, transform anim-speed
-
-	&.visible
-		opacity 1
-		transform scale(1)
 
 
-.autocomplete .autocomplete-input[type="text"]
-	color inherit
-	font inherit
-	font-size 16px
-	width 100%
-	border none
-	background none
-	box-shadow none
-	padding 10 20 8 40
-	margin 10 0
-	outline none
-
-	&:focus
+	.autocomplete-input[type="text"]
+		color inherit
+		font inherit
+		font-size 16px
+		width 100%
+		border none
+		background none
+		box-shadow none
+		padding 10 20 8 40
+		margin 10 0
 		outline none
+		height 36
+
+		&:focus
+			outline none
 
 
 .autocomplete-list
 	position relative
 	width 100%
+	height auto
+	max-height calc(100% - 56px)
 	overflow-y auto
 	z-index 99
 	padding 10 0
 	border-top dark-color-bg1
-	max-height calc(20 * (1em + 10px) + 15px)
 	user-select none
 
 	&:empty
@@ -66,7 +63,7 @@
 	align-items flex-start
 
 
-	&:hover,
+	&:hover
 	&.selected
 		background-color dark-color-highlight
 

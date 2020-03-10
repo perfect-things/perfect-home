@@ -1,4 +1,4 @@
-<div class="modal-backdrop"
+<div class="modal-backdrop {cssClass}"
 	class:visible="{opened}"
 	bind:this="{backdropEl}"
 	on:click="{onBackdropClick}">
@@ -12,9 +12,13 @@
 		</div>
 	</div>
 </div>
+<svelte:options accessors/>
+
 <script>
 export let title = '';
-let backdropEl, contentEl, triggerEl, opened = false;
+export let opened = false;
+export let cssClass = '';
+let backdropEl, contentEl, triggerEl;
 
 function focusFirst () {
 	const focusable = getFocusableElements().shift();
