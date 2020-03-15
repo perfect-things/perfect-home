@@ -232,9 +232,9 @@ function addFolder () {
 	dockedFolders.set(docked);
 }
 
-function delFolder (id) {
+function delFolder (folder) {
 	const docked = $dockedFolders;
-	const idx = docked.findIndex(f => f.id === id);
+	const idx = docked.findIndex(f => f.id === folder.id);
 	docked.splice(idx, 1);
 	dockedFolders.set(docked);
 }
