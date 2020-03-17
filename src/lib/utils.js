@@ -175,6 +175,20 @@ function isFirefox () {
 	return typeof browser !== 'undefined';
 }
 
+function processSubTree (tree) {
+	return tree[0].children.map(ch => {
+		if (!ch.type) {
+			if (ch.children) ch.type = 'folder';
+			else ch.type = 'bookmark';
+		}
+		if (ch.url && ch.url.startsWith('about:reader')) {
+			ch.url = ch.url.replace('about:reader?url=', '');
+			ch.url = decodeURIComponent(ch.url);
+		}
+		return ch;
+	});
+}
+
 export {
 	injectCss,
 	validateCustomCss,
@@ -187,4 +201,5 @@ export {
 	copyToClipboard,
 	flattenTree,
 	isFirefox,
+	processSubTree,
 };

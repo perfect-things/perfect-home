@@ -77,18 +77,10 @@ function folderChanged (folderId) {
 
 function readFolder (id) {
 	getSubTree(id)
-		.then(tree => {
-			if (tree && tree.length) {
-				$items = tree[0].children.map(ch => {
-					if (ch.type) return ch;
-					if (ch.children) ch.type = 'folder';
-					else ch.type = 'bookmark';
-					return ch;
-				});
-			}
+		.then(_items => {
+			$items = _items;
 			$itemsLoaded = true;
-		})
-		.catch(e => console.error(e));
+		});
 }
 
 
