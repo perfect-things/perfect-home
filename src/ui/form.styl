@@ -12,9 +12,9 @@ input[type="color"]
 input[type="number"]
 	font inherit
 	height 34
-	border dark-color-bg2
-	background-color dark-color-bg2
-	color dark-color-text3
+	border 1px solid var(--color-background)
+	background-color var(--color-background)
+	color var(--color-text)
 	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
 	border-radius 4px
 
@@ -23,13 +23,13 @@ input[type="number"]
 
 	&:focus
 	&:focus-within
-		border-color dark-color-accent
-		box-shadow 0 0 2px 1px dark-color-accent
+		border-color  var(--color-accent)
+		box-shadow 0 0 2px 1px  var(--color-accent)
 		outline none
 
 	&:invalid
-		border-color color-danger
-		box-shadow 0 0 2px 1px color-danger
+		border-color  var(--color-danger)
+		box-shadow 0 0 2px 1px  var(--color-danger)
 		outline none
 
 

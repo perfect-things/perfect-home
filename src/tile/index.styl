@@ -34,7 +34,7 @@
 		font 400 3em/1 helvetica, arial, sans-serif
 		align-items center
 		justify-content center
-		color #555
+		color var(--color-background-alt)
 		overflow hidden
 
 	.item-thumb-suffix
@@ -52,7 +52,7 @@
 		display none
 
 	.item-folder .item-thumb
-		background-color #ccc
+		background-color var(--color-text-dimmed)
 		mask url('assets/folder.svg') center no-repeat
 		mask-size cover
 
@@ -66,7 +66,7 @@
 
 
 	.item-thumb.img-drag
-		box-shadow 0 0 3px 1px dark-color-accent
+		box-shadow 0 0 3px 1px  var(--color-accent)
 		background none !important
 		.text-fit
 		.item-thumb-suffix
@@ -94,6 +94,6 @@
 				max-width 90%
 				max-height 3em
 				margin-top 0
-				color #fff
+				color var(--color-text)
 				letter-spacing 2px
 				z-index 9

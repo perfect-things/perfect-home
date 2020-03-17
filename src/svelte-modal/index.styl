@@ -1,5 +1,7 @@
 @import "lib"
 
+anim-speed = 0.15s
+
 .modal-backdrop
 	position fixed
 	top 0
@@ -17,8 +19,8 @@
 		background-color rgba(#000, .6)
 
 .modal
-	background dark-color-bg3
-	color dark-color-text3
+	background var(--color-background-alt)
+	color var(--color-text)
 	border-radius 3px
 	margin-top -60
 	opacity 0
@@ -32,7 +34,7 @@
 
 	h1
 		font-size 18px
-		border-bottom #111
+		border-bottom var(--color-border)
 		padding 20 20 18
 		margin 0
 

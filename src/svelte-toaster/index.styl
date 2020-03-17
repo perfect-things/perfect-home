@@ -44,17 +44,17 @@
 		align-items center
 		justify-content center
 		transition background-color .2s
-		color dark-color-text3
+		color var(--color-text)
 
 		&:hover
-			color dark-color-text3
+			color var(--color-text)
 			background #3338
 		&:active
-			color dark-color-text1
+			color var(--color-text-dimmed)
 			background #0008
 
 	.toast-msg
-		color dark-color-text3
+		color var(--color-text)
 		flex 1
 
 	.toast-close
@@ -66,13 +66,13 @@
 
 .toast
 .toast-info
-	background color-info
+	background  var(--color-info)
 
 .toast-warning
-	background color-warning
+	background  var(--color-warning)
 
 .toast-error
-	background color-danger
+	background  var(--color-danger)
 
 .toast-progressbar
 	position absolute

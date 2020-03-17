@@ -21,7 +21,7 @@
 
 .settings-pane
 	position absolute
-	background-color #444
+	background-color var(--color-background-alt)
 	top 0
 	right 0
 	bottom 0
@@ -31,7 +31,7 @@
 	transition transform .3s, opacity .3s
 	z-index 10
 	overflow-y auto
-	color dark-color-text2
+	color var(--color-text)
 
 	&.hidden
 		transform translateX(310px)
@@ -42,10 +42,12 @@
 	h2
 		padding 10 20
 		margin 25 -20 15
-		background #666
 		text-align left
-		border-top #888
-		border-bottom #888
+		background var(--color-info)
+		border-top 1px solid var(--color-background)
+		border-bottom 1px solid var(--color-background)
+		color var(--color-text)
+		filter saturate(.5)
 
 	label
 		display block
@@ -88,7 +90,7 @@
 		margin-bottom 15
 
 		a
-			color dark-color-accent
+			color  var(--color-accent)
 			text-decoration none
 
 			&:hover

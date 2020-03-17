@@ -47,7 +47,7 @@
 	overflow-y auto
 	z-index 99
 	padding 10 0
-	border-top dark-color-bg1
+	border-top var(--color-border)
 	user-select none
 
 	&:empty
@@ -65,7 +65,7 @@
 
 	&:hover
 	&.selected
-		background-color dark-color-highlight
+		background-color  var(--color-highlight)
 
 	&.hidden
 		display none
@@ -84,12 +84,12 @@
 	padding-top 2
 
 	b
-		color dark-color-accent
+		color  var(--color-accent)
 
 
 .autocomplete-list-item-folder
 	.autocomplete-list-item-icon
-		background-color dark-color-text3
+		background-color var(--color-text)
 		mask-image url('assets/folder.svg')
 
 	.autocomplete-list-item-text
@@ -99,6 +99,6 @@
 .autocomplete-list-item-bookmark
 	.autocomplete-list-item-icon
 		border-radius 10
-		box-shadow 0 0 1px 1px dark-color-text3
+		box-shadow 0 0 1px 1px var(--color-text)
 		background-repeat no-repeat
 		background-position center
