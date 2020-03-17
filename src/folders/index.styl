@@ -13,8 +13,8 @@
 
 
 .folder
-	background-color #333
-	border dark-color-bg1
+	border 1px solid var(--color-border)
+	background var(--color-background)
 	border-width 1px 1px 0 1px
 	padding 0 0 10
 	display flex
@@ -27,7 +27,7 @@
 	display flex
 	align-items center
 	justify-content center
-	border-bottom dark-color-bg1
+	border-bottom 1px solid var(--color-border)
 	margin-bottom 5
 	height 40
 	min-height 40
@@ -37,21 +37,21 @@
 	display flex
 	align-items center
 	justify-content center
-	padding 5 10
+	padding 5
+	margin 3 20 0 5
 	background none
 	border none
 	font inherit
 	font-size 16px
 	cursor pointer
-	color dark-color-text1
+	color var(--color-text-dimmed)
 	transition color .2s
 	font-weight 600
 	letter-spacing 1px
-	margin 3 20 0 0
+	border-radius 5
 
 	&:focus
-		outline 1px solid #ffa500
-		box-shadow 0 0 2px 1px #ffa500
+		box-shadow 0 0 2px 1px var(--color-accent)
 
 
 .folder-pin
@@ -63,20 +63,19 @@
 	margin-left 8
 	cursor pointer
 	opacity 0
-	border #000
-	background-color #3333
+	border 1px solid var(--color-border)
+	background-color var(--color-background-alt)
 	transition opacity .3s ease-out
 
 	&:focus
-		border-color dark-color-accent
-		box-shadow 0 0 2px 1px dark-color-accent
-		color dark-color-text2
+		border-color  var(--color-accent)
+		box-shadow 0 0 2px 1px  var(--color-accent)
 
 	.folder-expanded &
 		opacity 1
 
 	.folder-pinned &
-		background-color dark-color-accent
+		background-color var(--color-accent)
 		filter brightness(.7)
 
 
@@ -95,10 +94,11 @@
 		transition visibility 0s .5s, opacity .5s
 
 	&:empty
-		color #888
+		color var(--color-text)
 		text-align center
 		padding 30 20 20
 		display block
+		filter opacity(.5)
 
 		&::after
 			content 'Folder is empty'

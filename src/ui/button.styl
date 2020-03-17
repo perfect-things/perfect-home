@@ -19,44 +19,30 @@
 	border-radius 3
 	user-select none
 	box-shadow 0 1px 0 rgba(#000, .8)
-	color dark-color-text3
-	background color-info
+	color var(--color-text)
+	background  var(--color-info)
 	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
 
 
 	&:focus
-		border-color dark-color-accent
-		box-shadow 0 0 2px 1px dark-color-accent
+		border-color  var(--color-accent)
+		box-shadow 0 0 2px 1px  var(--color-accent)
 		outline none
 
 	&:active
 		outline none
 		box-shadow none
 		transform translateY(1px)
-		background darken(color-info, 15%)
-		color alpha(dark-color-text3, 50%)
-
-
+		filter brightness(0.85)
 
 	&.success
-		background darken(color-success, 30%)
-
-		&:active
-			background darken(color-success, 15%)
-
+		background var(--color-success)
 
 	&.warning
-		background color-warning
-
-		&:active
-			background darken(color-warning, 15%)
-
+		background  var(--color-warning)
 
 	&.danger
-		background color-danger
-
-		&:active
-			background darken(color-danger, 15%)
+		background  var(--color-danger)
 
 
 
@@ -70,17 +56,17 @@
 	text-align center
 	cursor pointer
 	z-index 10
-	color dark-color-text0
+	color var(--color-text-dimmed)
 	transition color .2s
 	display inline-block
 
 	&:focus
-		border-color dark-color-accent
-		box-shadow 0 0 2px 1px dark-color-accent
-		color dark-color-text2
+		border-color  var(--color-accent)
+		box-shadow 0 0 2px 1px  var(--color-accent)
+		color var(--color-text)
 
 	&:hover
-		color dark-color-text2
+		color var(--color-text)
 
 
 .flex-spacer

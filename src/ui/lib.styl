@@ -1,28 +1,3 @@
-
-// DARK THEME
-dark-color-bg1 = #000
-dark-color-bg2 = #333
-dark-color-bg3 = #444
-
-dark-color-text0 = #888
-dark-color-text1 = #ccc
-dark-color-text2 = #eee
-dark-color-text3 = #fff
-
-dark-color-highlight = #14789f
-dark-color-accent = orange
-
-dark-shadow = 0 1px 5px 1px rgba(#000, 0.5)
-
-anim-speed = 0.15s
-
-color-info=#666d7b
-color-success=#408062
-color-warning=#af8a1a
-color-danger=#8b4848
-
-
-
 //*** SHORTCUTS ************************************************************************************
 b(n) { if n is 0 { font-weight: normal } else { font-weight: bold } }				// b:1 -> font-weight: bold;
 i(n) { if n is 0 { font-style: normal } else { font-style: italic } }				// i:1 -> font-style: italic;
@@ -59,18 +34,6 @@ z(n = 0) { z-index: n }
 //*** SHORTCUTS ************************************************************************************
 
 
-
-
-// top, right, bottom, left
-pos()
-	a = arguments
-	position: absolute;
-	unless type(a[0]) is not 'unit' { top: px(a[0]); }
-	unless type(a[1]) is not 'unit' { right: px(a[1]); }
-	unless type(a[2]) is not 'unit' { bottom: px(a[2]); }
-	unless type(a[3]) is not 'unit' { left: px(a[3]); }
-
-
 font()
 	if length(arguments) is 3 and type(arguments[1]) is 'literal'	// font: 12/2 -> font-size: 12px; line-height: 2
 		font-size: px(arguments[0]);
@@ -85,67 +48,7 @@ font()
 
 
 
-// border: [top] [1px] [solid] [blue], e.g. border: 1px; border: red; border: top blue; border: top 1px; border: top 2px dotted green;
-border-top() { border-top: setBorder(arguments); }
-border-right() { border-right: setBorder(arguments); }
-border-bottom() { border-bottom: setBorder(arguments); }
-border-left() { border-left: setBorder(arguments); }
-border()
-	if arguments[0] == 'none' { border: none; } else { border: setBorder(arguments); }
-
 border-radius() { border-radius: joinArgs(arguments); }
-
-
-// set background, e.g. bg: red; bg: img x y; bg: red img;
-bg()
-	arg = arguments
-	if type(arg[0]) == 'rgba'
-		if length(arg) > 1
-			background: arg[0] setBg(arg[1], arg[2] || 0, arg[3] || 0, arg[4] || no-repeat)
-		else
-			background: arg[0]
-	else
-		if arguments[0] == 'none'
-			background: none
-		else
-			background: setBg(arg[0], arg[1] || 0, arg[2] || 0, arg[3] || no-repeat)
-
-
-
-
-
-//*** STYLE HELPERS ********************************************************************************
-
-// border: [1px] [solid] [blue], e.g. border: 1; border: red; border: 1 red; border: 1 dotted red;
-setBorder()
-	arg = arguments
-	if arg[0] == 'none'
-		return none
-	else if type(arg[0]) == 'unit'
-		size = arg[0]
-		if type(arg[1]) == 'rgba'
-			color = arg[1]
-			style = solid
-		else
-			if type(arg[1]) == 'ident'
-				style = arg[1]
-				if type(arg[2]) == 'rgba' { color = arg[2] } else { color = transparent }
-			else
-				style = solid
-				if arg[1] == null
-					color = transparent
-	else
-		size = 1
-		style = solid
-		if type(arg[0]) == 'rgba' { color = arg[0] }
-
-	return px(size) style color;
-
-
-setBg()
-	arg = arguments
-	return unquote('url(' + img-base + '/' + unquote(arg[0]) + ') ' + px(arg[1]) + ' ' + px(arg[2]) + ' ' + arg[3]);
-//*** STYLE HELPERS ********************************************************************************
 
 
 

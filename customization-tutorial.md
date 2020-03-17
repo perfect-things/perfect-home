@@ -42,3 +42,35 @@ Now, to style the folder we add something like the below to the  `Custom CSS` bo
 ```
 
 And that's it - the effect should be visible immediately.
+
+
+## Theming
+The colour palette used throughout the UI is defined in CSS custom properties attached to `:root` element.
+The few colours you can set in Settings panel are overwriting the defaults, and are also defined as CSS custom properties (with the same names as the default ones) and are attached to `HTML` tag selector.
+If you wish to overwrite the colour palette, you just need to change the values for the CSS custom properties and attach them to `BODY` tag selector, like so:
+```css
+body {
+    --color-text: red;
+}
+```
+
+### Colour palette
+Here is the full colour palette. To overwrite the colours, just copy the following snippet to the "Custom CSS" field in Settings and change the colour values.
+```css
+body {
+	--color-border: #000;
+	--color-background: #333;
+	--color-background-alt: #444;
+
+	--color-text: #fff;
+	--color-text-dimmed: #ccc;
+
+	--color-highlight: #14789f;
+	--color-accen:t orange;
+
+	--color-info: #666d7b;
+	--color-success: #408062;
+	--color-warning: #af8a1a;
+	--color-danger: #8b4848;
+}
+```

@@ -48,8 +48,8 @@ function optionsChanged (props) {
 	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
 	document.documentElement.style.setProperty('--grid-gap', props.gridGap + 'px');
 
-	document.documentElement.style.setProperty('--color', props.pageColor);
-	document.documentElement.style.setProperty('--bg', props.pageBg);
+	document.documentElement.style.setProperty('--color-text', props.pageColor);
+	document.documentElement.style.setProperty('--color-background', props.pageBg);
 	injectCss(props.css);
 	currentFolder.set(props.rootFolder);
 }

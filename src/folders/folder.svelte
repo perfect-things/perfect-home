@@ -136,7 +136,8 @@ function readFolder (id = folder.id) {
 	return getSubTree(id)
 		.then(_items => {
 			if (!_items || !_items.length) return;
-			return _items.filter(i => i.type !== 'folder');
+			items = _items.filter(i => i.type !== 'folder');
+			return items;
 		});
 }
 
