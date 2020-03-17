@@ -134,12 +134,10 @@ function close () {
 
 function readFolder (id = folder.id) {
 	return getSubTree(id)
-		.then(tree => {
-			if (!tree || !tree.length) return;
-			items = tree[0].children.filter(i => i.type !== 'folder');
-			return items;
-		})
-		.catch(e => console.error(e));
+		.then(_items => {
+			if (!_items || !_items.length) return;
+			return _items.filter(i => i.type !== 'folder');
+		});
 }
 
 </script>

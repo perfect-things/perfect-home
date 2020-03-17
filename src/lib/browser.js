@@ -1,12 +1,12 @@
 import browser from 'webextension-polyfill';
-import {isFirefox, flattenTree} from './utils';
+import {isFirefox, flattenTree, processSubTree} from './utils';
 
 const getSettings = async () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = async (settings) => browser.storage.local.set({ settings });
 
 const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title).catch(() => {});
 
-const getSubTree = async (id) => browser.bookmarks.getSubTree(id).catch(() => {});
+const getSubTree = async (id) => browser.bookmarks.getSubTree(id).then(processSubTree).catch(e => console.error(e));
 
 const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]).catch(() => {});
 const saveBookmark = async (item) => browser.bookmarks.update(item.id, {title: item.title, url: item.url});

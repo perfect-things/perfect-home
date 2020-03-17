@@ -13,7 +13,7 @@ Please first read through the common problems/issues:
 ---
 
 ### Can't open a bookmark to a local file (starting with `file://`)
-Firefox prevents bookmarks/lings to local files for security reasons.
+Firefox prevents bookmarks/links to local files for security reasons.
 You can see the error if you open firefox dev tools (on windows: <kbd>F12</kbd> and on mac: <kbd>CMD+ALT+i</kbd>) and click such a link. You shoud see an error that looks like this:
 ```
 Security Error: Content at moz-extension://8b9a7299-b965-814f-a87b-8cdeac5e9d3f/index.html may not load or link to file:///path/to/my/local/file.html.
@@ -22,13 +22,20 @@ You can manually enable your browser to handle such links:
 To do that, open `about:config` page and add these 3 properties:
 1. `capability.policy.policynames`, and set it to a string value: `localfilelinks`
 2. `capability.policy.localfilelinks.checkloaduri.enabled`, and set it to a string value: `allAccess`
-3. `capability.policy.localfilelinks.sites`, and set to `moz-extension://<EXTENSION ID>/index.html` 
-    
+3. `capability.policy.localfilelinks.sites`, and set to `moz-extension://<EXTENSION ID>/index.html`
+
 	The long ID number is the ID of this extension, which is different on every computer.
 
     You can find yours if you open the Perfect Home in a new tab, then open `Dev Tools` and `Console` tab, and enter: `location.href` and hit <kbd>Enter</kbd>.
 
 After this is done, refresh the Perfect Home tab and your local links should work.
+
+---
+
+### Can't open a bookmark to a Reader View of an article
+e.g. `about:reader?url=https%3A%2F%2Fwww.domain.com`
+Unfortunately, Firefox prevents opening links like that (security reasons).
+As a workaround - *Perfect Home* will strip the reader part of the URI and just open a normal link.
 
 ---
 
