@@ -34,11 +34,17 @@ onMount(() => {
 	EVENT.on(EVENT.settings.loaded, init);
 	EVENT.on(EVENT.bookmark.added, refresh);
 	EVENT.on(EVENT.bookmark.removed, refresh);
+	EVENT.on(EVENT.document.clicked, focusBody);
+
 });
 
 
 function refresh () {
 	readFolder($currentFolder);
+}
+
+function focusBody () {
+	document.body.focus();
 }
 
 function optionsChanged (props) {

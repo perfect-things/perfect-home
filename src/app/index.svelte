@@ -45,10 +45,6 @@ document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
 window.addEventListener('dragover', e => e.preventDefault(),false);
 window.addEventListener('drop', e => e.preventDefault(), true);
 
-EVENT.on(EVENT.document.localLink, showLocalLinkWarning);
+EVENT.on(EVENT.document.localLink, () => modal.open());
 
-function showLocalLinkWarning () {
-	modal.open();
-
-}
 </script>
