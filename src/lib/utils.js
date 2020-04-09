@@ -189,6 +189,19 @@ function processSubTree (tree) {
 	});
 }
 
+function isImage (url) {
+	const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'];
+	let _url;
+	try { _url = new URL(url); }
+	catch (e) {/*eslint no-empty: 0*/}
+	if (_url && _url.protocol === 'file:') {
+		const fname = _url.pathname.split('/').pop();
+		const ext = fname.split('.').pop();
+		return imageExtensions.includes(ext);
+	}
+	return false;
+}
+
 export {
 	injectCss,
 	validateCustomCss,
@@ -202,4 +215,5 @@ export {
 	flattenTree,
 	isFirefox,
 	processSubTree,
+	isImage,
 };

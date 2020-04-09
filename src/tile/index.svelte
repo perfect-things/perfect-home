@@ -41,7 +41,7 @@
 <script>
 import TextFit from '../svelte-text-fit';
 import {currentFolder, thumbs, wasSorted} from '../store';
-import {EVENT, getLetterThumbnail, getFavicon} from '../lib';
+import {EVENT, getLetterThumbnail, getFavicon, isImage} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
 
@@ -100,10 +100,20 @@ afterUpdate(() => {
 		style = letterThumbnail.style;
 		letterThumb = letterThumbnail.text;
 		letterThumbSuff = letterThumbnail.suf;
-
 	}
 	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;
 	thumb.style = style;
+
+	// this may not work on some systems
+	if (isImage(item.url)) {
+		const i = new Image();
+		i.src = item.url;
+		i.onload = () => {
+			thumb.style = `background-image: url("${item.url}"); background-color: unset;`;
+			letterThumb = '';
+			letterThumbSuff = '';
+		};
+	}
 });
 
 </script>
