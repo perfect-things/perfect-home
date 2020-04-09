@@ -194,9 +194,8 @@ function isImage (url) {
 	let _url;
 	try { _url = new URL(url); }
 	catch (e) {/*eslint no-empty: 0*/}
-	if (_url && _url.protocol === 'file:') {
-		const fname = _url.pathname.split('/').pop();
-		const ext = fname.split('.').pop();
+	if (_url && _url.pathname) {
+		const ext = _url.pathname.split('.').pop();
 		return imageExtensions.includes(ext);
 	}
 	return false;

@@ -95,6 +95,10 @@ afterUpdate(() => {
 	if ($thumbs && $thumbs[item.id]) {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
+	// this may not work for local files on some systems
+	else if (isImage(item.url)) {
+		style = `background-image: url("${item.url}"); background-color: unset;`;
+	}
 	else if (item.type === 'bookmark' && item.url) {
 		const letterThumbnail = getLetterThumbnail(item);
 		style = letterThumbnail.style;
@@ -103,17 +107,6 @@ afterUpdate(() => {
 	}
 	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;
 	thumb.style = style;
-
-	// this may not work on some systems
-	if (isImage(item.url)) {
-		const i = new Image();
-		i.src = item.url;
-		i.onload = () => {
-			thumb.style = `background-image: url("${item.url}"); background-color: unset;`;
-			letterThumb = '';
-			letterThumbSuff = '';
-		};
-	}
 });
 
 </script>
