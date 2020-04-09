@@ -190,15 +190,10 @@ function processSubTree (tree) {
 }
 
 function isImage (url) {
+	if (!url) return false;
 	const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'];
-	let _url;
-	try { _url = new URL(url); }
-	catch (e) {/*eslint no-empty: 0*/}
-	if (_url && _url.pathname) {
-		const ext = _url.pathname.split('.').pop();
-		return imageExtensions.includes(ext);
-	}
-	return false;
+	const ext = url.split('.').pop();
+	return imageExtensions.includes(ext);
 }
 
 export {

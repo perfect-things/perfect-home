@@ -43,8 +43,8 @@ function refresh () {
 	readFolder($currentFolder);
 }
 
-function focusBody () {
-	document.body.focus();
+function focusBody (e) {
+	if (!e.target.closest('.modal')) document.body.focus();
 }
 
 function optionsChanged (props) {

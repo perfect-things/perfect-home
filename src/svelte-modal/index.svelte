@@ -60,7 +60,7 @@ export function close () {
 		backdropEl.style.display = 'none';
 		if (triggerEl) triggerEl.focus();
 		document.removeEventListener('keydown', onDocKeydown);
-	}, 150);
+	}, 250);
 
 }
 
