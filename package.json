@@ -1,7 +1,7 @@
 {
 	"name": "perfect-home",
 	"description": "Firefox new tab replacement",
-	"version": "0.9.1",
+	"version": "0.10.0",
 	"author": "Tom",
 	"scripts": {
 		"ext:start": "web-ext run --no-reload -s ./dist -p test-profile --keep-profile-changes > /dev/null",
