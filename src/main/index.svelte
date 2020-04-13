@@ -44,7 +44,8 @@ function refresh () {
 }
 
 function focusBody (e) {
-	if (!e.target.closest('.modal')) document.body.focus();
+	if (e.target.closest('.modal') || e.target.closest('.settings-pane')) return;
+	document.body.focus();
 }
 
 function optionsChanged (props) {
