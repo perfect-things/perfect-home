@@ -1,5 +1,5 @@
 import {readable, writable, derived} from 'svelte/store';
-import {EVENT, getFolderTitle, getSettings, saveSettings, getThumbs, saveThumbs,
+import {EVENT, getFolderTitle, getThumbs, saveThumbs,
 	getDockedFolders, saveDockedFolders} from '../lib';
 
 
@@ -24,15 +24,6 @@ export const currentFolderTitle = derived(currentFolder, ($currentFolder, set) =
 export const defaultOptions = readable(_options);
 export const options = writable(_options);
 export const items = writable([]);
-
-
-
-getSettings().then(stored => {
-	options.set(Object.assign({}, _options, stored));
-	options.subscribe(saveSettings);
-	EVENT.fire(EVENT.settings.loaded);
-});
-
 
 
 

@@ -158,7 +158,7 @@
 <script>
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
-import {EVENT, getAllItems, clearCache, validateCustomCss} from '../lib';
+import {EVENT, getAllItems, clearCache, validateCustomCss, getSettings, saveSettings} from '../lib';
 import Toggle from '../svelte-toggle';
 
 let isVisible = false;
@@ -167,12 +167,22 @@ let settingsPane, settingsForm, settingsInput, settingsBtn;
 
 
 onMount(() => {
-	getAllItems().then(items => {
-		folders = items.filter(item => item.type === 'folder');
-	});
+	getAllItems()
+		.then(items => folders = items.filter(item => item.type === 'folder'))
+		.then(loadSettings);
+
 	settingsPane.addEventListener('transitionend', ontransitionend);
 	EVENT.on(EVENT.document.clicked, onDocClick);
 });
+
+
+function loadSettings () {
+	getSettings().then(stored => {
+		options.set(Object.assign({}, $defaultOptions, stored));
+		options.subscribe(saveSettings);
+		EVENT.fire(EVENT.settings.loaded);
+	});
+}
 
 
 function toggle (e) {
