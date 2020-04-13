@@ -4,7 +4,6 @@ const del = require('del');
 const isProd = require('minimist')(process.argv.slice(2)).prod;
 const DIST_PATH = 'dist/';
 
-
 function eslint () {
 	const gulpEslint = require('gulp-eslint');
 	return src(['src/**/*.js', 'src/**/*.svelte', '*.js'])
@@ -29,7 +28,7 @@ function rollupBuild (inputOptions = {}, outputOptions = {}) {
 		.then(out => {
 			if (!out.code) out = out.output[0];
 			readable.push(out.code);
-			if (outputOptions.sourcemap) {
+			if (outputOptions.output.sourcemap) {
 				readable.push('\n//# sourceMappingURL=');
 				readable.push(out.map.toUrl());
 			}
