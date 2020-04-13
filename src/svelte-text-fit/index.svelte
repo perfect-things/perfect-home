@@ -19,6 +19,7 @@ function resize () {
 
 onMount(() => {
 	parent = el.parentNode;
+	if (!window.ResizeObserver) return;
 	resizeObserver = new ResizeObserver(() => {
 		if (timer) clearTimeout(timer);
 		timer = setTimeout(resize, DEBOUNCE_RESIZE);
@@ -32,6 +33,7 @@ onMount(() => {
 });
 
 onDestroy(() => {
+	if (!window.ResizeObserver) return;
 	resizeObserver.unobserve(parent);
 	mutationObserver.disconnect();
 });
