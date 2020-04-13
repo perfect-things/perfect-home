@@ -176,6 +176,7 @@ function isFirefox () {
 }
 
 function processSubTree (tree) {
+	if (!tree || !tree.length) return [];
 	return tree[0].children.map(ch => {
 		if (!ch.type) {
 			if (ch.children) ch.type = 'folder';

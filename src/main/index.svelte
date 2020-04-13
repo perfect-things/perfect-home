@@ -83,7 +83,7 @@ function folderChanged (folderId) {
 
 function readFolder (id) {
 	getSubTree(id)
-		.then(_items => {
+		.then((_items = []) => {
 			$items = _items;
 			$itemsLoaded = true;
 		});
