@@ -131,10 +131,20 @@ function filter () {
 
 	const q = text.toLowerCase();
 	let filtered = clone(data).filter(item => item.type !== 'separator');
-	if (text) filtered = filtered
-		.filter(item => fuzzy(item.title, q))
-		.map(item => (item.highlightedTitle = emphasize(item.title, q), item));
-
+	if (text) {
+		filtered = filtered
+			.filter(item => fuzzy(item.title, q))
+			.map(item => {
+				item.highlightedTitle = emphasize(item.title, q);
+				item.score = 1;
+				if (item.title.toLowerCase().includes(q)) item.score = 2;
+				if (item.title.includes(text)) item.score = 3;
+				if (item.title.toLowerCase() === q) item.score = 4;
+				if (item.title === text) item.score = 5;
+				return item;
+			});
+		filtered = filtered.sort((a, b) => b.score - a.score);
+	}
 	filteredData = filtered;
 }
 
