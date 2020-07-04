@@ -43,7 +43,7 @@ function js () {
 	const commonjs = require('@rollup/plugin-commonjs');
 	const source = require('vinyl-source-stream');
 	const svelte = require('rollup-plugin-svelte');
-	const resolve = require('@rollup/plugin-node-resolve');
+	const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
 	const {terser} = require('rollup-plugin-terser');
 	const inputOptions = {
 		input: './src/index.js',
