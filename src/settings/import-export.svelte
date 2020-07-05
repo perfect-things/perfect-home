@@ -3,12 +3,12 @@
 	<div class="settings-row">
 
 		<a href="#export"
-			class="btn btn-half btn-export"
+			class="btn btn-export"
 			tabindex="0"
 			download="perfect-home-settings.json"
 			on:click="{exportSettings}">Export</a>
 
-		<div class="btn btn-half btn-import"
+		<div class="btn btn-import"
 			tabindex="0"
 			on:keypress="{importClick}"
 			on:click="{importClick}">

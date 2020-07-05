@@ -1,37 +1,6 @@
 @import "lib"
 
-.icon-btn.btn-settings
-	right 4
-	top 6
-	z-index 12
-	transition transform .2s, color .2s
-	transform-origin center
-	border-radius 20
-
-	&.hidden
-		transform rotate(-90deg)
-
-	svg
-		height 20
-		width 20
-		margin 2 0 0 -2
-
-
-
-
 .settings-pane
-	position absolute
-	background-color var(--color-background-alt)
-	top 0
-	right 0
-	bottom 0
-	width 300
-	min-height 300
-	box-shadow -2px 0 5px #0008
-	transition transform .3s, opacity .3s
-	z-index 11
-	overflow-y auto
-	color var(--color-text)
 
 	h1
 		margin 0
@@ -44,7 +13,7 @@
 
 	label
 		display block
-		margin 0 0 5
+		margin 0 5 0 0
 
 	.select-wrap
 		flex 1
@@ -53,14 +22,14 @@
 	input + input
 		margin 0 0 0 10
 
+	input:not(.toggle)
+		width 75
+
 	.btn
 		flex 1
 		display flex
 		align-items center
 		justify-content center
-
-	.btn-half
-		flex 0.5
 
 	.xbtn
 		padding 0 5
@@ -71,6 +40,8 @@
 		font-size 23px
 		min-height 33px
 
+	.btn-export
+		margin-right 10
 
 	div.btn
 		position relative
@@ -88,31 +59,3 @@
 
 			&:hover
 				text-decoration underline
-
-
-
-.settings-form
-	display flex
-	flex-flow column
-	align-items stretch
-	margin 0
-	font inherit
-	font-size 15px
-
-
-.settings-row
-	display flex
-	flex-flow row
-	align-items flex-start
-	justify-content space-between
-	margin-bottom 20
-	flex-wrap wrap
-
-	label
-		margin 0 5 0 0
-	input:not(.toggle)
-		width 75
-
-
-.btn-export
-	margin-right 10

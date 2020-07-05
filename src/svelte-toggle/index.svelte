@@ -12,7 +12,6 @@ import {afterUpdate} from 'svelte';
 export let id;
 export let value = false;
 let el;
-
 afterUpdate(() => {
 	el.value = +value * 100;
 });
