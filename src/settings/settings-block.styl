@@ -1,0 +1,41 @@
+@import "lib"
+
+.settings-block
+	margin 0 0 -1
+	max-height 500
+	overflow hidden
+	transition max-height .3s ease-out
+
+	&.collapsible
+		cursor pointer
+
+	.settings-block-header
+		padding 10 20
+		height 45
+		text-align left
+		background var(--color-info)
+		border-top 1px solid var(--color-background)
+		border-bottom 1px solid var(--color-background)
+		color var(--color-text)
+		filter saturate(.5)
+		display flex
+		align-items center
+		justify-content space-between
+
+	.chevron
+		height 24
+		rotate 180deg
+		transition rotate .2s
+
+		&.hidden
+			display none
+
+	.settings-block-content
+		padding 15 20 10
+
+
+	&.collapsed
+		max-height 45
+
+		.chevron
+			rotate 0deg

@@ -12,145 +12,150 @@
 	<h1>Settings</h1>
 	<div class="settings-form" style="display: none" bind:this="{settingsForm}">
 
-		<h2 id="main-folder">Main folder</h2>
-		<small>This is the primary navigable list of bookmarks.</small>
+		<SettingsBlock collapsible title="Main folder">
+			<small>This is the primary navigable list of bookmarks.</small>
 
-		<div class="settings-row">
-			<div class="select-wrap">
-				<select name="rootfolder" bind:value="{$options.rootFolder}" aria-labelledby="main-folder">
-					{#each folders as folder}
-						<option value="{folder.id}">{folder.title}</option>
-					{/each}
-				</select>
-			</div>
-		</div>
-
-
-
-		<h2 id="docked-folders">Docked folders</h2>
-		<small>These folders will be docked to the bottom.</small>
-
-		{#each $dockedFolders as dockedFolder}
 			<div class="settings-row">
 				<div class="select-wrap">
-					<select title="Select a docked folder"
-						aria-labelledby="docked-folders"
-						bind:value="{dockedFolder.id}"
-						on:change="{() => onDockedFoldersChange(dockedFolder.id)}"
-					>
-						<option value="">None</option>
+					<select name="rootfolder" bind:value="{$options.rootFolder}" aria-label="Main folder">
 						{#each folders as folder}
 							<option value="{folder.id}">{folder.title}</option>
 						{/each}
 					</select>
 				</div>
-				<button
-					title="Remove a docked folder"
-					class="btn xbtn"
-					type="button"
-					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
-				</button>
 			</div>
-		{/each}
-		<div class="settings-row">
-			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
-		</div>
+		</SettingsBlock>
 
+		<SettingsBlock collapsible title="Docked folders">
+			<small>These folders will be docked to the bottom.</small>
 
-
-		<h2>Customize</h2>
-
-		<div class="settings-row">
-			<label for="gridMaxWidth">Max grid width</label>
-			<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
-		</div>
-
-		<div class="settings-row">
-			<label for="gridGap">Gaps</label>
-			<input id="gridGap" type="number" bind:value="{$options.gridGap}">
-		</div>
-
-		<div class="settings-row">
-			<label id="tile-size">Tile size</label>
-			<div class="flex-spacer"></div>
-			<input aria-labelledby="tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
-			<input aria-labelledby="tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
-		</div>
-
-		<div class="settings-row">
-			<label for="pageColor">Text color</label>
-			<div class="flex-spacer"></div>
-			<input aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
-			<input aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
-		</div>
-
-		<div class="settings-row">
-			<label for="pageBg">Background</label>
-			<div class="flex-spacer"></div>
-			<input aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
-			<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
-		</div>
-
-		<div class="settings-row">
-			<label for="showLabels">Show labels</label>
-			<div class="flex-spacer"></div>
-			<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
-		</div>
-
-
-		<h2 id="custom-css">Custom CSS</h2>
-		<small>This allows you to fully customize the page.
-			See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
-				this tutorial</a> for some examples.
-		</small>
-
-		<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
-			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" title="CSS Validator">here</a>.
-		</small>
-
-		<div class="settings-row">
-			<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-labelledby="custom-css"></textarea>
-		</div>
-
-
-		<h2>Reset</h2>
-		<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
-		<div class="settings-row">
-			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
-		</div>
-
-
-		<h2>Import/Export</h2>
-		<small>You can Export settings with thumbnails to a json file to backup your configuration. That file can then be imported in the same version of this Firefox extension.</small>
-		<div class="settings-row">
-
-			<a href="#export"
-				class="btn btn-half btn-export"
-				tabindex="0"
-				download="perfect-home-settings.json"
-				on:click="{exportSettings}">Export</a>
-
-			<div class="btn btn-half btn-import"
-				tabindex="0"
-				on:keypress="{importClick}"
-				on:click="{importClick}">
-					Import
-					<input type="file" accept="application/json"
-						tabindex="-1"
-						bind:this="{settingsInput}"
-						on:change="{importSettings}">
+			{#each $dockedFolders as dockedFolder}
+				<div class="settings-row">
+					<div class="select-wrap">
+						<!-- svelte-ignore a11y-no-onchange -->
+						<select title="Select a docked folder"
+							aria-label="Docked Folders"
+							bind:value="{dockedFolder.id}"
+							on:change="{() => onDockedFoldersChange(dockedFolder.id)}"
+						>
+							<option value="">None</option>
+							{#each folders as folder}
+								<option value="{folder.id}">{folder.title}</option>
+							{/each}
+						</select>
+					</div>
+					<button
+						title="Remove a docked folder"
+						class="btn xbtn"
+						type="button"
+						on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
+					</button>
+				</div>
+			{/each}
+			<div class="settings-row">
+				<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
 			</div>
-		</div>
+		</SettingsBlock>
 
 
-		<h2>Purge</h2>
-		<small>This will clear all stored items: options and thumbnails cache.</small>
-		<div class="settings-row">
-			<button type="button"
-				class="btn btn-clear danger"
-				on:keydown="{e => trapfocus(e, 'last')}"
-				on:click="{purge}">Clear cache</button>
-		</div>
+
+		<SettingsBlock collapsible collapsed title="Customize">
+			<div class="settings-row">
+				<label for="gridMaxWidth">Max grid width</label>
+				<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
+			</div>
+
+			<div class="settings-row">
+				<label for="gridGap">Gaps</label>
+				<input id="gridGap" type="number" bind:value="{$options.gridGap}">
+			</div>
+
+			<div class="settings-row">
+				<label id="tile-size">Tile size</label>
+				<div class="flex-spacer"></div>
+				<input aria-labelledby="tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
+				<input aria-labelledby="tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
+			</div>
+
+			<div class="settings-row">
+				<label for="pageColor">Text color</label>
+				<div class="flex-spacer"></div>
+				<input aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
+				<input aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
+			</div>
+
+			<div class="settings-row">
+				<label for="pageBg">Background</label>
+				<div class="flex-spacer"></div>
+				<input aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
+				<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
+			</div>
+
+			<div class="settings-row">
+				<label for="showLabels">Show labels</label>
+				<div class="flex-spacer"></div>
+				<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
+			</div>
+		</SettingsBlock>
+
+
+		<SettingsBlock collapsible collapsed title="Custom CSS">
+			<small>This allows you to fully customize the page.
+				See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
+					this tutorial</a> for some examples.
+			</small>
+
+			<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
+				Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" title="CSS Validator">here</a>.
+			</small>
+
+			<div class="settings-row">
+				<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-label="Custom CSS"></textarea>
+			</div>
+		</SettingsBlock>
+
+
+		<SettingsBlock collapsible collapsed title="Reset">
+			<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
+			<div class="settings-row">
+				<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
+			</div>
+		</SettingsBlock>
+
+
+		<SettingsBlock collapsible collapsed title="Import/Export">
+			<small>You can Export settings with thumbnails to a json file to backup your configuration. That file can then be imported in the same version of this Firefox extension.</small>
+			<div class="settings-row">
+
+				<a href="#export"
+					class="btn btn-half btn-export"
+					tabindex="0"
+					download="perfect-home-settings.json"
+					on:click="{exportSettings}">Export</a>
+
+				<div class="btn btn-half btn-import"
+					tabindex="0"
+					on:keypress="{importClick}"
+					on:click="{importClick}">
+						Import
+						<input type="file" accept="application/json"
+							tabindex="-1"
+							bind:this="{settingsInput}"
+							on:change="{importSettings}">
+				</div>
+			</div>
+		</SettingsBlock>
+
+
+		<SettingsBlock collapsible collapsed title="Purge">
+			<small>This will clear all stored items: options and thumbnails cache.</small>
+			<div class="settings-row">
+				<button type="button"
+					class="btn btn-clear danger"
+					on:keydown="{e => trapfocus(e, 'last')}"
+					on:click="{purge}">Clear cache</button>
+			</div>
+		</SettingsBlock>
 
 	</div>
 </div>
@@ -159,12 +164,14 @@
 import {onMount} from 'svelte';
 import {options, defaultOptions, thumbs, dockedFolders} from '../store';
 import {EVENT, getAllItems, clearCache, validateCustomCss, getSettings, saveSettings} from '../lib';
+import SettingsBlock from './settings-block';
 import Toggle from '../svelte-toggle';
 
 let isVisible = false;
 let folders = [];
 let settingsPane, settingsForm, settingsInput, settingsBtn;
 
+setTimeout(open, 100);
 
 onMount(() => {
 	getAllItems()
