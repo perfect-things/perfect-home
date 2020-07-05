@@ -1,7 +1,7 @@
+<Settings />
 <Header />
 <Main />
 <Folders />
-<Settings />
 <ContextMenu />
 <Search />
 <Editor />

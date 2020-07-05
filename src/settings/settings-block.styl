@@ -2,12 +2,7 @@
 
 .settings-block
 	margin 0 0 -1
-	max-height 500
 	overflow hidden
-	transition max-height .3s ease-out
-
-	&.collapsible
-		cursor pointer
 
 	.settings-block-header
 		padding 10 20
@@ -21,21 +16,19 @@
 		display flex
 		align-items center
 		justify-content space-between
+		cursor pointer
+
+		&:focus
+			color var(--color-accent)
 
 	.chevron
 		height 24
 		rotate 180deg
 		transition rotate .2s
 
-		&.hidden
-			display none
-
 	.settings-block-content
 		padding 15 20 10
 
 
-	&.collapsed
-		max-height 45
-
-		.chevron
-			rotate 0deg
+	&.collapsed .chevron
+		rotate 0deg

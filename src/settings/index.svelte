@@ -8,11 +8,15 @@
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -256 1792 1792" aria-label="Cog"><g transform="matrix(1,0,0,-1,121.49153,1285.4237)"><path aria-label="Cog" d="m 1024,640 q 0,106 -75,181 -75,75 -181,75 -106,0 -181,-75 -75,-75 -75,-181 0,-106 75,-181 75,-75 181,-75 106,0 181,75 75,75 75,181 z m 512,109 V 527 q 0,-12 -8,-23 -8,-11 -20,-13 l -185,-28 q -19,-54 -39,-91 35,-50 107,-138 10,-12 10,-25 0,-13 -9,-23 -27,-37 -99,-108 -72,-71 -94,-71 -12,0 -26,9 l -138,108 q -44,-23 -91,-38 -16,-136 -29,-186 -7,-28 -36,-28 H 657 q -14,0 -24.5,8.5 Q 622,-111 621,-98 L 593,86 q -49,16 -90,37 L 362,16 Q 352,7 337,7 323,7 312,18 186,132 147,186 q -7,10 -7,23 0,12 8,23 15,21 51,66.5 36,45.5 54,70.5 -27,50 -41,99 L 29,495 Q 16,497 8,507.5 0,518 0,531 v 222 q 0,12 8,23 8,11 19,13 l 186,28 q 14,46 39,92 -40,57 -107,138 -10,12 -10,24 0,10 9,23 26,36 98.5,107.5 72.5,71.5 94.5,71.5 13,0 26,-10 l 138,-107 q 44,23 91,38 16,136 29,186 7,28 36,28 h 222 q 14,0 24.5,-8.5 Q 914,1391 915,1378 l 28,-184 q 49,-16 90,-37 l 142,107 q 9,9 24,9 13,0 25,-10 129,-119 165,-170 7,-8 7,-22 0,-12 -8,-23 -15,-21 -51,-66.5 -36,-45.5 -54,-70.5 26,-50 41,-98 l 183,-28 q 13,-2 21,-12.5 8,-10.5 8,-23.5 z" style="fill:currentColor"/></g></svg>
 </button>
 
-<div class="settings-pane" class:hidden="{!isVisible}" tabindex="-1" bind:this="{settingsPane}">
+{#if isVisible}
+<div class="settings-pane"
+	class:hidden="{!isVisible}"
+	transition:fly="{{ x: 310 }}"
+	tabindex="-1">
 	<h1>Settings</h1>
-	<div class="settings-form" style="display: none" bind:this="{settingsForm}">
+	<div class="settings-form">
 
-		<SettingsBlock collapsible title="Main folder">
+		<SettingsBlock title="Main folder">
 			<small>This is the primary navigable list of bookmarks.</small>
 
 			<div class="settings-row">
@@ -26,7 +30,7 @@
 			</div>
 		</SettingsBlock>
 
-		<SettingsBlock collapsible title="Docked folders">
+		<SettingsBlock title="Docked folders">
 			<small>These folders will be docked to the bottom.</small>
 
 			{#each $dockedFolders as dockedFolder}
@@ -59,7 +63,7 @@
 
 
 
-		<SettingsBlock collapsible collapsed title="Customize">
+		<SettingsBlock collapsed title="Customize">
 			<div class="settings-row">
 				<label for="gridMaxWidth">Max grid width</label>
 				<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
@@ -99,7 +103,7 @@
 		</SettingsBlock>
 
 
-		<SettingsBlock collapsible collapsed title="Custom CSS">
+		<SettingsBlock collapsed title="Custom CSS">
 			<small>This allows you to fully customize the page.
 				See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
 					this tutorial</a> for some examples.
@@ -115,7 +119,7 @@
 		</SettingsBlock>
 
 
-		<SettingsBlock collapsible collapsed title="Reset">
+		<SettingsBlock collapsed title="Reset">
 			<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
 			<div class="settings-row">
 				<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
@@ -123,53 +127,31 @@
 		</SettingsBlock>
 
 
-		<SettingsBlock collapsible collapsed title="Import/Export">
-			<small>You can Export settings with thumbnails to a json file to backup your configuration. That file can then be imported in the same version of this Firefox extension.</small>
-			<div class="settings-row">
-
-				<a href="#export"
-					class="btn btn-half btn-export"
-					tabindex="0"
-					download="perfect-home-settings.json"
-					on:click="{exportSettings}">Export</a>
-
-				<div class="btn btn-half btn-import"
-					tabindex="0"
-					on:keypress="{importClick}"
-					on:click="{importClick}">
-						Import
-						<input type="file" accept="application/json"
-							tabindex="-1"
-							bind:this="{settingsInput}"
-							on:change="{importSettings}">
-				</div>
-			</div>
-		</SettingsBlock>
+		<ImportExport />
 
 
-		<SettingsBlock collapsible collapsed title="Purge">
+		<SettingsBlock collapsed title="Purge">
 			<small>This will clear all stored items: options and thumbnails cache.</small>
 			<div class="settings-row">
 				<button type="button"
 					class="btn btn-clear danger"
-					on:keydown="{e => trapfocus(e, 'last')}"
 					on:click="{purge}">Clear cache</button>
 			</div>
 		</SettingsBlock>
-
+		<div tabindex="0" on:keydown="{e => trapfocus(e, 'last')}" bind:this="{lastFocusEl}"></div>
 	</div>
 </div>
+{/if}
 
 <script>
 import {onMount} from 'svelte';
-import {options, defaultOptions, thumbs, dockedFolders} from '../store';
+import {fly} from 'svelte/transition';
+import {options, defaultOptions, dockedFolders} from '../store';
 import {EVENT, getAllItems, clearCache, validateCustomCss, getSettings, saveSettings} from '../lib';
+import ImportExport from './import-export';
 import SettingsBlock from './settings-block';
 import Toggle from '../svelte-toggle';
-
-let isVisible = false;
-let folders = [];
-let settingsPane, settingsForm, settingsInput, settingsBtn;
+let isVisible = false, folders = [], settingsBtn, lastFocusEl;
 
 setTimeout(open, 100);
 
@@ -178,7 +160,6 @@ onMount(() => {
 		.then(items => folders = items.filter(item => item.type === 'folder'))
 		.then(loadSettings);
 
-	settingsPane.addEventListener('transitionend', ontransitionend);
 	EVENT.on(EVENT.document.clicked, onDocClick);
 });
 
@@ -198,7 +179,6 @@ function toggle (e) {
 }
 
 function open () {
-	settingsForm.style = '';
 	isVisible = true;
 }
 
@@ -207,36 +187,6 @@ function close (focusBtn) {
 	if (focusBtn) settingsBtn.focus();
 }
 
-function ontransitionend () {
-	if (!isVisible) settingsForm.style.display = 'none';
-}
-
-
-function exportSettings (e) {
-	const exp = JSON.stringify({
-		options: $options,
-		dockedFolders: $dockedFolders,
-		thumbs: $thumbs,
-	});
-	e.target.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
-}
-
-function importSettings (e) {
-	const reader = new FileReader();
-	reader.onload = ev => {
-		let json;
-		try { json = JSON.parse(ev.target.result); }
-		catch (er) {/* no-empty: 0 */ }
-		if (!json) alert('Incorrect settings file!');
-		else {
-			if (json.thumbs) thumbs.set(json.thumbs);
-			if (json.dockedFolder) dockedFolders.set(json.dockedFolder);
-			if (json.options) options.set(json.options);
-			EVENT.fire(EVENT.settings.imported);
-		}
-	};
-	reader.readAsText(e.target.files[0]);
-}
 
 function onDockedFoldersChange (id) {
 	EVENT.fire(EVENT.dockedFolders.changed, id);
@@ -272,13 +222,16 @@ function onDocClick (e) {
 	close();
 }
 
-
 function trapfocus (e, how) {
 	if (!isVisible || e.key !== 'Tab') return;
-	if (how === 'first' && !e.shiftKey) return;
-	if (how === 'last' && e.shiftKey) return;
-	e.preventDefault();
-	e.target.focus();
+	if (how === 'first' && e.shiftKey) {
+		e.preventDefault();
+		lastFocusEl.focus();
+	}
+	else if (how === 'last' && !e.shiftKey) {
+		e.preventDefault();
+		settingsBtn.focus();
+	}
 }
 
 
@@ -290,7 +243,4 @@ function validateCss (ev) {
 	el.setCustomValidity(res ? '' : 'Check your CSS!');
 }
 
-function importClick (e) {
-	if (e.key === 'Enter' || e.key === ' ' || e.type === 'click') settingsInput.click();
-}
 </script>
