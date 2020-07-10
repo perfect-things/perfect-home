@@ -22,7 +22,6 @@ import {fly} from 'svelte/transition';
 import {EVENT} from '../lib';
 let isVisible = false, settingsBtn, lastFocusEl;
 
-setTimeout(open, 100);
 
 onMount(() => {
 	EVENT.on(EVENT.document.clicked, onDocClick);

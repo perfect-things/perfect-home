@@ -65,14 +65,6 @@
 		background none
 
 
-	.item-thumb.img-drag
-		box-shadow 0 0 3px 1px  var(--color-accent)
-		background none !important
-		.text-fit
-		.item-thumb-suffix
-			display none
-
-
 	&.no-labels
 		.item-bookmark .item-title
 			display none
@@ -97,3 +89,12 @@
 				color var(--color-text)
 				letter-spacing 2px
 				z-index 9
+
+	&:not(.is-sorting)
+		.item-thumb.img-drag
+			box-shadow 0 0 3px 1px  var(--color-accent)
+			background none !important
+
+			.text-fit
+			.item-thumb-suffix
+				display none
