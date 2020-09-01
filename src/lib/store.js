@@ -1,6 +1,7 @@
 import {readable, writable, derived} from 'svelte/store';
-import {EVENT, getFolderTitle, getThumbs, saveThumbs,
-	getDockedFolders, saveDockedFolders} from '../lib';
+import {EVENT} from './event';
+import {getFolderTitle, getThumbs, saveThumbs,
+	getDockedFolders, saveDockedFolders} from './browser';
 
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu

@@ -23,8 +23,7 @@
 
 
 <script>
-import {options, thumbs, dockedFolders} from '../store';
-import {EVENT} from '../lib';
+import {EVENT, options, thumbs, dockedFolders} from '../lib';
 import SettingsBlock from './settings-block';
 let settingsInput;
 

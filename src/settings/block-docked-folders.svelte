@@ -32,8 +32,7 @@
 
 <script>
 import SettingsBlock from './settings-block';
-import {dockedFolders} from '../store';
-import {EVENT} from '../lib';
+import {EVENT, dockedFolders} from '../lib';
 
 export let folders = [];
 

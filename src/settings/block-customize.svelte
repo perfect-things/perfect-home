@@ -1,4 +1,18 @@
 <SettingsBlock collapsed title="Customize">
+	<h3>Theme</h3>
+	<small>See <a href="https://github.com/perfect-things/perfect-home/blob/master/theming-tutorial.md" target="_blank">
+		more info on Theming</a>.
+	</small>
+	<div class="select-wrap">
+		<select name="theme" bind:value="{$options.theme}" aria-label="Theme">
+			{#each themes as theme}
+				<option value="{theme.id}">{theme.title}</option>
+			{/each}
+		</select>
+	</div>
+
+
+	<h3>Basic customizations</h3>
 	<div class="settings-row">
 		<label for="gridMaxWidth">Max grid width</label>
 		<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
@@ -56,9 +70,9 @@
 <script>
 import SettingsBlock from './settings-block';
 import Toggle from '../svelte-toggle';
-import {options} from '../store';
-import {validateCustomCss} from '../lib';
+import {options, validateCustomCss} from '../lib';
 
+let themes = [{ title: 'None' }];
 
 function validateCss (ev) {
 	const el = ev.target;

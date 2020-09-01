@@ -14,8 +14,8 @@
 <script>
 import Tile from '../tile';
 import {onMount} from 'svelte';
-import {options, items, currentFolder, itemsLoaded,	wasSorted} from '../store';
-import {getSubTree, moveBookmark, injectCss, EVENT} from '../lib';
+import {getSubTree, moveBookmark, injectCss, EVENT,
+	options, items, currentFolder, itemsLoaded,	wasSorted} from '../lib';
 import Sortable from 'sortablejs';
 
 onMount(() => {

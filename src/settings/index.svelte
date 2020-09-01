@@ -25,8 +25,7 @@
 <script>
 import {onMount} from 'svelte';
 import {fly} from 'svelte/transition';
-import {options, defaultOptions} from '../store';
-import {EVENT, getAllItems, getSettings, saveSettings} from '../lib';
+import {EVENT, getAllItems, getSettings, saveSettings, options, defaultOptions} from '../lib';
 
 import MainFolder from './block-main-folder';
 import DockedFolders from './block-docked-folders';

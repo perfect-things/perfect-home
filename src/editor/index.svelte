@@ -39,8 +39,7 @@ import Modal from '../svelte-modal';
 import TextFit from '../svelte-text-fit';
 import {showToast, hideToast} from '../svelte-toaster';
 import {onMount} from 'svelte';
-import {items, thumbs} from '../store';
-import {EVENT, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
+import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';

@@ -14,7 +14,7 @@
 
 
 <script>
-import {options} from '../store';
+import {options} from '../lib';
 import SettingsBlock from './settings-block';
 
 export let folders = [];

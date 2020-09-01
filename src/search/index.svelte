@@ -29,9 +29,8 @@
 
 <script>
 import {onMount} from 'svelte';
-import {currentFolder} from '../store';
 import Modal from '../svelte-modal';
-import {EVENT, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
+import {EVENT, currentFolder, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
 
 let modal;
 let data = [];

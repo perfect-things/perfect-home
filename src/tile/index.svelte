@@ -40,8 +40,7 @@
 
 <script>
 import TextFit from '../svelte-text-fit';
-import {currentFolder, thumbs, wasSorted} from '../store';
-import {EVENT, getLetterThumbnail, getFavicon, isImage} from '../lib';
+import {EVENT, getLetterThumbnail, getFavicon, isImage, currentFolder, thumbs, wasSorted} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
 

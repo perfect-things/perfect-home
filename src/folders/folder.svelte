@@ -25,8 +25,7 @@
 <script>
 import Tile from '../tile';
 import {onMount, tick} from 'svelte';
-import {wasSorted, dockedFolders} from '../store';
-import {EVENT, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
+import {EVENT, wasSorted, dockedFolders, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
 import Sortable from 'sortablejs';
 
 export let folder;

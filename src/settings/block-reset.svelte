@@ -13,8 +13,7 @@
 
 <script>
 import SettingsBlock from './settings-block';
-import { options, defaultOptions } from '../store';
-import { clearCache } from '../lib';
+import {clearCache, options, defaultOptions} from '../lib';
 
 function reset () {
 	options.set($defaultOptions);
