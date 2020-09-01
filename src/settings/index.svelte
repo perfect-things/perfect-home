@@ -1,139 +1,49 @@
-<SettingsPane>
-	<SettingsBlock title="Main folder">
-		<small>This is the primary navigable list of bookmarks.</small>
+<button
+	title="Settings"
+	class="icon-btn btn-settings"
+	class:hidden="{!isVisible}"
+	bind:this="{settingsBtn}"
+	on:keydown="{e => trapfocus(e, 'first')}"
+	on:click="{toggle}">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -256 1792 1792" aria-label="Cog"><g transform="matrix(1,0,0,-1,121.49153,1285.4237)"><path aria-label="Cog" d="m 1024,640 q 0,106 -75,181 -75,75 -181,75 -106,0 -181,-75 -75,-75 -75,-181 0,-106 75,-181 75,-75 181,-75 106,0 181,75 75,75 75,181 z m 512,109 V 527 q 0,-12 -8,-23 -8,-11 -20,-13 l -185,-28 q -19,-54 -39,-91 35,-50 107,-138 10,-12 10,-25 0,-13 -9,-23 -27,-37 -99,-108 -72,-71 -94,-71 -12,0 -26,9 l -138,108 q -44,-23 -91,-38 -16,-136 -29,-186 -7,-28 -36,-28 H 657 q -14,0 -24.5,8.5 Q 622,-111 621,-98 L 593,86 q -49,16 -90,37 L 362,16 Q 352,7 337,7 323,7 312,18 186,132 147,186 q -7,10 -7,23 0,12 8,23 15,21 51,66.5 36,45.5 54,70.5 -27,50 -41,99 L 29,495 Q 16,497 8,507.5 0,518 0,531 v 222 q 0,12 8,23 8,11 19,13 l 186,28 q 14,46 39,92 -40,57 -107,138 -10,12 -10,24 0,10 9,23 26,36 98.5,107.5 72.5,71.5 94.5,71.5 13,0 26,-10 l 138,-107 q 44,23 91,38 16,136 29,186 7,28 36,28 h 222 q 14,0 24.5,-8.5 Q 914,1391 915,1378 l 28,-184 q 49,-16 90,-37 l 142,107 q 9,9 24,9 13,0 25,-10 129,-119 165,-170 7,-8 7,-22 0,-12 -8,-23 -15,-21 -51,-66.5 -36,-45.5 -54,-70.5 26,-50 41,-98 l 183,-28 q 13,-2 21,-12.5 8,-10.5 8,-23.5 z" style="fill:currentColor"/></g></svg>
+</button>
 
-		<div class="settings-row">
-			<div class="select-wrap">
-				<select name="rootfolder" bind:value="{$options.rootFolder}" aria-label="Main folder">
-					{#each folders as folder}
-						<option value="{folder.id}">{folder.title}</option>
-					{/each}
-				</select>
-			</div>
+{#if isVisible}
+	<div class="settings-pane" class:hidden="{!isVisible}" transition:fly="{{ x: 310 }}" tabindex="-1">
+		<h1>Settings</h1>
+		<div class="settings-form">
+			<MainFolder {folders} />
+			<DockedFolders {folders} />
+			<Customize />
+			<ImportExport />
+			<Reset />
 		</div>
-	</SettingsBlock>
-
-	<SettingsBlock title="Docked folders">
-		<small>These folders will be docked to the bottom.</small>
-
-		{#each $dockedFolders as dockedFolder}
-			<div class="settings-row">
-				<div class="select-wrap">
-					<!-- svelte-ignore a11y-no-onchange -->
-					<select title="Select a docked folder"
-						aria-label="Docked Folders"
-						bind:value="{dockedFolder.id}"
-						on:change="{() => onDockedFoldersChange(dockedFolder.id)}"
-					>
-						<option value="">None</option>
-						{#each folders as folder}
-							<option value="{folder.id}">{folder.title}</option>
-						{/each}
-					</select>
-				</div>
-				<button
-					title="Remove a docked folder"
-					class="btn xbtn"
-					type="button"
-					on:click|stopPropagation="{() => delFolder(dockedFolder)}">&times;
-				</button>
-			</div>
-		{/each}
-		<div class="settings-row">
-			<button class="btn" type="button" on:click="{addFolder}">Add Docked Folder</button>
-		</div>
-	</SettingsBlock>
-
-
-
-	<SettingsBlock collapsed title="Customize">
-		<div class="settings-row">
-			<label for="gridMaxWidth">Max grid width</label>
-			<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
-		</div>
-
-		<div class="settings-row">
-			<label for="gridGap">Gaps</label>
-			<input id="gridGap" type="number" bind:value="{$options.gridGap}">
-		</div>
-
-		<div class="settings-row">
-			<label id="tile-size">Tile size</label>
-			<div class="flex-spacer"></div>
-			<input aria-labelledby="tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
-			<input aria-labelledby="tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
-		</div>
-
-		<div class="settings-row">
-			<label for="pageColor">Text color</label>
-			<div class="flex-spacer"></div>
-			<input aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
-			<input aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
-		</div>
-
-		<div class="settings-row">
-			<label for="pageBg">Background</label>
-			<div class="flex-spacer"></div>
-			<input aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
-			<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
-		</div>
-
-		<div class="settings-row">
-			<label for="showLabels">Show labels</label>
-			<div class="flex-spacer"></div>
-			<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
-		</div>
-	</SettingsBlock>
-
-
-	<SettingsBlock collapsed title="Custom CSS">
-		<small>This allows you to fully customize the page.
-			See <a href="https://github.com/perfect-things/perfect-home/blob/master/customization-tutorial.md" target="_blank">
-				this tutorial</a> for some examples.
-		</small>
-
-		<small>The CSS validator used here is very basic, and cannot ensure the 100% correctness.<br>
-			Please, validate your code <a href="https://jigsaw.w3.org/css-validator/#validate_by_input" target="_blank" title="CSS Validator">here</a>.
-		</small>
-
-		<div class="settings-row">
-			<textarea bind:value="{$options.css}" on:input="{validateCss}" aria-label="Custom CSS"></textarea>
-		</div>
-	</SettingsBlock>
-
-
-	<ImportExport />
-
-
-	<SettingsBlock collapsed title="Reset">
-		<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
-		<div class="settings-row">
-			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
-		</div>
-
-		<small>This will clear all stored items: options and thumbnails cache.</small>
-		<div class="settings-row">
-			<button type="button" class="btn btn-clear danger" on:click="{purge}">Clear cache</button>
-		</div>
-	</SettingsBlock>
-</SettingsPane>
+		<div tabindex="0" on:keydown="{e => trapfocus(e, 'last')}" bind:this="{lastFocusEl}"></div>
+	</div>
+{/if}
 
 <script>
 import {onMount} from 'svelte';
-import {options, defaultOptions, dockedFolders} from '../store';
-import {EVENT, getAllItems, clearCache, validateCustomCss, getSettings, saveSettings} from '../lib';
-import ImportExport from './import-export';
-import SettingsPane from './settings-pane';
-import SettingsBlock from './settings-block';
-import Toggle from '../svelte-toggle';
+import {fly} from 'svelte/transition';
+import {options, defaultOptions} from '../store';
+import {EVENT, getAllItems, getSettings, saveSettings} from '../lib';
+
+import MainFolder from './block-main-folder';
+import DockedFolders from './block-docked-folders';
+import Customize from './block-customize';
+import ImportExport from './block-import-export';
+import Reset from './block-reset';
+
 let folders = [];
+let isVisible = false, settingsBtn, lastFocusEl;
+
 
 onMount(() => {
 	getAllItems()
 		.then(items => folders = items.filter(item => item.type === 'folder'))
 		.then(loadSettings);
+	EVENT.on(EVENT.document.clicked, onDocClick);
 });
-
 
 function loadSettings () {
 	getSettings().then(stored => {
@@ -144,41 +54,37 @@ function loadSettings () {
 }
 
 
-function onDockedFoldersChange (id) {
-	EVENT.fire(EVENT.dockedFolders.changed, id);
+function toggle (e) {
+	const focusBtn = (!e.screenX && !e.screenY);
+	isVisible ? close(focusBtn) : open();
+}
+
+function open () {
+	isVisible = true;
+}
+
+function close (focusBtn) {
+	isVisible = false;
+	if (focusBtn) settingsBtn.focus();
 }
 
 
-function addFolder () {
-	const docked = $dockedFolders;
-	docked.push({id: '', open: false});
-	dockedFolders.set(docked);
+function onDocClick (e) {
+	if (e.target.closest('.settings-pane,.btn-settings')) return;
+	if (!isVisible) return;
+	close();
 }
 
-function delFolder (folder) {
-	const docked = $dockedFolders;
-	const idx = docked.findIndex(f => f.id === folder.id);
-	docked.splice(idx, 1);
-	dockedFolders.set(docked);
-}
-
-function reset () {
-	options.set($defaultOptions);
-}
-
-
-function purge () {
-	const res = window.confirm('Are you sure you wish to purge all cache?\n(Make sure you backed up your settings)');
-	if (res) clearCache().then(() => location.reload());
-}
-
-
-function validateCss (ev) {
-	const el = ev.target;
-	const text = el.value || '';
-
-	const res = validateCustomCss(text);
-	el.setCustomValidity(res ? '' : 'Check your CSS!');
+function trapfocus (e, how) {
+	if (!isVisible || e.key !== 'Tab') return;
+	if (how === 'first' && e.shiftKey) {
+		e.preventDefault();
+		lastFocusEl.focus();
+	}
+	else if (how === 'last' && !e.shiftKey) {
+		e.preventDefault();
+		settingsBtn.focus();
+	}
 }
 
 </script>
