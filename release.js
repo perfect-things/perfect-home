@@ -149,7 +149,7 @@ function release () {
 				'rm -rf ~/Desktop/source';
 			return run(cmd).catch(() => {});
 		})
-		.then (() => {
+		.then(() => {
 			spinner.text = 'Source zipped to ' + chalk.cyan('Desktop') + '!';
 			spinner.succeed();
 

@@ -73,7 +73,11 @@ function getLetterThumbnail (item) {
 		text = item.title;
 	}
 	else if (isLocalFile(item.url)) {
-		suf = item.url.replace('file://', '').split(/[/\\]/).slice(-2).join('/');
+		suf = item.url
+			.replace('file://', '')
+			.split(/[/\\]/)
+			.slice(-2)
+			.join('/');
 		text = item.title;
 	}
 	else {
@@ -117,7 +121,7 @@ function animate (el, from, to, options = {}) {
 	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
 	const opts = Object.assign({}, dflt, options);
 
-	return new Promise (resolve => {
+	return new Promise(resolve => {
 		const anim = el.animate([from, to], opts);
 		anim.oncancel = resolve;
 		anim.onfinish = resolve;
@@ -127,7 +131,6 @@ function animate (el, from, to, options = {}) {
 
 function getFavicon (url) {
 	const favIconService = 'https://www.google.com/s2/favicons?domain=';
-	// const fallback = 'https://besticon-demo.herokuapp.com/icon?size=64&url=';
 	let urlObj;
 	try { urlObj = new URL(url); }
 	catch {}

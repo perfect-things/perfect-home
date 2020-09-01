@@ -102,18 +102,15 @@
 	</SettingsBlock>
 
 
+	<ImportExport />
+
+
 	<SettingsBlock collapsed title="Reset">
 		<small>This will reset the customization settings to their default values. It will not change the thumbnails cache.</small>
 		<div class="settings-row">
 			<button type="button" class="btn btn-reset" on:click="{reset}">Reset to defaults</button>
 		</div>
-	</SettingsBlock>
 
-
-	<ImportExport />
-
-
-	<SettingsBlock collapsed title="Purge">
 		<small>This will clear all stored items: options and thumbnails cache.</small>
 		<div class="settings-row">
 			<button type="button" class="btn btn-clear danger" on:click="{purge}">Clear cache</button>
