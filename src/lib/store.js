@@ -14,7 +14,7 @@ const _options = {
 	pageBg       : '#333333',
 	showLabels   : true,
 	css          : '',
-	theme        : 'none',
+	theme        : '',
 	themeCSS     : '',
 	rootFolder   : ROOT_ID,
 };

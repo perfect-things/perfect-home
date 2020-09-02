@@ -7,6 +7,7 @@
 		<!-- svelte-ignore a11y-no-onchange -->
 		<select name="theme" aria-labelledby="lbl-theme"
 			bind:value="{$options.theme}" on:change="{onThemeChange}">
+			<option value="">None</option>
 			{#each themeNames as themeName}
 				<option value="{themeName}">{themeName}</option>
 			{/each}
@@ -75,13 +76,12 @@ import SettingsBlock from './settings-block';
 import Toggle from '../svelte-toggle';
 import {getThemes, themeIcons, options, validateCustomCss, getThemeCSS} from '../lib';
 
+let themeNames = [];
 let themes = {};
-let themeNames = ['None'];
 
 onMount(() => {
 	getThemes().then(thms => {
-		const names = Object.keys(thms);
-		themeNames = [ 'None', ...names ];
+		themeNames = Object.keys(thms);
 		themes = thms;
 		onThemeChange();
 	});
@@ -97,11 +97,12 @@ function validateCss (ev) {
 
 
 function onThemeChange () {
-	themeIcons.set(themes[$options.theme].icons);
-	getThemeCSS(themes[$options.theme].css)
-		.then(css => {
+	if ($options.theme && themes[$options.theme]) {
+		themeIcons.set(themes[$options.theme].icons);
+		getThemeCSS(themes[$options.theme].css).then(css => {
 			$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
 		});
+	}
 }
 
 </script>
