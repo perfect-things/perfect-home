@@ -14,6 +14,8 @@ const _options = {
 	pageBg       : '#333333',
 	showLabels   : true,
 	css          : '',
+	theme        : 'none',
+	themeCSS     : '',
 	rootFolder   : ROOT_ID,
 };
 
@@ -25,6 +27,8 @@ export const currentFolderTitle = derived(currentFolder, ($currentFolder, set) =
 export const defaultOptions = readable(_options);
 export const options = writable(_options);
 export const items = writable([]);
+
+export const themeIcons = writable([]);
 
 
 

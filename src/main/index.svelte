@@ -59,6 +59,7 @@ function optionsChanged (props) {
 
 	document.documentElement.style.setProperty('--color-text', props.pageColor);
 	document.documentElement.style.setProperty('--color-background', props.pageBg);
+	injectCss(props.themeCSS, 'ThemeCSS');
 	injectCss(props.css);
 	currentFolder.set(props.rootFolder);
 }

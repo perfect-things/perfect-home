@@ -15,7 +15,7 @@
 			"<b>{$currentFolderTitle}</b>"
 			folder in your bookmarks.
 		</p>
-		{:else}
+		{:else if $currentFolderTitle}
 			{$currentFolderTitle}
 		{/if}
 	</h1>

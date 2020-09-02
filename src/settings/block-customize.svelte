@@ -1,12 +1,14 @@
 <SettingsBlock collapsed title="Customize">
-	<h3>Theme</h3>
-	<small>See <a href="https://github.com/perfect-things/perfect-home/blob/master/theming-tutorial.md" target="_blank">
+	<h3 id="lbl-theme">Theme</h3>
+	<small>See <a href="https://github.com/perfect-things/perfect-home-themes#perfect-home---themes" target="_blank">
 		more info on Theming</a>.
 	</small>
 	<div class="select-wrap">
-		<select name="theme" bind:value="{$options.theme}" aria-label="Theme">
-			{#each themes as theme}
-				<option value="{theme.id}">{theme.title}</option>
+		<!-- svelte-ignore a11y-no-onchange -->
+		<select name="theme" aria-labelledby="lbl-theme"
+			bind:value="{$options.theme}" on:change="{onThemeChange}">
+			{#each themeNames as themeName}
+				<option value="{themeName}">{themeName}</option>
 			{/each}
 		</select>
 	</div>
@@ -24,10 +26,10 @@
 	</div>
 
 	<div class="settings-row">
-		<label id="tile-size" for="tile-size">Tile size</label>
+		<label id="lbl-tile-size" for="tile-size">Tile size</label>
 		<div class="flex-spacer"></div>
-		<input aria-labelledby="tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
-		<input aria-labelledby="tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
+		<input aria-labelledby="lbl-tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
+		<input aria-labelledby="lbl-tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
 	</div>
 
 	<div class="settings-row">
@@ -68,19 +70,38 @@
 
 
 <script>
+import {onMount} from 'svelte';
 import SettingsBlock from './settings-block';
 import Toggle from '../svelte-toggle';
-import {options, validateCustomCss} from '../lib';
+import {getThemes, themeIcons, options, validateCustomCss, getThemeCSS} from '../lib';
 
-let themes = [{ title: 'None' }];
+let themes = {};
+let themeNames = ['None'];
+
+onMount(() => {
+	getThemes().then(thms => {
+		const names = Object.keys(thms);
+		themeNames = [ 'None', ...names ];
+		themes = thms;
+		onThemeChange();
+	});
+});
+
 
 function validateCss (ev) {
 	const el = ev.target;
 	const text = el.value || '';
-
 	const res = validateCustomCss(text);
 	el.setCustomValidity(res ? '' : 'Check your CSS!');
 }
 
+
+function onThemeChange () {
+	themeIcons.set(themes[$options.theme].icons);
+	getThemeCSS(themes[$options.theme].css)
+		.then(css => {
+			$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
+		});
+}
 
 </script>
