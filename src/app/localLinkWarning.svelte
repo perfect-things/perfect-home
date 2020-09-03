@@ -8,8 +8,8 @@
 		<input class="ext-url" type="text" readonly value="{location.href}" on:focus="{e => e.target.select()}">
 	</p>
 	<div class="buttons">
-		<div class="flex-spacer"></div>
 		<button type="button" class="btn" on:click="{modal.close()}">Close</button>
+		<div class="flex-spacer"></div>
 	</div>
 </Modal>
 

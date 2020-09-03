@@ -37,10 +37,10 @@
 			</div>
 		</div>
 		<div class="buttons">
-			<button type="button" class="btn danger" on:click="{() => delBookmark(item)}">Delete</button>
-			<div class="flex-spacer"></div>
-			<button type="button" class="btn" on:click="{cancel}">Cancel</button>
 			<button type="submit" class="btn success" on:click="{save}">Save</button>
+			<button type="button" class="btn" on:click="{cancel}">Cancel</button>
+			<div class="flex-spacer"></div>
+			<button type="button" class="btn danger" on:click="{() => delBookmark(item)}">Delete</button>
 		</div>
 	</form>
 </Modal>
