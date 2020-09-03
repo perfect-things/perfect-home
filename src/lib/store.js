@@ -1,5 +1,6 @@
-import {readable, writable, derived} from 'svelte/store';
+import {readable, writable, derived, get} from 'svelte/store';
 import {EVENT} from './event';
+import {getThemes, getThemeCSS} from './github';
 import {getFolderTitle, getThumbs, saveThumbs,
 	getDockedFolders, saveDockedFolders} from './browser';
 
@@ -28,7 +29,40 @@ export const defaultOptions = readable(_options);
 export const options = writable(_options);
 export const items = writable([]);
 
+export const themeNames = writable([]);
 export const themeIcons = writable([]);
+
+function themesStore () {
+	const { subscribe, set } = writable({});
+
+	function apply () {
+		const $options = get(options);
+		const $themes = get(themes);
+		if ($options.theme && $themes[$options.theme]) {
+			themeIcons.set($themes[$options.theme].icons);
+			getThemeCSS($themes[$options.theme].css)
+				.then(css => {
+					$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
+					options.set($options);
+				});
+		}
+	}
+	return {
+		subscribe,
+		load: () => {
+			if (get(themeNames).length) return;
+			return getThemes().then(thms => {
+				set(thms);
+				themeNames.set(Object.keys(thms));
+				apply();
+			});
+		},
+		apply,
+		reset: () => set(0)
+	};
+}
+
+export const themes = themesStore();
 
 
 

@@ -23,6 +23,17 @@
 						on:change="{onThumbnailSelect}">
 				</label>
 				<textarea id="thumb_url" on:input="{onThumbUrlChange}">{thumbnailUrl || ''}</textarea>
+
+				<label for="theme-icon">Choose icon from theme</label>
+				<div class="select-wrap">
+				<!-- svelte-ignore a11y-no-onchange -->
+				<select id="theme-icon" aria-label="Theme Icon" on:change="{onThemeIconChange}" bind:this="{themeIconSelect}">
+						<option value="">None</option>
+						{#each $themeIcons as icon}
+							<option value="{icon.url}">{icon.name}</option>
+						{/each}
+					</select>
+				</div>
 			</div>
 		</div>
 		<div class="buttons">
@@ -35,21 +46,24 @@
 </Modal>
 
 <script>
+import {onMount} from 'svelte';
 import Modal from '../svelte-modal';
 import TextFit from '../svelte-text-fit';
 import {showToast, hideToast} from '../svelte-toaster';
-import {onMount} from 'svelte';
-import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate, saveBookmark, deleteBookmark, createBookmark} from '../lib';
+import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate, themeIcons, getThemeIcon,
+	saveBookmark, deleteBookmark, createBookmark, themes} from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';
-
+let themeIconSelect;
 
 onMount(() => {
 	EVENT.on(EVENT.bookmark.edit, editBookmark);
 	EVENT.on(EVENT.bookmark.delete, delBookmark);
 	EVENT.on(EVENT.bookmark.thumbDropped, thumbDropped);
 });
+
+
 
 function onThumbUrlChange (ev) {
 	const url = ev.target.value;
@@ -167,7 +181,9 @@ function editBookmark (_item, _el) {
 	targetEl = _el;
 	thumbnailUrl = $thumbs[item.id] || '';
 	showThumb();
+	themeIconSelect.value = '';
 	modal.open();
+	themes.load();
 }
 
 
@@ -205,6 +221,11 @@ function thumbDropped (_item, _url) {
 		}
 	});
 	save();
+}
+
+
+function onThemeIconChange (e) {
+	getThemeIcon(e.target.value).then(thumbChangedTo);
 }
 
 </script>

@@ -44,3 +44,15 @@ export function getThemeCSS (url) {
 		.then(resp => resp && resp.content ? atob(resp.content || '') : '')
 		.catch(() => {});
 }
+
+
+export function getThemeIcon (url) {
+	if (!url) return Promise.resolve('');
+	return fetch(url)
+		.then(resp => resp.json())
+		.then(resp => {
+			const content = (resp && resp.content || '').replace(/\n/g, '');
+			return 'data:image/png;base64,' + content;
+		})
+		.catch(() => {});
+}

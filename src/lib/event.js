@@ -4,16 +4,6 @@ export const EVENT = {
 	off,
 	fire,
 
-	document: {
-		clicked: 'document-clicked',
-		localLink: 'opening-local-link'
-	},
-
-	search: {
-		toggle: 'search-toggle',
-		open: 'search-open'
-	},
-
 	bookmark: {
 		added: 'bookmark-added',
 		moved: 'bookmark-moved',
@@ -26,15 +16,25 @@ export const EVENT = {
 		changeThumb: 'bookmark-thumb-change',
 		thumbDropped: 'bookmark-thumb-dropped',
 	},
-	settings: {
-		loaded: 'settings-loaded',
-		imported: 'settings-imported',
-	},
+
 	dockedFolders: {
 		loaded: 'docked-folders-loaded',
 		changed: 'docked-folders-changed',
 	},
 
+	document: {
+		clicked: 'document-clicked',
+		localLink: 'opening-local-link'
+	},
 
+	search: {
+		toggle: 'search-toggle',
+		open: 'search-open'
+	},
+
+	settings: {
+		loaded: 'settings-loaded',
+		imported: 'settings-imported',
+	},
 
 };
