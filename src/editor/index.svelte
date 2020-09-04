@@ -42,7 +42,7 @@ import {onMount} from 'svelte';
 import Modal from '../svelte-modal';
 import TextFit from '../svelte-text-fit';
 import {showToast, hideToast} from '../svelte-toaster';
-import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate, getThemeIcon,
+import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate,
 	saveBookmark, deleteBookmark, createBookmark, themes, options} from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
@@ -219,7 +219,7 @@ function thumbDropped (_item, _url) {
 
 
 function pickedIconFromTheme (icon) {
-	getThemeIcon(icon.url).then(thumbChangedTo);
+	themes.getIcon(icon.url).then(thumbChangedTo);
 }
 
 </script>

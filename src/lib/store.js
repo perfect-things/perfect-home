@@ -1,9 +1,9 @@
 import {readable, writable, derived, get} from 'svelte/store';
 import {EVENT} from './event';
-import {getThemes, getThemeCSS} from './github';
+import {getFaviconFromGoogle} from './google';
+import {getThemes, getThemeIcon, getThemeCSS} from './github';
 import {getFolderTitle, getThumbs, saveThumbs,
 	getDockedFolders, saveDockedFolders} from './browser';
-
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu
 const _options = {
@@ -18,6 +18,8 @@ const _options = {
 	theme        : '',
 	themeCSS     : '',
 	rootFolder   : ROOT_ID,
+	allowGH      : false,
+	allowGoogle  : false,
 };
 
 export const currentFolder = writable(ROOT_ID);
@@ -51,6 +53,12 @@ export const wasSorted = writable(false);
 
 
 
+export function getFavicon (url) {
+	if (!get(options).allowGoogle) return '';
+	return getFaviconFromGoogle(url);
+}
+
+
 
 /*** THEMES ***************************************************************************************/
 
@@ -62,6 +70,8 @@ function themesStore () {
 
 	function load () {
 		if (get(themeNames).length) return;
+		if (!get(options).allowGH) return Promise.resolve({});
+
 		return getThemes().then(thms => {
 			set(thms);
 			themeNames.set(Object.keys(thms));
@@ -75,6 +85,7 @@ function themesStore () {
 		const theme = Object.keys($themes).length && $options.theme && $themes[$options.theme];
 		if (theme) {
 			themeIcons.set(theme.icons);
+			if (!get(options).allowGH) return;
 			getThemeCSS(theme.css)
 				.then(css => {
 					$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
@@ -88,10 +99,16 @@ function themesStore () {
 		}
 	}
 
+	function getIcon (url) {
+		if (!get(options).allowGH) return Promise.resolve({});
+		return getThemeIcon(url);
+	}
+
 	return {
 		subscribe,
 		load,
 		apply,
+		getIcon,
 		reset: () => set(0)
 	};
 }

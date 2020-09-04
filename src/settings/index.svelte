@@ -15,6 +15,7 @@
 			<MainFolder {folders} />
 			<DockedFolders {folders} />
 			<Customize />
+			<Privacy />
 			<ImportExport />
 			<Reset />
 		</div>
@@ -30,6 +31,7 @@ import {EVENT, getAllItems, getSettings, saveSettings, options, defaultOptions} 
 import MainFolder from './block-main-folder';
 import DockedFolders from './block-docked-folders';
 import Customize from './block-customize';
+import Privacy from './block-privacy';
 import ImportExport from './block-import-export';
 import Reset from './block-reset';
 

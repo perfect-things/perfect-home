@@ -1,3 +1,4 @@
+
 const CUSTOM_CSS_TITLE = 'CustomCSS';
 function injectCss (css, title = CUSTOM_CSS_TITLE) {
 	let style = document.querySelector(`[title=${title}]`);
@@ -118,9 +119,9 @@ function emphasize (str, q) {
 
 
 
-function animate (el, from, to, options = {}) {
+function animate (el, from, to, _options = {}) {
 	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
-	const opts = Object.assign({}, dflt, options);
+	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {
 		const anim = el.animate([from, to], opts);
@@ -129,15 +130,6 @@ function animate (el, from, to, options = {}) {
 	});
 }
 
-
-function getFavicon (url) {
-	const favIconService = 'https://www.google.com/s2/favicons?domain=';
-	let urlObj;
-	try { urlObj = new URL(url); }
-	catch {}
-	if (!urlObj || !urlObj.host) return '';
-	return favIconService + urlObj.host;
-}
 
 
 function clone (obj) {
@@ -175,10 +167,6 @@ function flattenTree (list = []) {
 	return flatList;
 }
 
-function isFirefox () {
-	return typeof browser !== 'undefined';
-}
-
 function processSubTree (tree) {
 	if (!tree || !tree.length) return [];
 	return tree[0].children.map(ch => {
@@ -208,11 +196,9 @@ export {
 	fuzzy,
 	emphasize,
 	animate,
-	getFavicon,
 	clone,
 	copyToClipboard,
 	flattenTree,
-	isFirefox,
 	processSubTree,
 	isImage,
 };

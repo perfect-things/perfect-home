@@ -8,10 +8,14 @@
 </div>
 
 <script>
-import {afterUpdate} from 'svelte';
+import {afterUpdate, createEventDispatcher} from 'svelte';
+const dispatch = createEventDispatcher();
+
 export let id;
 export let value = false;
 let el;
+
+
 afterUpdate(() => {
 	el.value = +value * 100;
 });
@@ -19,17 +23,20 @@ afterUpdate(() => {
 function onchange () {
 	el.value = Math.round(el.value / 100) * 100;
 	value = !!+el.value;
+	dispatch('change', value);
 }
 
 function onkeydown (e) {
 	if (e.key === 'ArrowRight') el.value = 100;
 	else if (e.key === 'ArrowLeft') el.value = 0;
 	value = !!+el.value;
+	dispatch('change', value);
 }
 
 function onkeypress (e) {
 	if (e.key === ' ' || e.key === 'Enter') el.value = +el.value ? 0 : 100;
 	value = !!+el.value;
+	dispatch('change', value);
 }
 
 </script>
