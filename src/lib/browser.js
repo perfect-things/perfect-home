@@ -1,5 +1,8 @@
 import browser from 'webextension-polyfill';
-import {isFirefox, flattenTree, processSubTree} from './utils';
+import {flattenTree, processSubTree} from './utils';
+
+const isFirefox = () => typeof browser !== 'undefined';
+
 
 const getSettings = async () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = async (settings) => browser.storage.local.set({ settings });

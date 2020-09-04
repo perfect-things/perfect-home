@@ -5,6 +5,7 @@
 <ContextMenu />
 <Search />
 <Editor />
+<IconPicker/>
 <Toaster />
 <LocalLinkWarning/>
 <Cron />
@@ -17,6 +18,7 @@ import ContextMenu from '../context-menu';
 import Settings from '../settings';
 import Search from '../search';
 import Editor from '../editor';
+import IconPicker from '../icon-picker';
 import Cron from '../cron';
 import Toaster from '../svelte-toaster';
 import LocalLinkWarning from './localLinkWarning';

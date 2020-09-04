@@ -3,16 +3,20 @@
 	<small>See <a href="https://github.com/perfect-things/perfect-home-themes#perfect-home---themes" target="_blank">
 		more info on Theming</a>.
 	</small>
-	<div class="select-wrap">
-		<!-- svelte-ignore a11y-no-onchange -->
-		<select name="theme" aria-labelledby="lbl-theme"
-			bind:value="{$options.theme}" on:change="{onThemeChange}">
-			<option value="">None</option>
-			{#each $themeNames as themeName}
-				<option value="{themeName}">{themeName}</option>
-			{/each}
-		</select>
-	</div>
+	{#if $options.allowGH}
+		<div class="select-wrap">
+			<!-- svelte-ignore a11y-no-onchange -->
+			<select name="theme" aria-labelledby="lbl-theme"
+				bind:value="{$options.theme}" on:change="{onThemeChange}">
+				<option value="">None</option>
+				{#each $themeNames as themeName}
+					<option value="{themeName}">{themeName}</option>
+				{/each}
+			</select>
+		</div>
+	{:else}
+	<p class="danger">To use themes you need to <em>Allow Github</em> in <em>Privacy</em> section below.</p>
+	{/if}
 
 
 	<h3>Basic customizations</h3>
@@ -47,7 +51,7 @@
 		<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
 	</div>
 
-	<div class="settings-row">
+	<div class="settings-row horizontal-lbl">
 		<label for="showLabels">Show labels</label>
 		<div class="flex-spacer"></div>
 		<Toggle id="showLabels" bind:value="{$options.showLabels}"/>

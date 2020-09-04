@@ -24,12 +24,17 @@ export const EVENT = {
 
 	document: {
 		clicked: 'document-clicked',
-		localLink: 'opening-local-link'
+		localLink: 'opening-local-link',
+	},
+
+	iconPicker: {
+		open: 'open-icon-picker',
+		picked: 'icon-picker-picked',
 	},
 
 	search: {
 		toggle: 'search-toggle',
-		open: 'search-open'
+		open: 'search-open',
 	},
 
 	settings: {

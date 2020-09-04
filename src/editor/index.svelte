@@ -21,19 +21,11 @@
 					<input type="file" tabindex="-1" accept="image/png, image/jpeg"
 						bind:this="{fileInput}"
 						on:change="{onThumbnailSelect}">
+					{#if $options.theme}
+						<button type="button" on:click="{openPicker}">Pick from theme</button>
+					{/if}
 				</label>
 				<textarea id="thumb_url" on:input="{onThumbUrlChange}">{thumbnailUrl || ''}</textarea>
-
-				<label for="theme-icon">Choose icon from theme</label>
-				<div class="select-wrap">
-				<!-- svelte-ignore a11y-no-onchange -->
-				<select id="theme-icon" aria-label="Theme Icon" on:change="{onThemeIconChange}" bind:this="{themeIconSelect}">
-						<option value="">None</option>
-						{#each $themeIcons as icon}
-							<option value="{icon.url}">{icon.name}</option>
-						{/each}
-					</select>
-				</div>
 			</div>
 		</div>
 		<div class="buttons">
@@ -50,20 +42,23 @@ import {onMount} from 'svelte';
 import Modal from '../svelte-modal';
 import TextFit from '../svelte-text-fit';
 import {showToast, hideToast} from '../svelte-toaster';
-import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate, themeIcons, getThemeIcon,
-	saveBookmark, deleteBookmark, createBookmark, themes} from '../lib';
+import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate,
+	saveBookmark, deleteBookmark, createBookmark, themes, options} from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';
-let themeIconSelect;
 
 onMount(() => {
 	EVENT.on(EVENT.bookmark.edit, editBookmark);
 	EVENT.on(EVENT.bookmark.delete, delBookmark);
 	EVENT.on(EVENT.bookmark.thumbDropped, thumbDropped);
+	EVENT.on(EVENT.iconPicker.picked, pickedIconFromTheme);
 });
 
 
+function openPicker (e) {
+	EVENT.fire(EVENT.iconPicker.open, e.target);
+}
 
 function onThumbUrlChange (ev) {
 	const url = ev.target.value;
@@ -181,7 +176,6 @@ function editBookmark (_item, _el) {
 	targetEl = _el;
 	thumbnailUrl = $thumbs[item.id] || '';
 	showThumb();
-	themeIconSelect.value = '';
 	modal.open();
 	themes.load();
 }
@@ -224,8 +218,8 @@ function thumbDropped (_item, _url) {
 }
 
 
-function onThemeIconChange (e) {
-	getThemeIcon(e.target.value).then(thumbChangedTo);
+function pickedIconFromTheme (icon) {
+	themes.getIcon(icon.url).then(thumbChangedTo);
 }
 
 </script>
