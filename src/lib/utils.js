@@ -3,9 +3,11 @@ const CUSTOM_CSS_TITLE = 'CustomCSS';
 function injectCss (css, title = CUSTOM_CSS_TITLE) {
 	let style = document.querySelector(`[title=${title}]`);
 	if (style) style.remove();
-
+	css = css.replace(/\n/g, ' ').replace(/<br>/g, ' ');
+	if (!css) return;
 	style = document.createElement('STYLE');
 	style.title = title;
+	console.log(css);
 	style.innerText = css;
 	document.head.appendChild(style);
 }
