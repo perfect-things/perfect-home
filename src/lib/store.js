@@ -29,42 +29,6 @@ export const defaultOptions = readable(_options);
 export const options = writable(_options);
 export const items = writable([]);
 
-export const themeNames = writable([]);
-export const themeIcons = writable([]);
-
-function themesStore () {
-	const { subscribe, set } = writable({});
-
-	function apply () {
-		const $options = get(options);
-		const $themes = get(themes);
-		if ($options.theme && $themes[$options.theme]) {
-			themeIcons.set($themes[$options.theme].icons);
-			getThemeCSS($themes[$options.theme].css)
-				.then(css => {
-					$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
-					options.set($options);
-				});
-		}
-	}
-	return {
-		subscribe,
-		load: () => {
-			if (get(themeNames).length) return;
-			return getThemes().then(thms => {
-				set(thms);
-				themeNames.set(Object.keys(thms));
-				apply();
-			});
-		},
-		apply,
-		reset: () => set(0)
-	};
-}
-
-export const themes = themesStore();
-
-
 
 export const thumbs = writable({});
 getThumbs().then(_thumbs => {
@@ -84,3 +48,52 @@ getDockedFolders().then(folders => {
 export const itemsLoaded = writable(false);
 // when dragging links - temporarily prevent them from working
 export const wasSorted = writable(false);
+
+
+
+
+/*** THEMES ***************************************************************************************/
+
+export const themeNames = writable([]);
+export const themeIcons = writable([]);
+
+function themesStore () {
+	const { subscribe, set } = writable({});
+
+	function load () {
+		if (get(themeNames).length) return;
+		return getThemes().then(thms => {
+			set(thms);
+			themeNames.set(Object.keys(thms));
+			apply();
+		});
+	}
+
+	function apply () {
+		const $options = get(options);
+		const $themes = get(themes);
+		const theme = Object.keys($themes).length && $options.theme && $themes[$options.theme];
+		if (theme) {
+			themeIcons.set(theme.icons);
+			getThemeCSS(theme.css)
+				.then(css => {
+					$options.themeCSS = ('' + css).replace(/[\n\t]/g, '');
+					options.set($options);
+				});
+		}
+		else {
+			themeIcons.set([]);
+			$options.themeCSS = '';
+			options.set($options);
+		}
+	}
+
+	return {
+		subscribe,
+		load,
+		apply,
+		reset: () => set(0)
+	};
+}
+
+export const themes = themesStore();

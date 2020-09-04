@@ -35,21 +35,28 @@ function getFocusableElements () {
 }
 
 function onBackdropClick (e) {
-	if (!e.target.closest('.modal')) close();
+	if (!e.target.closest('.modal')) {
+		e.stopPropagation();
+		close();
+	}
 }
 
 function onDocKeydown (e) {
-	if (e.key === 'Escape' && opened) close();
+	const hasFocus = document.activeElement.closest('.modal-backdrop') === backdropEl;
+	if (e.key === 'Escape' && opened && hasFocus) {
+		e.stopPropagation();
+		close();
+	}
 }
 
-export function open () {
+export function open (openedBy) {
 	if (opened) return;
-	triggerEl = document.activeElement;
+	triggerEl = openedBy || document.activeElement;
 	backdropEl.style.display = 'flex';
 	setTimeout(() => {
 		opened = true;
 		focusFirst();
-		document.addEventListener('keydown', onDocKeydown);
+		document.addEventListener('keydown', onDocKeydown, true);
 	}, 100);
 }
 

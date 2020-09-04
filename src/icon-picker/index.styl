@@ -1,0 +1,42 @@
+@import "lib"
+
+.icon-picker
+
+	.modal
+		width 90vw
+		height 90vh
+		display flex
+		flex-flow column
+		align-items stretch
+		justify-content flex-start
+
+	.modal-content
+		flex 1
+		display flex
+		flex-flow column
+		overflow hidden
+
+
+.icon-picker-content
+	flex 1
+	overflow-y auto
+	margin -5 -10
+
+.icon-picker-content-inner
+	padding 5
+	display grid
+	grid-gap 5px
+	grid-template-columns repeat(auto-fill, minmax(96px, 1fr))
+
+
+.icon-picker-icon
+	size 96
+	background-size cover
+	background-repeat no-repeat
+	background-position center
+	color transparent
+	border-radius 3
+
+	&:hover
+	&:focus
+		box-shadow 0 0 2px 3px var(--color-accent)
