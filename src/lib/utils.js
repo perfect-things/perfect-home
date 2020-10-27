@@ -1,19 +1,19 @@
 
-const CUSTOM_CSS_TITLE = 'CustomCSS';
-function injectCss (css, title = CUSTOM_CSS_TITLE) {
-	let style = document.querySelector(`[title=${title}]`);
+const CUSTOM_CSS_ID = 'CustomCSS';
+function injectCss (css, id = CUSTOM_CSS_ID) {
+	let style = document.getElementById(id);
 	if (style) style.remove();
 	css = css.replace(/\n/g, ' ').replace(/<br>/g, ' ');
 	if (!css) return;
 	style = document.createElement('STYLE');
-	style.title = title;
+	style.id = id;
 	style.innerText = css;
 	document.head.appendChild(style);
 }
 
 
 function validateCustomCss (css = '') {
-	const styl = Array.from(document.styleSheets).find(s => s.title === CUSTOM_CSS_TITLE);
+	const styl = Array.from(document.styleSheets).find(s => s.id === CUSTOM_CSS_ID);
 	if (css.length < 3) return true;
 	if (!styl.rules.length) return false;
 	const lt = css.split('{').length;
