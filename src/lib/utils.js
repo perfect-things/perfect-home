@@ -156,14 +156,18 @@ function objectsMoreLessTheSame (obj1, obj2) {
 
 
 function copyToClipboard (text) {
-	close();
 	const inp = document.createElement('INPUT');
 	inp.value = text;
 	inp.style = 'position: fixed; left: -1000px; top: -1000px;';
 	document.body.appendChild(inp);
-	inp.select();
-	inp.setSelectionRange(0, 99999); // For mobile devices
-	document.execCommand('copy');
+	try {
+		inp.select();
+		inp.setSelectionRange(0, 99999); // For mobile devices
+		document.execCommand('copy');
+	}
+	catch (e) {
+		console.error(e);
+	}
 	setTimeout(() => inp.remove());
 
 }
