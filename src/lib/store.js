@@ -54,7 +54,7 @@ export const wasSorted = writable(false);
 
 
 export function getFavicon (url) {
-	if (!get(options).allowGoogle) return '';
+	if (!get(options).allowGoogle) return 'assets/bookmark.svg';
 	return getFaviconFromGoogle(url);
 }
 
