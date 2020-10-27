@@ -1,6 +1,7 @@
 @import "lib"
 
 anim-speed = 0.25s
+title-height = 58px
 
 .modal-backdrop
 	position fixed
@@ -35,9 +36,10 @@ anim-speed = 0.25s
 	h1
 		font-size 18px
 		border-bottom 1px solid var(--color-border)
-		padding 20 20 18
+		padding 20 20 0
 		margin 0
 		flex unset
+		height title-height
 
 		&:empty
 			display none
@@ -48,3 +50,4 @@ anim-speed = 0.25s
 .modal-content
 	padding 20
 	position relative
+	max-height 'calc(100% - %s)' % title-height

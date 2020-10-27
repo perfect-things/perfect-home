@@ -73,8 +73,10 @@ function themesStore () {
 		if (!get(options).allowGH) return Promise.resolve({});
 
 		return getThemes().then(thms => {
-			set(thms);
-			themeNames.set(Object.keys(thms));
+			if (thms) {
+				set(thms);
+				themeNames.set(Object.keys(thms));
+			}
 			apply();
 		});
 	}
