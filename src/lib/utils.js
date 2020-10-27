@@ -2,6 +2,7 @@
 const CUSTOM_CSS_ID = 'CustomCSS';
 function injectCss (css, id = CUSTOM_CSS_ID) {
 	let style = document.getElementById(id);
+	// let style = document.querySelector(`[title=${id}]`);
 	if (style) style.remove();
 	css = css.replace(/\n/g, ' ').replace(/<br>/g, ' ');
 	if (!css) return;
@@ -12,12 +13,23 @@ function injectCss (css, id = CUSTOM_CSS_ID) {
 }
 
 
+/**
+ * Workaround for how firefox handles <style> elements:
+ *   - if <style> element has only `title` - the css will not be applied
+ *   - if styleSheet has only `id` - it will not be found in `document.styleSheets`
+ * this temporarily changes id to title, and removes the title after the validation
+ * @param {string} css
+ */
 function validateCustomCss (css = '') {
-	const styl = Array.from(document.styleSheets).find(s => s.id === CUSTOM_CSS_ID);
+	const styleElem = document.getElementById(CUSTOM_CSS_ID);
+	styleElem.title = styleElem.id;
+	const styl = Array.from(document.styleSheets).find(s => s.title === CUSTOM_CSS_ID);
 	if (css.length < 3) return true;
 	if (!styl.rules.length) return false;
 	const lt = css.split('{').length;
 	const gt = css.split('}').length;
+	styleElem.id = styleElem.title;
+	styleElem.removeAttribute('title');
 	if (!lt || !gt || lt !== gt) return false;
 	return true;
 }
