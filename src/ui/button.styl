@@ -1,5 +1,6 @@
 @import "lib"
 
+
 .btn
 	font inherit
 	display inline-block
@@ -21,7 +22,7 @@
 	box-shadow 0 1px 0 rgba(#000, .8)
 	color var(--color-text)
 	background  var(--color-info)
-	transition background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out
+	transition background-color var(--animation-speed) ease-out, border-color var(--animation-speed) ease-out, box-shadow var(--animation-speed) ease-out
 
 	&:focus
 		border-color  var(--color-accent)
@@ -56,7 +57,7 @@
 	cursor pointer
 	z-index 10
 	color var(--color-text-dimmed)
-	transition color .2s
+	transition color var(--animation-speed) ease-out
 	display inline-block
 
 	&:focus

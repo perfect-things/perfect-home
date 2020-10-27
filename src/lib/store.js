@@ -14,6 +14,7 @@ const _options = {
 	pageColor    : '#eeeeee',
 	pageBg       : '#333333',
 	showLabels   : true,
+	animSpeed    : 250,
 	css          : '',
 	theme        : '',
 	themeCSS     : '',

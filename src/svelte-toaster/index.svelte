@@ -2,7 +2,7 @@
 	{#each toasts as toast (toast.id)}
 		<div aria-live="{toast.ariaLive}" role="status"
 			class="toast toast-{toast.type}"
-			transition:scale="{{ start: 0.5 }}"
+			transition:scale="{{ start: 0.5, duration: $options.animSpeed }}"
 			on:click|preventDefault="{e => toast.cb(e, toast.id)}">
 				<div class="toast-msg">{toast.msg}</div>
 				{#if toast.btn}
@@ -22,6 +22,7 @@
 <script context="module">
 import { writable } from 'svelte/store';
 import { scale } from 'svelte/transition';
+import { options } from '../lib';
 
 const _toasts = writable({});
 

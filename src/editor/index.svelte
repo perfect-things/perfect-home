@@ -21,7 +21,7 @@
 					<input type="file" tabindex="-1" accept="image/png, image/jpeg"
 						bind:this="{fileInput}"
 						on:change="{onThumbnailSelect}">
-					{#if $options.theme}
+					{#if $options.theme && $options.allowGH}
 						<button type="button" on:click="{openPicker}">Pick from theme</button>
 					{/if}
 				</label>

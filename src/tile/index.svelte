@@ -7,8 +7,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click|preventDefault="{() => $currentFolder = item.id}"
-		in:fade={onIn()}
-		out:fade={onOut()}
+		in:onIn
+		out:onOut
 	>
 		<span class="item-thumb" bind:this={thumb}></span>
 		<span class="item-title">{item.title || ''}</span>
@@ -20,8 +20,8 @@
 		title="{item.title || ''}"
 		data-id="{item.id}"
 		on:click="{onclick}"
-		in:fade={onIn()}
-		out:fade={onOut()}
+		in:onIn
+		out:onOut
 	>
 		<span class="item-thumb" bind:this={thumb}
 			class:img-drag="{imgDrag}"
@@ -40,7 +40,7 @@
 
 <script>
 import TextFit from '../svelte-text-fit';
-import {EVENT, getLetterThumbnail, getFavicon, isImage, currentFolder, thumbs, wasSorted} from '../lib';
+import {EVENT, getLetterThumbnail, getFavicon, isImage, currentFolder, thumbs, wasSorted, options} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
 
@@ -50,9 +50,17 @@ let favicon;
 let letterThumb = '', letterThumbSuff = '';
 let imgDrag = false;
 
-const ANIM_DURATION = 150;
-const onIn = () => ({ delay: ANIM_DURATION, duration: ANIM_DURATION + 50 });
-const onOut = () => ({ duration: ANIM_DURATION });
+function onIn (node) {
+	if (!$options.animSpeed) return;
+	return fade(node, { delay: Math.max($options.animSpeed - 50, 0), duration: $options.animSpeed });
+}
+
+function onOut (node) {
+	if (!$options.animSpeed) return;
+	return fade(node, { duration: Math.max($options.animSpeed - 50, 0) });
+}
+
+
 
 function ondrop (e) {
 	imgDrag = false;

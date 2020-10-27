@@ -62,6 +62,7 @@ function optionsChanged (props) {
 
 	document.documentElement.style.setProperty('--color-text', props.pageColor);
 	document.documentElement.style.setProperty('--color-background', props.pageBg);
+	document.documentElement.style.setProperty('--animation-speed', props.animSpeed + 'ms');
 	injectCss(props.themeCSS, 'ThemeCSS');
 	injectCss(props.css);
 	currentFolder.set(props.rootFolder);

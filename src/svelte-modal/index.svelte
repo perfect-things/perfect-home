@@ -15,6 +15,9 @@
 <svelte:options accessors/>
 
 <script>
+import { options } from '../lib';
+
+
 export let title = '';
 export let opened = false;
 export let cssClass = '';
@@ -67,7 +70,7 @@ export function close () {
 		backdropEl.style.display = 'none';
 		if (triggerEl) triggerEl.focus();
 		document.removeEventListener('keydown', onDocKeydown);
-	}, 250);
+	}, $options.animSpeed);
 
 }
 

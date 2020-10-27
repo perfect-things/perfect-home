@@ -57,6 +57,12 @@
 		<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
 	</div>
 
+	<div class="settings-row horizontal-lbl">
+		<label for="showLabels">Animation speed in ms</label>
+		<div class="flex-spacer"></div>
+		<input id="animSpeed" type="number" bind:value="{$options.animSpeed}" min="0">
+	</div>
+
 
 	<h3>Custom CSS</h3>
 	<small>This allows you to fully customize the page.

@@ -9,7 +9,11 @@
 </button>
 
 {#if isVisible}
-	<div class="settings-pane" class:hidden="{!isVisible}" transition:fly="{{ x: 310 }}" tabindex="-1">
+	<div class="settings-pane"
+		class:hidden="{!isVisible}"
+		transition:fly="{{ x: 310, duration: $options.animSpeed }}"
+		tabindex="-1">
+
 		<h1>Settings</h1>
 		<div class="settings-form">
 			<MainFolder {folders} />

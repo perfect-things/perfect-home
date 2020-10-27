@@ -30,7 +30,7 @@
 <script>
 import {onMount} from 'svelte';
 import Modal from '../svelte-modal';
-import {EVENT, currentFolder, clone, fuzzy, emphasize, getAllItems, getFavicon} from '../lib';
+import {EVENT, currentFolder, clone, fuzzy, emphasize, getAllItems, getFavicon, options} from '../lib';
 
 let modal;
 let data = [];
@@ -179,7 +179,7 @@ function open () {
 
 function close () {
 	modal.close();
-	setTimeout(clear, 150);
+	setTimeout(clear, $options.animSpeed);
 }
 
 function toggle () {

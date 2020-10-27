@@ -1,6 +1,5 @@
 @import "lib"
 
-anim-speed = 0.25s
 title-height = 58px
 
 .modal-backdrop
@@ -14,7 +13,7 @@ title-height = 58px
 	justify-content center
 	z-index 99
 	background-color rgba(#000, 0)
-	transition background-color anim-speed
+	transition background-color var(--animation-speed) ease-out
 
 	&.visible
 		background-color rgba(#000, .6)
@@ -26,7 +25,7 @@ title-height = 58px
 	margin-top -60
 	opacity 0
 	transform scale(0.8)
-	transition opacity anim-speed, transform anim-speed
+	transition opacity var(--animation-speed) ease-out, transform var(--animation-speed) ease-out
 	box-shadow 0 2px 10px 2px #000a
 
 	.visible &
