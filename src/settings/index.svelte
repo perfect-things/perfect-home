@@ -41,10 +41,16 @@ let isVisible = false, settingsBtn, lastFocusEl;
 
 onMount(() => {
 	getAllItems()
-		.then(items => folders = items.filter(item => item.type === 'folder'))
+		.then(parseFoldersAndSort)
 		.then(loadSettings);
 	EVENT.on(EVENT.document.clicked, onDocClick);
 });
+
+function parseFoldersAndSort (items) {
+	folders = items
+		.filter(item => item.type === 'folder')
+		.sort((a, b) => a.title.localeCompare(b.title));
+}
 
 function loadSettings () {
 	getSettings().then(stored => {
