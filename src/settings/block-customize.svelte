@@ -20,6 +20,12 @@
 
 
 	<h3>Basic customizations</h3>
+
+	<div class="settings-row">
+		<label for="pageTitle">Page title</label>
+		<input id="pageTitle" type="text" bind:value="{$options.pageTitle}">
+	</div>
+
 	<div class="settings-row">
 		<label for="gridMaxWidth">Max grid width</label>
 		<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
@@ -58,7 +64,7 @@
 	</div>
 
 	<div class="settings-row horizontal-lbl">
-		<label for="showLabels">Animation speed in ms</label>
+		<label for="animSpeed">Animation speed in ms</label>
 		<div class="flex-spacer"></div>
 		<input id="animSpeed" type="number" bind:value="{$options.animSpeed}" min="0">
 	</div>

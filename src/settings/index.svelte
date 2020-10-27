@@ -1,3 +1,6 @@
+<svelte:head>
+	<title>{$options.pageTitle}</title>
+</svelte:head>
 <button
 	title="Settings"
 	class="icon-btn btn-settings"

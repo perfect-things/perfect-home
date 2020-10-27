@@ -7,6 +7,7 @@ import {getFolderTitle, getThumbs, saveThumbs,
 
 const ROOT_ID = 'menu________'; // = Bookmarks Menu
 const _options = {
+	pageTitle    : '',
 	gridMaxWidth : 1000,
 	iconWidth    : 150,
 	iconHeight   : 140,
