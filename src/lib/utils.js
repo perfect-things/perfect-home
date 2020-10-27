@@ -7,7 +7,6 @@ function injectCss (css, title = CUSTOM_CSS_TITLE) {
 	if (!css) return;
 	style = document.createElement('STYLE');
 	style.title = title;
-	console.log(css);
 	style.innerText = css;
 	document.head.appendChild(style);
 }
@@ -138,6 +137,10 @@ function clone (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+function objectsMoreLessTheSame (obj1, obj2) {
+	return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
+
 
 
 function copyToClipboard (text) {
@@ -199,6 +202,7 @@ export {
 	emphasize,
 	animate,
 	clone,
+	objectsMoreLessTheSame,
 	copyToClipboard,
 	flattenTree,
 	processSubTree,

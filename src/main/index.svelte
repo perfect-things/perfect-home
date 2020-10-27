@@ -14,9 +14,10 @@
 <script>
 import Tile from '../tile';
 import {onMount} from 'svelte';
-import {getSubTree, moveBookmark, injectCss, EVENT,
+import {getSubTree, moveBookmark, injectCss, EVENT, clone, objectsMoreLessTheSame,
 	options, items, currentFolder, itemsLoaded,	wasSorted} from '../lib';
 import Sortable from 'sortablejs';
+let oldProps;
 
 onMount(() => {
 	new Sortable(document.querySelector('.bookmarks'), {
@@ -52,6 +53,8 @@ function focusBody (e) {
 
 function optionsChanged (props) {
 	if (!props) return;
+	if (objectsMoreLessTheSame(props, oldProps)) return;
+	oldProps = clone(props);
 	document.documentElement.style.setProperty('--grid-max-width', props.gridMaxWidth + 'px');
 	document.documentElement.style.setProperty('--icon-width', props.iconWidth + 'px');
 	document.documentElement.style.setProperty('--icon-height', props.iconHeight + 'px');
