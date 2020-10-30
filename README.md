@@ -61,5 +61,5 @@ See [a tutorial here](customization-tutorial.md)
 
 
 ## Buy me a coffee :smile:
-<a href="https://www.buymeacoffee.com/dziad" target="_blank"><img height="60" width="217" src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/dziadborowy" target="_blank"><img height="60" width="217" src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
