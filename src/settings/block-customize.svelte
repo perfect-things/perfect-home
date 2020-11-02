@@ -23,38 +23,38 @@
 
 	<div class="settings-row">
 		<label for="pageTitle">Page title</label>
-		<input id="pageTitle" type="text" bind:value="{$options.pageTitle}">
+		<input id="pageTitle" type="text" bind:value="{$options.pageTitle}" placeholder="New Tab">
 	</div>
 
 	<div class="settings-row">
 		<label for="gridMaxWidth">Max grid width</label>
-		<input id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
+		<input class="inp-short" id="gridMaxWidth" type="number" bind:value="{$options.gridMaxWidth}">
 	</div>
 
 	<div class="settings-row">
 		<label for="gridGap">Gaps</label>
-		<input id="gridGap" type="number" bind:value="{$options.gridGap}">
+		<input class="inp-short" id="gridGap" type="number" bind:value="{$options.gridGap}">
 	</div>
 
 	<div class="settings-row">
 		<label id="lbl-tile-size" for="tile-size">Tile size</label>
 		<div class="flex-spacer"></div>
-		<input aria-labelledby="lbl-tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
-		<input aria-labelledby="lbl-tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
+		<input class="inp-short" aria-labelledby="lbl-tile-size" aria-label="Tile width" type="number" bind:value="{$options.iconWidth}">
+		<input class="inp-short" aria-labelledby="lbl-tile-size" aria-label="Tile height" type="number" bind:value="{$options.iconHeight}">
 	</div>
 
 	<div class="settings-row">
 		<label for="pageColor">Text color</label>
 		<div class="flex-spacer"></div>
-		<input aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
-		<input aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
+		<input class="inp-short" aria-label="Select text color" type="color" bind:value="{$options.pageColor}">
+		<input class="inp-short" aria-label="Enter text color hex" id="pageColor" type="text" bind:value="{$options.pageColor}">
 	</div>
 
 	<div class="settings-row">
 		<label for="pageBg">Background</label>
 		<div class="flex-spacer"></div>
-		<input aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
-		<input aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
+		<input class="inp-short" aria-label="Select background color" type="color" bind:value="{$options.pageBg}">
+		<input class="inp-short" aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
 	</div>
 
 	<div class="settings-row horizontal-lbl">
@@ -66,7 +66,7 @@
 	<div class="settings-row horizontal-lbl">
 		<label for="animSpeed">Animation speed in ms</label>
 		<div class="flex-spacer"></div>
-		<input id="animSpeed" type="number" bind:value="{$options.animSpeed}" min="0">
+		<input class="inp-short" id="animSpeed" type="number" bind:value="{$options.animSpeed}" min="0">
 	</div>
 
 
