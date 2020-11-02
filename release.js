@@ -158,8 +158,7 @@ function release () {
 			process.exit(0);
 		})
 		.catch(e => {
-			console.log(e);
-			spinner.text = e;
+			spinner.text = '' + e;
 			spinner.fail();
 		});
 }
