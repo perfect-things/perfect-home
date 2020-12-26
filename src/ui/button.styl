@@ -56,18 +56,19 @@
 	text-align center
 	cursor pointer
 	z-index 10
-	color var(--color-text-dimmed)
-	transition color var(--animation-speed) ease-out
 	display inline-block
+	transition opacity var(--animation-speed) ease-out
+	opacity .7
+	color var(--color-text)
 
 	&:focus
 		border-color  var(--color-accent)
 		box-shadow 0 0 2px 1px  var(--color-accent)
-		color var(--color-text)
+		opacity 1
 		outline 0
 
 	&:hover
-		color var(--color-text)
+		opacity 1
 
 
 .flex-spacer

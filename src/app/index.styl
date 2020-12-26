@@ -1,20 +1,29 @@
 @import "lib"
 
 :root
-	--color-border #000
-	--color-background #333
-	--color-background-alt #444
-
-	--color-text #fff
-	--color-text-dimmed #ccc
-
 	--color-highlight #14789f
 	--color-accent orange
-
 	--color-info #666d7b
 	--color-success #408062
-	--color-warning #af8a1a
 	--color-danger #8b4848
+
+@media (prefers-color-scheme: dark)
+	:root
+		--color-border #000
+		--color-background #333
+		--color-background-alt #444
+		--color-text #fff
+		--color-text-dimmed #ccc
+		--color-warning #af8a1a
+
+@media (prefers-color-scheme: light)
+	:root
+		--color-border #aaa
+		--color-background #eee
+		--color-background-alt #ccc
+		--color-text #111
+		--color-text-dimmed #444
+		--color-warning #764c00
 
 
 html, body
