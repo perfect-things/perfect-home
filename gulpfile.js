@@ -53,7 +53,7 @@ function js () {
 				extensions: ['.mjs', '.js', '.svelte', '.json'],
 				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 			}),
-			svelte({ dev: !isProd, css: false }),
+			svelte({ compilerOptions: {dev: !isProd, css: false } }),
 			isProd && terser()
 		]
 	};
