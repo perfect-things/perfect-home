@@ -11,9 +11,10 @@
 			<div class="details">
 				<label for="title">Title</label>
 				<input id="title" type="text" bind:value="{item.title}">
-				<label for="url">URL</label>
-				<input id="url" type="text" bind:value="{item.url}">
-
+				{#if !isFolder}
+					<label for="url">URL</label>
+					<input id="url" type="text" bind:value="{item.url}">
+				{/if}
 				<label for="thumb_url" class="thumbnail-label">
 					Thumbnail URL
 					<button type="button" on:click="{() => clearThumb(item, itemEl)}">Clear</button>
@@ -47,6 +48,9 @@ import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate,
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';
+
+$:isFolder = (item.type === 'folder');
+
 
 onMount(() => {
 	EVENT.on(EVENT.bookmark.edit, editBookmark);
@@ -137,14 +141,14 @@ function clearThumb (_item, el) {
 	let style = '', text = '', suf = '';
 	const itemThumb = el.querySelector('.item-thumb');
 	const isTile = el.closest('main.bookmarks') || el.closest('.modal');
-	if (isTile) {
-		const letterThumbnail = getLetterThumbnail(item);
-		style = letterThumbnail.style;
-		text = letterThumbnail.text;
-		suf = letterThumbnail.suf;
-	}
-	else {
-		style = `background-image: url("${getFavicon(item.url)}")`;
+	if (!isFolder) {
+		if (isTile) {
+			const letterThumbnail = getLetterThumbnail(item);
+			style = letterThumbnail.style;
+			text = letterThumbnail.text;
+			suf = letterThumbnail.suf;
+		}
+		else style = `background-image: url("${getFavicon(item.url)}")`;
 	}
 	itemThumb.style = style;
 	letterThumb = text;

@@ -1,12 +1,16 @@
 <ul class="context-menu" class:hidden="{!opened}" bind:this="{menuEl}">
-	<li class="context-menu-item" on:click="{() => newTab()}">Open in New Tab</li>
-	<li class="context-menu-item" on:click="{() => newTab(true)}">Open in Background Tab</li>
-	<li class="context-menu-item" on:click="{newWin}">Open in New Window</li>
-	<li class="context-menu-item context-menu-separator"></li>
-	<li class="context-menu-item" on:click="{copyUrl}">Copy URL</li>
-	<li class="context-menu-item context-menu-separator"></li>
-	<li class="context-menu-item" on:click="{editBookmark}">Edit</li>
-	<li class="context-menu-item" on:click="{delBookmark}">Delete</li>
+	{#if !isFolder}
+		<li class="context-menu-item" on:click="{() => newTab()}">Open in New Tab</li>
+		<li class="context-menu-item" on:click="{() => newTab(true)}">Open in Background Tab</li>
+		<li class="context-menu-item" on:click="{newWin}">Open in New Window</li>
+		<li class="context-menu-item context-menu-separator"></li>
+		<li class="context-menu-item" on:click="{copyUrl}">Copy URL</li>
+		<li class="context-menu-item context-menu-separator"></li>
+		<li class="context-menu-item" on:click="{editBookmark}">Edit</li>
+		<li class="context-menu-item" on:click="{delBookmark}">Delete</li>
+	{:else}
+		<li class="context-menu-item" on:click="{editBookmark}">Edit</li>
+	{/if}
 </ul>
 
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
@@ -18,6 +22,7 @@ import {showToast} from '../svelte-toaster';
 let menuEl;
 let item, el;
 let opened = false;
+let isFolder = false;
 
 function newTab (bg) {
 	close();
@@ -65,8 +70,9 @@ function updatePosition (e)  {
 function onContextMenu (e) {
 	el = e.target.closest('.item');
 	if (!el) return;
+	isFolder = false;
 	e.preventDefault();
-	if (el.classList.contains('item-folder')) return;
+	if (el.classList.contains('item-folder')) isFolder = true;
 	updatePosition(e);
 	getBookmark(el.dataset.id).then(i => {
 		item = i;
