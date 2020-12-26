@@ -41,7 +41,8 @@
 
 <script>
 import TextFit from '../svelte-text-fit';
-import {EVENT, getLetterThumbnail, getFavicon, isImage, currentFolder, thumbs, wasSorted, options} from '../lib';
+import {EVENT, getLetterThumbnail, getFavicon, isImage, initialLoad,
+	currentFolder, thumbs, wasSorted, options} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
 
@@ -52,12 +53,12 @@ let letterThumb = '', letterThumbSuff = '';
 let imgDrag = false;
 
 function onIn (node) {
-	if (!$options.animSpeed) return;
+	if (!$options.animSpeed || $initialLoad) return;
 	return fade(node, { delay: Math.max($options.animSpeed - 50, 0), duration: $options.animSpeed });
 }
 
 function onOut (node) {
-	if (!$options.animSpeed) return;
+	if (!$options.animSpeed || $initialLoad) return;
 	return fade(node, { duration: Math.max($options.animSpeed - 50, 0) });
 }
 

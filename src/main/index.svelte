@@ -14,7 +14,7 @@
 <script>
 import Tile from '../tile';
 import {onMount} from 'svelte';
-import {getSubTree, moveBookmark, injectCss, EVENT, clone, objectsMoreLessTheSame,
+import {getSubTree, moveBookmark, injectCss, EVENT, clone, objectsMoreLessTheSame, initialLoad,
 	options, items, currentFolder, itemsLoaded,	wasSorted} from '../lib';
 import Sortable from 'sortablejs';
 let oldProps;
@@ -38,9 +38,13 @@ onMount(() => {
 	EVENT.on(EVENT.bookmark.added, refresh);
 	EVENT.on(EVENT.bookmark.removed, refresh);
 	EVENT.on(EVENT.document.clicked, focusBody);
-
 });
 
+function init () {
+	$currentFolder = history.state && history.state.id || $options.rootFolder;
+	options.subscribe(optionsChanged);
+	currentFolder.subscribe(folderChanged);
+}
 
 function refresh () {
 	readFolder($currentFolder);
@@ -65,7 +69,6 @@ function optionsChanged (props) {
 	document.documentElement.style.setProperty('--animation-speed', props.animSpeed + 'ms');
 	injectCss(props.themeCSS, 'ThemeCSS');
 	injectCss(props.css);
-	currentFolder.set(props.rootFolder);
 }
 
 
@@ -80,12 +83,12 @@ function onpopstate (e) {
 }
 
 function folderChanged (folderId) {
-	let id = folderId || $options.rootFolder;
+	$itemsLoaded = false;
 	if (!history.state || !history.state.id || history.state.id !== folderId) {
-		const fn = (id === $options.rootFolder) ? 'replaceState' : 'pushState';
-		window.history[fn]({ id }, document.title, '');
+		const fn = (folderId === $options.rootFolder) ? 'replaceState' : 'pushState';
+		window.history[fn]({ id: folderId }, document.title, '');
 	}
-	readFolder(id);
+	readFolder(folderId);
 }
 
 
@@ -94,17 +97,8 @@ function readFolder (id) {
 		.then((_items = []) => {
 			$items = _items;
 			$itemsLoaded = true;
+			setTimeout(() => $initialLoad = false, 300);
 		});
-}
-
-
-function init () {
-	const f = history.state && history.state.id;
-	options.subscribe(optionsChanged);
-	currentFolder.subscribe(folderChanged);
-	setTimeout(() =>  {
-		if (f) $currentFolder = f;
-	},  100);
 }
 
 </script>

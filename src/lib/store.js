@@ -5,7 +5,6 @@ import {getThemes, getThemeIcon, getThemeCSS} from './github';
 import {getFolderTitle, getThumbs, saveThumbs,
 	getDockedFolders, saveDockedFolders} from './browser';
 
-const ROOT_ID = 'menu________'; // = Bookmarks Menu
 const _options = {
 	pageTitle         : '',
 	gridMaxWidth      : 1000,
@@ -20,12 +19,12 @@ const _options = {
 	css               : '',
 	theme             : '',
 	themeCSS          : '',
-	rootFolder        : ROOT_ID,
+	rootFolder        : 'menu________',   // = Bookmarks Menu
 	allowGH           : false,
 	allowGoogle       : false,
 };
 
-export const currentFolder = writable(ROOT_ID);
+export const currentFolder = writable('');
 export const currentFolderTitle = derived(currentFolder, ($currentFolder, set) => {
 	getFolderTitle($currentFolder).then(set);
 });
@@ -50,6 +49,7 @@ getDockedFolders().then(folders => {
 });
 
 
+export const initialLoad = writable(true);
 export const itemsLoaded = writable(false);
 // when dragging links - temporarily prevent them from working
 export const wasSorted = writable(false);
