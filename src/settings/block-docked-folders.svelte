@@ -1,4 +1,4 @@
-<SettingsBlock title="Docked folders">
+<SettingsBlock collapsed title="Docked folders">
 	<small>These folders will be docked to the bottom.</small>
 
 	{#each $dockedFolders as dockedFolder}

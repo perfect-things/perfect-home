@@ -19,6 +19,7 @@
 		class="item item-{item.type} item-{item.id}"
 		title="{item.title || ''}"
 		data-id="{item.id}"
+		target="{$options.openLinksInNewTab ? '_blank' : '_self'}"
 		on:click="{onclick}"
 		in:onIn
 		out:onOut

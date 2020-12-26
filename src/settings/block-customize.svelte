@@ -57,11 +57,6 @@
 		<input class="inp-short" aria-label="Enter background color hex" id="pageBg" type="text" bind:value="{$options.pageBg}">
 	</div>
 
-	<div class="settings-row horizontal-lbl">
-		<label for="showLabels">Show labels</label>
-		<div class="flex-spacer"></div>
-		<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
-	</div>
 
 	<div class="settings-row horizontal-lbl">
 		<label for="animSpeed">Animation speed in ms</label>
@@ -69,6 +64,17 @@
 		<input class="inp-short" id="animSpeed" type="number" bind:value="{$options.animSpeed}" min="0">
 	</div>
 
+	<div class="settings-row horizontal-lbl">
+		<label for="showLabels">Show labels</label>
+		<div class="flex-spacer"></div>
+		<Toggle id="showLabels" bind:value="{$options.showLabels}"/>
+	</div>
+
+	<div class="settings-row horizontal-lbl">
+		<label for="openLinksInNewTab">Open links in new tab</label>
+		<div class="flex-spacer"></div>
+		<Toggle id="openLinksInNewTab" bind:value="{$options.openLinksInNewTab}"/>
+	</div>
 
 	<h3>Custom CSS</h3>
 	<small>This allows you to fully customize the page.

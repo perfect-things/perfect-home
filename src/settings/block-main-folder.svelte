@@ -1,4 +1,4 @@
-<SettingsBlock title="Main folder">
+<SettingsBlock collapsed title="Main folder">
 	<small>This is the primary navigable list of bookmarks.</small>
 
 	<div class="settings-row">
