@@ -6,7 +6,7 @@
 	overflow hidden
 
 	.settings-block-header
-		padding 10 20
+		padding 10 10 10 20
 		height 45
 		text-align left
 		background var(--color-info)
@@ -26,6 +26,10 @@
 		height 24
 		rotate 180deg
 		transition rotate var(--animation-speed) ease-out
+
+	&.collapsed .chevron
+		rotate 0deg
+
 
 	.settings-block-content
 		padding 15 20 10
@@ -52,6 +56,3 @@
 
 	.horizontal-lbl label
 		padding-top 6
-
-	&.collapsed .chevron
-		rotate 0deg

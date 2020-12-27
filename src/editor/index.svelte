@@ -1,4 +1,4 @@
-<Modal title="Edit bookmark" bind:this="{modal}">
+<Modal title="Edit {isFolder ? 'folder' : 'bookmark'}" bind:this="{modal}">
 	<form on:submit="{save}">
 		<div class="editor-contents" bind:this="{itemEl}">
 			<div class="thumb">

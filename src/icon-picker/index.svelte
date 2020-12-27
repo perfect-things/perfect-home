@@ -4,14 +4,18 @@
 		<input type="search" bind:value="{filter}" placeholder="Filter">
 	</div>
 	<div class="icon-picker-content">
-		<div class="icon-picker-content-inner">
-			{#each icons as icon}
-				<a class="icon-picker-icon"
-					href="{icon.imgUrl}"
-					style="background-image: url('{icon.imgUrl}')"
-					on:click|preventDefault="{() => selectIcon(icon)}">{icon.name}</a>
-			{/each}
-		</div>
+		{#if icons.length}
+			<div class="icon-picker-content-inner">
+				{#each icons as icon}
+					<a class="icon-picker-icon"
+						href="{icon.imgUrl}"
+						style="background-image: url('{icon.imgUrl}')"
+						on:click|preventDefault="{() => selectIcon(icon)}">{icon.name}</a>
+				{/each}
+			</div>
+		{:else}
+			<div class="icon-picker-empty">There are no icons in this theme.</div>
+		{/if}
 	</div>
 	<div class="buttons">
 		<button type="button" class="btn" on:click="{close}">Close</button>

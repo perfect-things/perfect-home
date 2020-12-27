@@ -69,12 +69,14 @@ function css () {
 	const sourcemap = require('gulp-sourcemaps');
 	const stylus = require('gulp-stylus');
 	const concat = require('gulp-concat');
+	const cleanCSS = require('gulp-clean-css');
 
 	return src(['src/**/*.styl'])
 		.pipe(isProd ? noop() : sourcemap.init())
-		.pipe(stylus({ paths: ['src/ui'], compress: isProd, 'include css': true }))
+		.pipe(stylus({ paths: ['src/ui'], 'include css': true }))
 		.pipe(concat('index.css'))
 		.pipe(isProd ? noop() : sourcemap.write())
+		.pipe(isProd ? cleanCSS() : noop())
 		.pipe(dest(DIST_PATH));
 }
 
