@@ -60,6 +60,30 @@ If you are seeing this issue, there's an easy (albeit laborious) fix - in bookma
 ---
 
 
+### Dark theme style looks weird - some parts are still using light theme.
+
+Some parts of the UI depend on the `prefers-color-scheme` css media query. However, there's one firefox setting, which hardens the privacy by restricting the browser access to some OS preferences (including this one). If **about:config** you search for:
+```
+privacy.resistFingerprinting
+```
+With that set to  **true** there's no way for the browser to detect if the user has enabled the dark mode, and then it defaults to light. Solutions:
+- change this setting to **false** - however, this will reduce your very restrictive privacy policy.
+- manually override the css variables (using *Custom CSS* box in *Settings*), like so:
+```css
+:root {
+	--color-border: #000;
+	--color-background: #333;
+	--color-background-alt: #444;
+	--color-text: #fff;
+	--color-text-dimmed: #ccc;
+	--color-warning: #af8a1a;
+}
+```
+
+
+
+---
+
 # Issues
 If you have a different problem please have a look at the [list of issues](https://github.com/perfect-things/perfect-home/issues).
 
