@@ -1,40 +1,32 @@
 import browser from 'webextension-polyfill';
 import {flattenTree, processSubTree} from './utils';
 
-const isFirefox = () => typeof browser !== 'undefined';
+const getSettings = () => browser.storage.local.get('settings').then(res => res && res.settings);
+const saveSettings = (settings) => browser.storage.local.set({ settings });
 
+const getFolderTitle = id => browser.bookmarks.get(id).then(res => res[0].title).catch(() => {});
 
-const getSettings = async () => browser.storage.local.get('settings').then(res => res && res.settings);
-const saveSettings = async (settings) => browser.storage.local.set({ settings });
+const getSubTree = (id) => browser.bookmarks.getSubTree(id).then(processSubTree).catch(() => {});
 
-const getFolderTitle = async id => browser.bookmarks.get(id).then(res => res[0].title).catch(() => {});
+const getBookmark =	 (id) => browser.bookmarks.get(id).then(res => res.length && res[0]).catch(() => {});
+const saveBookmark = (item) => browser.bookmarks.update(item.id, {title: item.title, url: item.url});
+const deleteBookmark = (id) => browser.bookmarks.remove(id);
+const createBookmark = (item) => browser.bookmarks.create(item);
 
-const getSubTree = async (id) => browser.bookmarks.getSubTree(id).then(processSubTree).catch(() => {});
+const moveBookmark = (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
 
-const getBookmark = async (id) => browser.bookmarks.get(id).then(res => res.length && res[0]).catch(() => {});
-const saveBookmark = async (item) => browser.bookmarks.update(item.id, {title: item.title, url: item.url});
-const deleteBookmark = async (id) => browser.bookmarks.remove(id);
-const createBookmark = async (item) => browser.bookmarks.create(item);
+const getAllItems = () => browser.bookmarks.getTree().then(tree => flattenTree(tree[0].children));
 
-const moveBookmark = async (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
+const clearCache = () => browser.storage.local.clear();
 
+const getThumbs = () => browser.storage.local.get('thumbs').then(res => res && res.thumbs);
+const saveThumbs = (thumbs) => browser.storage.local.set({ thumbs });
 
+const getDockedFolders = () => browser.storage.local.get('dockedFolders').then(res => res && res.dockedFolders);
+const saveDockedFolders = (dockedFolders) => browser.storage.local.set({ dockedFolders });
 
-const getAllItemsFirefox = async () => browser.bookmarks.search({ title: '' });
-const getAllItemsChrome = async () => browser.bookmarks.getTree().then(tree => flattenTree(tree[0].children));
-const getAllItems = async () => await (isFirefox() ? getAllItemsFirefox() : getAllItemsChrome());
-
-
-const clearCache = async () => browser.storage.local.clear();
-
-const getThumbs = async () => browser.storage.local.get('thumbs').then(res => res && res.thumbs);
-const saveThumbs = async (thumbs) => browser.storage.local.set({ thumbs });
-
-const getDockedFolders = async () => browser.storage.local.get('dockedFolders').then(res => res && res.dockedFolders);
-const saveDockedFolders = async (dockedFolders) => browser.storage.local.set({ dockedFolders });
-
-const newtab = async (cfg) => browser.tabs.create(cfg);
-const newwindow = async (cfg) => browser.windows.create(cfg);
+const newtab = (cfg) => browser.tabs.create(cfg);
+const newwindow = (cfg) => browser.windows.create(cfg);
 
 export {
 	getSettings,

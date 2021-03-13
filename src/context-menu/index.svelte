@@ -70,6 +70,9 @@ function updatePosition (e)  {
 function onContextMenu (e) {
 	el = e.target.closest('.item');
 	if (!el) return;
+	e.stopPropagation();
+	e.preventDefault();
+
 	isFolder = false;
 	e.preventDefault();
 	if (el.classList.contains('item-folder')) isFolder = true;
@@ -81,6 +84,7 @@ function onContextMenu (e) {
 }
 
 function onDocumentClick (e) {
+	if (e.button !== 0) return;
 	if (!e.target.closest('.context-menu')) close();
 }
 

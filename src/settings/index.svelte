@@ -13,7 +13,6 @@
 
 {#if isVisible}
 	<div class="settings-pane"
-		class:hidden="{!isVisible}"
 		transition:fly="{{ x: 310, duration: $options.animSpeed }}"
 		tabindex="-1">
 
