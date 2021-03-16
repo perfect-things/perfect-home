@@ -45,6 +45,13 @@
 		"sortablejs": "^1.10.2"
 	},
 	"webExt": {
-		"sourceDir": "dist/"
+		"sourceDir": "dist/",
+		"ignoreFiles": [
+			"package.json",
+			"package-lock.json",
+			"release.js",
+			"gulpfile.js",
+			"config-prod.json"
+		]
 	}
 }

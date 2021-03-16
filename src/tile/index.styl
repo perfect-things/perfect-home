@@ -53,6 +53,8 @@
 
 	.item-folder .item-thumb
 		background-color var(--color-text-dimmed)
+		-webkit-mask url('assets/folder.svg') center no-repeat
+		-webkit-mask-size cover
 		mask url('assets/folder.svg') center no-repeat
 		mask-size cover
 
@@ -75,6 +77,8 @@
 			justify-content center
 			position relative
 			.item-thumb
+				-webkit-mask-image url(assets/folder-outline.svg)
+				-webkit-mask-size contain
 				mask-image url(assets/folder-outline.svg)
 				mask-size contain
 				position absolute

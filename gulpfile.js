@@ -102,4 +102,5 @@ function watchTask (done) {
 
 const build = parallel(js, css, assets, htmls, eslint);
 exports.build = series(cleanup, build);
+exports.watch = watchTask;
 exports.default = series(build, watchTask);

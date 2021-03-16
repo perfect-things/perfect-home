@@ -1,6 +1,8 @@
 import browser from 'webextension-polyfill';
 import {flattenTree, processSubTree} from './utils';
 
+const isChrome = browser.extension.getURL('/').startsWith('chrome');
+
 const getSettings = () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = (settings) => browser.storage.local.set({ settings });
 
@@ -15,7 +17,10 @@ const createBookmark = (item) => browser.bookmarks.create(item);
 
 const moveBookmark = (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
 
-const getAllItems = () => browser.bookmarks.getTree().then(tree => flattenTree(tree[0].children));
+const getAllItems = () => browser.bookmarks.getTree().then(tree => {
+	tree[0].title = tree[0].title || 'All Bookmarks';
+	return flattenTree(tree);
+});
 
 const clearCache = () => browser.storage.local.clear();
 
@@ -29,6 +34,7 @@ const newtab = (cfg) => browser.tabs.create(cfg);
 const newwindow = (cfg) => browser.windows.create(cfg);
 
 export {
+	isChrome,
 	getSettings,
 	saveSettings,
 

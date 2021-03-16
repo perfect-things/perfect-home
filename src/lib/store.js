@@ -2,11 +2,10 @@ import {readable, writable, derived, get} from 'svelte/store';
 import {EVENT} from './event';
 import {getFaviconFromGoogle} from './google';
 import {getThemes, getThemeIcon, getThemeCSS} from './github';
-import {getFolderTitle, getThumbs, saveThumbs,
-	getDockedFolders, saveDockedFolders} from './browser';
+import {isChrome, getFolderTitle, getThumbs, saveThumbs, getDockedFolders, saveDockedFolders} from './browser';
 
 const _options = {
-	pageTitle         : '',
+	pageTitle         : 'New Tab',
 	gridMaxWidth      : 1000,
 	iconWidth         : 150,
 	iconHeight        : 140,
@@ -19,7 +18,7 @@ const _options = {
 	css               : '',
 	theme             : '',
 	themeCSS          : '',
-	rootFolder        : 'menu________',   // = Bookmarks Menu
+	rootFolder        : isChrome ? '0' : 'root________',
 	allowGH           : false,
 	allowGoogle       : false,
 };

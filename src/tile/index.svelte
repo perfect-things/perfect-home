@@ -102,7 +102,7 @@ afterUpdate(() => {
 	letterThumbSuff = '';
 
 	if ($thumbs && $thumbs[item.id]) {
-		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset; mask: none;`;
+		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset; -webkit-mask: none; mask: none;`;
 	}
 	// this may not work for local files on some systems
 	else if (isImage(item.url)) {

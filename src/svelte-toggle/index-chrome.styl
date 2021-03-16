@@ -1,42 +1,37 @@
 @import "lib"
 
 .toggle
-	background transparent
-	height 24
-	width 71
-	cursor ew-resize
-
-	&:focus
-		outline none
-
 	&
-	&::-moz-range-thumb
+	&::-ms-thumb
+	&::-webkit-slider-thumb
 		-webkit-appearance none
-		-moz-appearance none
 		appearance none
 		border-radius 4px
 
 
-	&::-moz-range-progress
-	&::-moz-range-thumb
-	&::-moz-range-track
+	&::-webkit-slider-runnable-track
+	&::-webkit-slider-thumb
+	&::-ms-fill-lower
+	&::-ms-fill-upper
+	&::-ms-thumb
 		border-radius 4px
 
-	&::-moz-range-thumb
+	&::-webkit-slider-thumb
+	&::-ms-thumb
 		height 22
 		width 22
 		background var(--color-text)
 
-	&::-moz-range-progress
+	&::-ms-fill-lower
 		background-color var(--color-highlight)
 		height 100%
 
-	&::-moz-range-track
+	&::-webkit-slider-runnable-track
 		padding 1
 		width 100%
 		height 100%
 		background-color var(--color-background)
 		border 1px solid var(--color-background)
 
-	&:focus::-moz-range-track
+	&:focus::-webkit-slider-runnable-track
 		box-shadow 0 0 2px 1px  var(--color-accent)
