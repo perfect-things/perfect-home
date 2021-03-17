@@ -4,6 +4,8 @@ No ads, no speed dials, no frequently visited or other "frecence" bullshit!
 Just your own, predictable grid of links.
 
 **Download from [mozilla addons page](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
+**Download from [chrome web store](https://chrome.google.com/webstore/detail/hdekbnedodfockfppllkaaahaibfgcaj)**
+
 
 **[![Screenshot](_stuff/screen-main.png)](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
 
