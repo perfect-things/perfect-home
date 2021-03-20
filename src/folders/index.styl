@@ -63,15 +63,17 @@
 	margin-left 8
 	cursor pointer
 	opacity 0
+	visibility hidden
 	border 1px solid var(--color-border)
 	background-color var(--color-background-alt)
-	transition opacity var(--animation-speed) ease-out
+	transition opacity var(--animation-speed) ease-out, visibility var(--animation-speed) ease-out
 
 	&:focus
 		border-color  var(--color-accent)
 		box-shadow 0 0 2px 1px  var(--color-accent)
 
 	.folder-expanded &
+		visibility visible
 		opacity 1
 
 	.folder-pinned &

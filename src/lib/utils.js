@@ -22,6 +22,7 @@ function injectCss (css, id = CUSTOM_CSS_ID) {
  */
 function validateCustomCss (css = '') {
 	const styleElem = document.getElementById(CUSTOM_CSS_ID);
+	if (!styleElem) return true;
 	styleElem.title = styleElem.id;
 	const styl = Array.from(document.styleSheets).find(s => s.title === CUSTOM_CSS_ID);
 	if (css.length < 3) return true;
