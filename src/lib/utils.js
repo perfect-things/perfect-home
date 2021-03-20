@@ -116,6 +116,7 @@ function fuzzy (hay = '', s = '') {
 
 function emphasize (str, q) {
 	if (!q) return str;
+	str = '' + str;
 	let idx = 0;
 	let low = str.toLowerCase();
 	let stra = str.split('');

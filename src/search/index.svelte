@@ -19,6 +19,7 @@
 				</div>
 				<span class="autocomplete-list-item-text">
 					{@html item.highlightedTitle || item.title}
+					<small>{@html item.breadcrumbs}</small>
 				</span>
 			</div>
 			{/each}
@@ -54,11 +55,20 @@ function load () {
 			data = all
 				.filter(item => item.type !== 'separator')
 				.map(item => {
+					item.breadcrumbs = getBreadcrumbs(item, all);
 					if (item.type === 'bookmark') item.favicon = getFavicon(item.url);
 					return item;
 				});
 		})
 		.then(filter);
+}
+
+function getBreadcrumbs (item, allItems) {
+	if (!item.parentId) return item.title || 'All Bookmarks';
+	const breadcrumbs = [];
+	const parentItem = allItems.find(i => i.id === item.parentId);
+	breadcrumbs.push(getBreadcrumbs(parentItem, allItems), item.title || '-');
+	return breadcrumbs.join(' &raquo; ');
 }
 
 
