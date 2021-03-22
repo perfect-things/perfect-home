@@ -8,7 +8,7 @@ Just your own, predictable grid of links.
 **Download from [chrome web store](https://chrome.google.com/webstore/detail/hdekbnedodfockfppllkaaahaibfgcaj)**
 
 
-**[![Screenshot](_stuff/screen-main.png)](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
+**[![Screenshot](_stuff/1-main.png)](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
 
 ## FEATURES
 - [x] Drag & drop tiles to reorder
@@ -65,4 +65,3 @@ See [a tutorial here](customization-tutorial.md)
 
 ## Buy me a coffee :smile:
 <a href="https://www.buymeacoffee.com/tborychowski" target="_blank"><img height="60" width="217" src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
