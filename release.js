@@ -15,6 +15,7 @@ const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
+const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
 const dryrun = false;
 const faker = () => new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -100,6 +101,7 @@ function release () {
 			}
 		])
 		.then(({version}) => {
+			app.version = version;
 			spinner = ora('').start();
 			// update package & manifest
 			manifests.forEach(m => {
@@ -153,8 +155,22 @@ function release () {
 			spinner.text = 'Source zipped to ' + chalk.cyan('Desktop') + '!';
 			spinner.succeed();
 
+			spinner.text = 'Zipping dist for chrome store...';
+			spinner.start();
+			const name = `${app.name}-${app.version}`;
+			const cmd = `mkdir ~/Desktop/${name} && ` +
+				`cp -R dist/* ~/Desktop/${name} && ` +
+				`7z a ~/Desktop/${name}.zip ~/Desktop/${name}/ > /dev/null && ` +
+				`rm -rf ~/Desktop/${name}`;
+			return run(cmd).catch(() => {});
+		})
+		.then(() => {
+			spinner.text = 'Chrome store package zipped to ' + chalk.cyan('Desktop') + '!';
+			spinner.succeed();
+
 			console.log(chalk.cyan('All done!'));
 			if (!dryrun) open(addonUrl);
+			if (!dryrun) open(chromeStoreDash);
 			process.exit(0);
 		})
 		.catch(e => {
