@@ -108,6 +108,7 @@ function getLetterThumbnail (item) {
 
 function fuzzy (hay = '', s = '') {
 	hay = hay.toLowerCase();
+	s = s.toLowerCase();
 	let n = -1;
 	for (let l of s) if (!~(n = hay.indexOf(l, n + 1))) return false;
 	return true;
@@ -119,6 +120,11 @@ function emphasize (str, q) {
 	str = '' + str;
 	let idx = 0;
 	let low = str.toLowerCase();
+
+	// string includes the whole query block
+	if (low.includes(q)) return str.replace(new RegExp(`(${q})`, 'ig'), '<b>$1</b>');
+
+	// string includes the scattered query
 	let stra = str.split('');
 	q = q.toLowerCase();
 	for (let l of q) {
