@@ -66,7 +66,7 @@ body {
 	--color-text-dimmed: #ccc;
 
 	--color-highlight: #14789f;
-	--color-accen:t orange;
+	--color-accent: orange;
 
 	--color-info: #666d7b;
 	--color-success: #408062;
