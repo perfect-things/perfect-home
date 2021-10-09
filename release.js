@@ -2,6 +2,7 @@
 
 const {exec} = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const semver = require('semver');
 const ora = require('ora');
@@ -15,8 +16,11 @@ const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
+const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
+
 const dryrun = false;
-const faker = () => new Promise(resolve => setTimeout(resolve, 2000));
+
+const faker = () => new Promise(resolve => setTimeout(resolve, 200));
 
 function run (cmd) {
 	if (dryrun) return faker();
@@ -46,6 +50,16 @@ function bump (manifest, newVersion) {
 	const pkg = require(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
+	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
+}
+
+// remove chrome_settings_overrides property from manifest.json
+// as chrome store doesn't allow that
+function updateManifestForChrome (pkgPath) {
+	pkgPath = pkgPath.replace('~', os.homedir);
+	const pkg = require(pkgPath);
+	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
+	delete pkg.chrome_settings_overrides;
 	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
 }
 
@@ -100,6 +114,7 @@ function release () {
 			}
 		])
 		.then(({version}) => {
+			app.version = version;
 			spinner = ora('').start();
 			// update package & manifest
 			manifests.forEach(m => {
@@ -153,8 +168,27 @@ function release () {
 			spinner.text = 'Source zipped to ' + chalk.cyan('Desktop') + '!';
 			spinner.succeed();
 
+			spinner.text = 'Zipping dist for chrome store...';
+			spinner.start();
+			const name = `${app.name}-${app.version}`;
+			const cmd = `mkdir ~/Desktop/${name} && cp -R dist/* ~/Desktop/${name}`;
+			return run(cmd).catch(() => {});
+		})
+		.then(() => {
+			const name = `${app.name}-${app.version}`;
+			updateManifestForChrome(`~/Desktop/${name}/manifest.json`);
+
+			const cmd = `7z a ~/Desktop/${name}.zip ~/Desktop/${name}/ > /dev/null && ` +
+				`rm -rf ~/Desktop/${name}`;
+			return run(cmd).catch(() => {});
+		})
+		.then(() => {
+			spinner.text = 'Chrome store package zipped to ' + chalk.cyan('Desktop') + '!';
+			spinner.succeed();
+
 			console.log(chalk.cyan('All done!'));
 			if (!dryrun) open(addonUrl);
+			if (!dryrun) open(chromeStoreDash);
 			process.exit(0);
 		})
 		.catch(e => {
