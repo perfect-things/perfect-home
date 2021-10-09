@@ -147,7 +147,7 @@ function release () {
 				' sign --channel=listed' +
 				' --api-secret=' + config.apiSecret +
 				' --api-key=' + config.apiKey;
-			return run(signCmd).catch(() => {});
+			return run(signCmd).catch(e => console.log(e));
 		})
 		.then(() => {
 			spinner.text = 'Signed & published to ' + chalk.cyan('mozilla') + '!';
