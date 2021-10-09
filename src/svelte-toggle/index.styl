@@ -1,42 +1,42 @@
 @import "lib"
 
 .toggle
-	background transparent
-	height 24
-	width 71
-	cursor ew-resize
+	width 75
+	border-radius 4
+	background var(--color-background)
+	overflow hidden
+	user-select none
+	-webkit-user-select none
+	cursor pointer
+
+	&[disabled]
+		pointer-events none
+		opacity 0.6
 
 	&:focus
 		outline none
-
-	&
-	&::-moz-range-thumb
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
-		border-radius 4px
-
-
-	&::-moz-range-progress
-	&::-moz-range-thumb
-	&::-moz-range-track
-		border-radius 4px
-
-	&::-moz-range-thumb
-		height 22
-		width 22
-		background var(--color-text)
-
-	&::-moz-range-progress
-		background-color var(--color-highlight)
-		height 100%
-
-	&::-moz-range-track
-		padding 1
-		width 100%
-		height 100%
-		background-color var(--color-background)
-		border 1px solid var(--color-background)
-
-	&:focus::-moz-range-track
 		box-shadow 0 0 2px 1px  var(--color-accent)
+
+	.toggle-label
+		margin 0
+		padding 0
+		height auto
+
+.toggle-input
+	display none
+
+.toggle-label
+	background var(--color-highlight)
+	width 24
+	display block
+	border-radius inherit
+	cursor inherit
+	transition width .2s
+
+.toggle-handle
+	size 24
+	background var(--color-text)
+	border: 1px solid var(--color-background);
+	display block
+	border-radius inherit
+	margin 0 0 0 auto
