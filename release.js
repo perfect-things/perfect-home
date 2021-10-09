@@ -127,28 +127,28 @@ function release () {
 			spinner.start();
 			return commit(version);              // commit code changes to  github
 		})
-		// .then(() => {
-		// 	spinner.text = `Update ${chalk.cyan('pushed')} to Github.`;
-		// 	spinner.succeed();
+		.then(() => {
+			spinner.text = `Update ${chalk.cyan('pushed')} to Github.`;
+			spinner.succeed();
 
-		// 	spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
-		// 	spinner.start();
-		// 	return run('gulp build --prod');
-		// })
-		// .then(() => {
-		// 	spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
-		// 	spinner.succeed();
+			spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
+			spinner.start();
+			return run('gulp build --prod');
+		})
+		.then(() => {
+			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
+			spinner.succeed();
 
 
-		// 	spinner.text = 'Publishing addon to mozilla...';
-		// 	spinner.start();
+			spinner.text = 'Publishing addon to mozilla...';
+			spinner.start();
 
-		// 	const signCmd = path.resolve('./', 'node_modules/.bin/web-ext') +
-		// 		' sign --channel=listed' +
-		// 		' --api-secret=' + config.apiSecret +
-		// 		' --api-key=' + config.apiKey;
-		// 	return run(signCmd).catch(e => console.log(e));
-		// })
+			const signCmd = path.resolve('./', 'node_modules/.bin/web-ext') +
+				' sign --channel=listed' +
+				' --api-secret=' + config.apiSecret +
+				' --api-key=' + config.apiKey;
+			return run(signCmd).catch(e => console.log(e));
+		})
 		.then(() => {
 			spinner.text = 'Signed & published to ' + chalk.cyan('mozilla') + '!';
 			spinner.succeed();
