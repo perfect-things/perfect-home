@@ -8,7 +8,7 @@
 		"ext:lint": "web-ext lint -s ./dist",
 		"ext:build": "web-ext build --overwrite-dest -s ./dist",
 		"src:start": "gulp",
-		"start": "run-p ext:start src:start",
+		"start": "gulp build && run-p ext:start src:start",
 		"build": "gulp build --prod"
 	},
 	"license": "GPL-3.0-or-later",
