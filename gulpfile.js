@@ -1,11 +1,28 @@
-const { series, parallel, src, dest, watch } = require('gulp');
-const del = require('del');
+import gulp from 'gulp';
+import del from 'del';
+import minimist from 'minimist';
+import gulpEslint from 'gulp-eslint';
+import stream from 'stream';
+import * as rollup from 'rollup';
+import commonjs from '@rollup/plugin-commonjs';
+import source from 'vinyl-source-stream';
+import svelte from 'rollup-plugin-svelte';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+import { default as throught2 } from 'through2';
+import sourcemap from 'gulp-sourcemaps';
+import stylus from 'gulp-stylus';
+import concat from 'gulp-concat';
+import cleanCSS from 'gulp-clean-css';
 
-const isProd = require('minimist')(process.argv.slice(2)).prod;
+
+const { series, parallel, src, dest, watch } = gulp;
+const noop = throught2.obj;
+
+const isProd = minimist(process.argv.slice(2)).prod;
 const DIST_PATH = 'dist/';
 
 function eslint () {
-	const gulpEslint = require('gulp-eslint');
 	return src(['src/**/*.js', 'src/**/*.svelte', '*.js'])
 		.pipe(gulpEslint())
 		.pipe(gulpEslint.format())
@@ -17,8 +34,6 @@ function eslint () {
 
 
 function rollupBuild (inputOptions = {}, outputOptions = {}) {
-	const stream = require('stream');
-	const rollup = require('rollup');
 	const readable = new stream.Readable();
 
 	readable._read = function () { };
@@ -40,16 +55,11 @@ function rollupBuild (inputOptions = {}, outputOptions = {}) {
 
 
 function js () {
-	const commonjs = require('@rollup/plugin-commonjs');
-	const source = require('vinyl-source-stream');
-	const svelte = require('rollup-plugin-svelte');
-	const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
-	const {terser} = require('rollup-plugin-terser');
 	const inputOptions = {
 		input: './src/index.js',
 		plugins: [
 			commonjs(),
-			resolve({
+			nodeResolve({
 				extensions: ['.mjs', '.js', '.svelte', '.json'],
 				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 			}),
@@ -65,12 +75,6 @@ function js () {
 
 
 function css () {
-	const noop = require('through2').obj;
-	const sourcemap = require('gulp-sourcemaps');
-	const stylus = require('gulp-stylus');
-	const concat = require('gulp-concat');
-	const cleanCSS = require('gulp-clean-css');
-
 	return src(['src/**/*.styl'])
 		.pipe(isProd ? noop() : sourcemap.init())
 		.pipe(stylus({ paths: ['src/ui'], 'include css': true }))
@@ -100,7 +104,6 @@ function watchTask (done) {
 	watch('src/assets/**/*.*', assets);
 }
 
-const build = parallel(js, css, assets, htmls, eslint);
-exports.build = series(cleanup, build);
-exports.watch = watchTask;
-exports.default = series(build, watchTask);
+const _build = parallel(js, css, assets, htmls, eslint);
+export const build = series(cleanup, _build);
+export default series(build, watchTask);
