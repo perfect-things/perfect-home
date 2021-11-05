@@ -10,8 +10,13 @@
 		in:onIn
 		out:onOut
 	>
-		<span class="item-thumb" bind:this={thumb}></span>
-		<span class="item-title">{item.title || ''}</span>
+		<span class="item-thumb" bind:this={thumb}
+			class:img-drag="{imgDrag}"
+			on:dragenter|preventDefault|stopPropagation|capture="{() => imgDrag = true}"
+			on:dragleave|preventDefault|stopPropagation|capture="{() => imgDrag = false}"
+			on:drop|preventDefault|stopPropagation|capture="{ondrop}"
+		></span>
+		<span class="item-title" class:img-drag="{imgDrag}">{ !$thumbs[item.id] && item.title || ''}</span>
 	</a>
 {:else}
 	<a
@@ -101,10 +106,11 @@ afterUpdate(() => {
 	letterThumb = '';
 	letterThumbSuff = '';
 
+	// bookmark has a custom thumbnail
 	if ($thumbs && $thumbs[item.id]) {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset; -webkit-mask: none; mask: none;`;
 	}
-	// this may not work for local files on some systems
+	// bookmark is a link to an image. This may not work for local files on some systems
 	else if (isImage(item.url)) {
 		style = `background-image: url("${item.url}"); background-color: unset;`;
 	}
