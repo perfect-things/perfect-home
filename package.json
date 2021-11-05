@@ -1,7 +1,7 @@
 {
 	"name": "perfect-home",
 	"description": "Firefox new tab replacement",
-	"version": "0.13.5",
+	"version": "0.13.6",
 	"author": "Tom",
 	"type": "module",
 	"scripts": {
