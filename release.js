@@ -1,24 +1,26 @@
 #!/usr/bin/env node
 
-const {exec} = require('child_process');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const semver = require('semver');
-const ora = require('ora');
-const chalk = require('chalk');
-const indent = require('detect-indent');
-const inquirer = require('inquirer');
-const open = require('open');
-const git = require('simple-git')();
-const config = require('./config-prod.json');
+import {exec} from 'child_process';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import semver from 'semver';
+import ora from 'ora';
+import chalk from 'chalk';
+import indent from 'detect-indent';
+import inquirer from 'inquirer';
+import open from 'open';
+import Git from 'simple-git';
+
+
+const git = Git();
 const cwd = process.cwd();
 
 const manifests = [ 'package.json', 'src/manifest.json' ];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
 const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
-
 const dryrun = false;
+
 
 const faker = () => new Promise(resolve => setTimeout(resolve, 200));
 
@@ -29,10 +31,21 @@ function run (cmd) {
 	});
 }
 
+function getJson (_path) {
+	try {
+		const file = fs.readFileSync(_path, 'utf8');
+		const json = JSON.parse(file);
+		return json || {};
+	}
+	catch {
+		return {};
+	}
+}
+
 
 function getVersion (manifest) {
 	const pkgPath = path.join(cwd, manifest || manifests[0]);
-	const pkg = require(pkgPath);
+	const pkg = getJson(pkgPath);
 	const current = pkg.version || '0.0.0';
 
 	return {
@@ -47,7 +60,7 @@ function getVersion (manifest) {
 
 function bump (manifest, newVersion) {
 	const pkgPath = path.join(cwd, manifest);
-	const pkg = require(pkgPath);
+	const pkg = getJson(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
 	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
@@ -57,7 +70,7 @@ function bump (manifest, newVersion) {
 // as chrome store doesn't allow that
 function updateManifestForChrome (pkgPath) {
 	pkgPath = pkgPath.replace('~', os.homedir);
-	const pkg = require(pkgPath);
+	const pkg = getJson(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	delete pkg.chrome_settings_overrides;
 	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
@@ -80,6 +93,7 @@ function commit (version) {
 
 
 function release () {
+	const config = getJson('./config-prod.json');
 	const app = getVersion();
 	let spinner;
 	console.log('\n**************************************');
