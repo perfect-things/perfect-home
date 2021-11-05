@@ -16,7 +16,9 @@
 			on:dragleave|preventDefault|stopPropagation|capture="{() => imgDrag = false}"
 			on:drop|preventDefault|stopPropagation|capture="{ondrop}"
 		></span>
-		<span class="item-title" class:img-drag="{imgDrag}">{ !$thumbs[item.id] && item.title || ''}</span>
+		<span class="item-title" class:img-drag="{imgDrag}">{
+			$options.showLabels || !$thumbs[item.id] ? (item.title || '') : ''
+		}</span>
 	</a>
 {:else}
 	<a
@@ -56,6 +58,7 @@ let thumb;
 let favicon;
 let letterThumb = '', letterThumbSuff = '';
 let imgDrag = false;
+
 
 function onIn (node) {
 	if (!$options.animSpeed || $initialLoad) return;
