@@ -40,7 +40,9 @@ function getHost (url) {
 	let _url;
 	try { _url = new URL(url); }
 	catch (e) {/*eslint no-empty: 0*/}
-	return _url.host.replace(/^www\./, '');
+	_url = _url.host.replace(/^www\./, '');
+	const chunks = _url.split('.');
+	return chunks.slice(-2).join('.');
 }
 
 
@@ -68,42 +70,11 @@ function isDark (color) {
 	return brightness < 80;
 }
 
-function isIP (url) {
-	const reg = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,7})?$/g;
-	return reg.test(url);
-}
-
-function isLocalFile (url) {
-	return url.startsWith('file://');
-}
-
-
-function getLetterThumbnail (item) {
+function getLetterThumbnailStyle (item) {
 	const bg = colorFromString(item.url.replace(/(^https?:\/\/)|(\/$)/g, ''));
 	const color = isDark(bg) ? '#fffd' : '#000d';
-	const style = `background-color: ${bg}; color: ${color};`;
-	const host = getHost(item.url);
-	let text = (host || ''), suf;
-	if (isIP(text)) {
-		suf = text;
-		text = item.title;
-	}
-	else if (isLocalFile(item.url)) {
-		suf = item.url
-			.replace('file://', '')
-			.split(/[/\\]/)
-			.slice(-2)
-			.join('/');
-		text = item.title;
-	}
-	else {
-		const ar = text.split(/[.:]/g);
-		if (ar.length > 1) text = text.replace(ar[0] + '.', ar[0] + '\n');
-		[text, suf] = text.split('\n');
-	}
-	return {style, text, suf};
+	return `background-color: ${bg}; color: ${color};`;
 }
-
 
 
 function fuzzy (hay = '', s = '') {
@@ -221,7 +192,8 @@ function isImage (url) {
 export {
 	injectCss,
 	validateCustomCss,
-	getLetterThumbnail,
+	getLetterThumbnailStyle,
+	getHost,
 	fuzzy,
 	emphasize,
 	animate,

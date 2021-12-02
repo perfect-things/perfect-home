@@ -43,8 +43,8 @@ import {onMount} from 'svelte';
 import Modal from '../svelte-modal';
 import TextFit from '../svelte-text-fit';
 import {showToast, hideToast} from '../svelte-toaster';
-import {EVENT, items, thumbs, getLetterThumbnail, getFavicon, animate,
-	saveBookmark, deleteBookmark, createBookmark, themes, options} from '../lib';
+import {EVENT, items, thumbs, getLetterThumbnailStyle, getFavicon, animate,
+	saveBookmark, deleteBookmark, createBookmark, themes, options, getHost} from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';
@@ -143,10 +143,9 @@ function clearThumb (_item, el) {
 	const isTile = el.closest('main.bookmarks') || el.closest('.modal');
 	if (!isFolder) {
 		if (isTile) {
-			const letterThumbnail = getLetterThumbnail(item);
-			style = letterThumbnail.style;
-			text = letterThumbnail.text;
-			suf = letterThumbnail.suf;
+			style = getLetterThumbnailStyle(item);
+			text = item.title;
+			suf = getHost(item.url);
 		}
 		else style = `background-image: url("${getFavicon(item.url)}")`;
 	}
@@ -164,10 +163,9 @@ function showThumb () {
 		style = `background-image: url("${$thumbs[item.id]}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const letterThumbnail = getLetterThumbnail(item);
-		style = letterThumbnail.style;
-		text = letterThumbnail.text;
-		suf = letterThumbnail.suf;
+		style = getLetterThumbnailStyle(item);
+		text = item.title;
+		suf = getHost(item.url);
 	}
 	thumb.style = style;
 	letterThumb = text;

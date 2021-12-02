@@ -41,7 +41,7 @@
 
 <script>
 import TextFit from '../svelte-text-fit';
-import {EVENT, getLetterThumbnail, getFavicon, isImage, initialLoad,
+import {EVENT, getLetterThumbnailStyle, getHost, getFavicon, isImage, initialLoad,
 	currentFolder, thumbs, wasSorted, options} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
@@ -109,10 +109,10 @@ afterUpdate(() => {
 		style = `background-image: url("${item.url}"); background-color: unset;`;
 	}
 	else if (item.type === 'bookmark' && item.url) {
-		const letterThumbnail = getLetterThumbnail(item);
-		style = letterThumbnail.style;
-		letterThumb = letterThumbnail.text;
-		letterThumbSuff = letterThumbnail.suf;
+		style = getLetterThumbnailStyle(item);
+
+		letterThumb = item.title;
+		letterThumbSuff = getHost(item.url);
 	}
 	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;
 	thumb.style = style;
