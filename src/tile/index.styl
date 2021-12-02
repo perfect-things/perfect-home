@@ -20,6 +20,7 @@
 		max-height 2.3em
 		overflow hidden
 		text-overflow ellipsis
+		transition all .2s ease-out
 
 	.item-thumb
 		width 100%
@@ -69,7 +70,7 @@
 
 	&.no-labels
 		.item-bookmark .item-title
-			display none
+			opacity 0
 
 		.item-folder
 			display flex
@@ -98,7 +99,12 @@
 		.item-thumb.img-drag
 			box-shadow 0 0 3px 1px  var(--color-accent)
 			background none !important
+			-webkit-mask none
+			mask none
 
 			.text-fit
 			.item-thumb-suffix
 				display none
+
+		.item-title.img-drag
+			display none

@@ -1,8 +1,13 @@
 {
 	"name": "perfect-home",
 	"description": "Firefox new tab replacement",
-	"version": "0.13.5",
+	"version": "0.13.7",
 	"author": "Tom",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/perfect-things/perfect-home"
+	},
 	"scripts": {
 		"ext:start": "web-ext run --no-reload -s ./dist -p test-profile --keep-profile-changes",
 		"ext:lint": "web-ext lint -s ./dist",
