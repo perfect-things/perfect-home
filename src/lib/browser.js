@@ -1,7 +1,10 @@
 import browser from 'webextension-polyfill';
 import {flattenTree, processSubTree} from './utils';
 
-const isChrome = browser.extension.getURL('/').startsWith('chrome');
+const isChrome = browser.extension &&
+	browser.extension.getURL &&
+	browser.extension.getURL('/') &&
+	browser.extension.getURL('/').startsWith('chrome');
 
 const getSettings = () => browser.storage.local.get('settings').then(res => res && res.settings);
 const saveSettings = (settings) => browser.storage.local.set({ settings });
