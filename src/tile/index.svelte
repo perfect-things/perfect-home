@@ -17,7 +17,7 @@
 			on:drop|preventDefault|stopPropagation|capture="{ondrop}"
 		></span>
 		<span class="item-title" class:img-drag="{imgDrag}">{
-			$options.showLabels || !$thumbs[item.id] ? (item.title || '') : ''
+			$options.showLabels || !$thumbs[item.id] ? (cropText(item.title, 40) || '') : ''
 		}</span>
 	</a>
 {:else}
@@ -41,14 +41,14 @@
 			<span class="item-thumb-suffix">{letterThumbSuff}</span>
 		</span>
 		<span class="item-favicon" bind:this={favicon}></span>
-		<span class="item-title">{item.title || ''}</span>
+		<span class="item-title">{cropText(item.title, 40) || ''}</span>
 	</a>
 {/if}
 
 
 <script>
 import TextFit from '../svelte-text-fit';
-import {EVENT, getLetterThumbnailStyle, getHost, getFavicon, isImage, initialLoad,
+import {EVENT, getLetterThumbnailStyle, getHost, getFavicon, isImage, initialLoad, cropText,
 	currentFolder, thumbs, wasSorted, options} from '../lib';
 import {onMount, afterUpdate} from 'svelte';
 import {fade} from 'svelte/transition';
@@ -120,7 +120,7 @@ afterUpdate(() => {
 	else if (item.type === 'bookmark' && item.url) {
 		style = getLetterThumbnailStyle(item);
 
-		letterThumb = item.title;
+		letterThumb = cropText(item.title, 20);
 		letterThumbSuff = getHost(item.url);
 	}
 	if (favicon) favicon.style = `background-image: url("${getFavicon(item.url)}")`;

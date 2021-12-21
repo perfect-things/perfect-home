@@ -189,6 +189,12 @@ function isImage (url) {
 	return imageExtensions.includes(ext);
 }
 
+
+function cropText (text, lim = 20) {
+	if (text.length < lim) return text;
+	return text.substr(0, lim - 3) + '...';
+}
+
 export {
 	injectCss,
 	validateCustomCss,
@@ -198,6 +204,7 @@ export {
 	emphasize,
 	animate,
 	clone,
+	cropText,
 	objectsMoreLessTheSame,
 	copyToClipboard,
 	flattenTree,
