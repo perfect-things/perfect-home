@@ -3,6 +3,7 @@
 	on:keydown="{onKey}"
 	on:touchstart={dragStart}
 	on:mousedown={dragStart}
+	on:contextmenu|preventDefault
 	on:click|preventDefault>
 	<label class="toggle-label" bind:this="{label}">
 		<div class="toggle-handle" bind:this="{handle}"></div>
@@ -14,14 +15,15 @@ import { onMount } from 'svelte';
 import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher();
 
-const getMouseX = e => (e.type === 'touchmove') ? e.touches[0].clientX : e.clientX;
+const isTouchDevice = 'ontouchstart' in document.documentElement;
+const getMouseX = e => (e.type.includes('touch')) ? e.touches[0].clientX : e.clientX;
 const getElemWidth = el => {
 	const css = getComputedStyle(el);
 	const borders = parseFloat(css.borderLeftWidth) + parseFloat(css.borderRightWidth);
 	return el.getBoundingClientRect().width - borders;
 };
 
-export let id;
+export let id = undefined;
 export let value = false;
 export let disabled = undefined;
 let el, label, handle, startX, maxX, minX, currentX = 0;
@@ -48,10 +50,17 @@ function onKey (e) {
 }
 
 function dragStart (e) {
-	document.addEventListener('mouseup', dragEnd);
-	document.addEventListener('mousemove', drag);
-	document.addEventListener('touchend', dragEnd);
-	document.addEventListener('touchmove', drag);
+	// prevent double call on mobile
+	if (isTouchDevice && e.type !== 'touchstart') return;
+
+	if (e.type === 'touchstart') {
+		document.addEventListener('touchend', dragEnd);
+		document.addEventListener('touchmove', drag, { passive: false  });
+	}
+	else {
+		document.addEventListener('mouseup', dragEnd);
+		document.addEventListener('mousemove', drag, { passive: false  });
+	}
 	label.style.transition = 'none';
 	startX = getMouseX(e) - currentX;
 	isDragging = true;
