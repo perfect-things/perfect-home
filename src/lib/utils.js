@@ -36,11 +36,20 @@ function validateCustomCss (css = '') {
 }
 
 
+function isIP (url) {
+	const reg = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,7})?$/g;
+	return reg.test(url);
+}
+
+
 function getHost (url) {
 	let _url;
 	try { _url = new URL(url); }
 	catch (e) {/*eslint no-empty: 0*/}
 	_url = _url.host.replace(/^www\./, '');
+
+	if (isIP(_url)) return _url;
+
 	const chunks = _url.split('.');
 	return chunks.slice(-2).join('.');
 }
