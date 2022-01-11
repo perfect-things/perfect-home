@@ -3,12 +3,12 @@ Replace your new-tab page and home page with your bookmarks.
 No ads, no speed dials, no frequently visited or other "frecence" bullshit!
 Just your own, predictable grid of links.
 
-**Download from [mozilla addons page](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
+**Download from [mozilla addons page](https://addons.mozilla.org/firefox/addon/perfect-home/)**
 
 **Download from [chrome web store](https://chrome.google.com/webstore/detail/hdekbnedodfockfppllkaaahaibfgcaj)**
 
 
-**[![Screenshot](_stuff/1-main.png)](https://addons.mozilla.org/en-US/firefox/addon/perfect-home/)**
+**[![Screenshot](_stuff/1-main.png)](https://addons.mozilla.org/firefox/addon/perfect-home/)**
 
 ## FEATURES
 - [x] Drag & drop tiles to reorder
