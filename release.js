@@ -164,8 +164,8 @@ function release () {
 				`7z a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +
 
 				// zip for chrome
-				// `rm -f ~/Desktop/${app.name}/manifest.json && ` +
-				// `cp manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
+				`rm -f ~/Desktop/${app.name}/manifest.json && ` +
+				`cp manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
 				`7z a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
 
 				`rm -rf ~/Desktop/${app.name}`;
