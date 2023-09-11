@@ -1,6 +1,6 @@
 {
 	"name": "perfect-home",
-	"description": "Firefox new tab replacement",
+	"description": "Firefox/Chrome new tab replacement",
 	"version": "0.14.0",
 	"author": "PerfectThings",
 	"type": "module",

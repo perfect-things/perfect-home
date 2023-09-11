@@ -22,7 +22,7 @@ const isProd = minimist(process.argv.slice(2)).prod;
 let gulpEsbuild = createGulpEsbuild({ incremental: false });
 
 const cleanup = () => deleteAsync(['dist/*']);
-const assets = () => src(['src/assets/**/*.*']).pipe(dest(DIST_PATH + 'assets/'));
+const assets = () => src(['src/assets/**/*.*']).pipe(dest(DIST_PATH));
 const htmls = () => src(['src/*.html', 'src/*.json']).pipe(dest(DIST_PATH));
 
 export function eslint () {

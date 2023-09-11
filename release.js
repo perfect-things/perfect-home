@@ -92,7 +92,6 @@ function commit (version) {
 
 
 function release () {
-	const config = getJson('./config-prod.json');
 	const app = getVersion();
 	let spinner;
 	console.log('\n**************************************');
@@ -152,33 +151,24 @@ function release () {
 			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
 			spinner.succeed();
 
-
-			spinner.text = 'Publishing addon to mozilla...';
-			spinner.start();
-
-			const signCmd = path.resolve('./', 'node_modules/.bin/web-ext') +
-				' sign --channel=listed' +
-				' --api-secret=' + config.apiSecret +
-				' --api-key=' + config.apiKey;
-			return run(signCmd).catch(() => {});
-		})
-		.then(() => {
-			spinner.text = 'Signed & published to ' + chalk.cyan('mozilla') + '!';
-			spinner.succeed();
-
 			spinner.text = 'Zipping source...';
 			spinner.start();
 
-			const cmd = 'mkdir ~/Desktop/source && ' +
-				'cp -R src ~/Desktop/source && ' +
-
-				// zip for chrome
-				'7z a ~/Desktop/source-chrome.zip ~/Desktop/source/ && ' +
+			const cmd = `rm -rf ~/Desktop/${app.name} && ` +
+				`mkdir ~/Desktop/${app.name} && ` +
+				`cp -R dist/ ~/Desktop/${app.name} && ` +
+				`cp LICENSE ~/Desktop/${app.name} && ` +
 
 				// zip for firefox
-				'7z a ~/Desktop/source-firefox.zip ~/Desktop/source/* && ' +
+				`7z a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +
 
-				'rm -rf ~/Desktop/source';
+				// zip for chrome
+				// `rm -f ~/Desktop/${app.name}/manifest.json && ` +
+				// `cp manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
+				`7z a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
+
+				`rm -rf ~/Desktop/${app.name}`;
+
 			return run(cmd).catch(() => {});
 		})
 		.then(() => {
