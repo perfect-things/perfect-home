@@ -165,7 +165,7 @@ function release () {
 
 				// zip for chrome
 				`rm -f ~/Desktop/${app.name}/manifest.json && ` +
-				`cp manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
+				`cp dist/manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
 				`7z a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
 
 				`rm -rf ~/Desktop/${app.name}`;
@@ -174,24 +174,6 @@ function release () {
 		})
 		.then(() => {
 			spinner.text = 'Source zipped to ' + chalk.cyan('Desktop') + '!';
-			spinner.succeed();
-
-			spinner.text = 'Zipping dist for chrome store...';
-			spinner.start();
-			const name = `${app.name}-${app.version}`;
-			const cmd = `mkdir ~/Desktop/${name} && cp -R dist/* ~/Desktop/${name}`;
-			return run(cmd).catch(() => {});
-		})
-		.then(() => {
-			const name = `${app.name}-${app.version}`;
-			updateManifestForChrome(`~/Desktop/${name}/manifest.json`);
-
-			const cmd = `7z a ~/Desktop/${name}.zip ~/Desktop/${name}/ > /dev/null && ` +
-				`rm -rf ~/Desktop/${name}`;
-			return run(cmd).catch(() => {});
-		})
-		.then(() => {
-			spinner.text = 'Chrome store package zipped to ' + chalk.cyan('Desktop') + '!';
 			spinner.succeed();
 
 			console.log(chalk.cyan('All done!'));
