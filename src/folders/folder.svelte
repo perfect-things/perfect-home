@@ -23,10 +23,10 @@
 
 
 <script>
-import Tile from '../tile';
-import {onMount, tick} from 'svelte';
-import {EVENT, wasSorted, dockedFolders, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders} from '../lib';
-import Sortable from 'sortablejs';
+import { Tile } from '../tile';
+import { onMount, tick } from 'svelte';
+import { EVENT, wasSorted, dockedFolders, getSubTree, getFolderTitle, moveBookmark, saveDockedFolders } from '../lib';
+import { default as Sortable } from 'sortablejs';
 
 export let folder;
 let folderEl;
@@ -103,7 +103,7 @@ function onBookmarkRemove (item) {
 
 function onsort (e) {
 	const isInFolder = e.item.closest('.folder-items');
-	if (isInFolder) moveBookmark(e.item.dataset.id, {parentId: folder.id, index: e.newIndex});
+	if (isInFolder) moveBookmark(e.item.dataset.id, { parentId: folder.id, index: e.newIndex });
 }
 
 function togglePin () {

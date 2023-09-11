@@ -25,14 +25,15 @@
 			<ImportExport />
 			<Reset />
 		</div>
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex a11y-no-static-element-interactions -->
 		<div tabindex="0" on:keydown="{e => trapfocus(e, 'last')}" bind:this="{lastFocusEl}"></div>
 	</div>
 {/if}
 
 <script>
-import {onMount} from 'svelte';
-import {fly} from 'svelte/transition';
-import {EVENT, getAllItems, getSettings, saveSettings, options, defaultOptions} from '../lib';
+import { onMount } from 'svelte';
+import { fly } from 'svelte/transition';
+import { EVENT, getAllItems, getSettings, saveSettings, options, defaultOptions } from '../lib';
 
 import MainFolder from './block-main-folder';
 import DockedFolders from './block-docked-folders';

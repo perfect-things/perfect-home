@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {exec} from 'child_process';
+import { exec } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -16,7 +16,7 @@ import Git from 'simple-git';
 const git = Git();
 const cwd = process.cwd();
 
-const manifests = [ 'package.json', 'src/manifest.json' ];
+const manifests = ['package.json', 'src/manifest.json'];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
 const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
 const dryrun = false;
@@ -86,7 +86,7 @@ function commit (version) {
 			.commit('Release v' + version)
 			.push(['origin', 'master'], err => {
 				if (err) reject(err);
-				else resolve({version});
+				else resolve({ version });
 			});
 	});
 }
@@ -109,7 +109,7 @@ function release () {
 				message: 'Bump version to:',
 				default: 1,
 				choices: [
-					{ value: app.current,   name: 'current (' + app.current + ')' },
+					{ value: app.current, name: 'current (' + app.current + ')' },
 					{ value: app.nextPatch, name: 'patch   (' + app.nextPatch + ')' },
 					{ value: app.nextMinor, name: 'minor   (' + app.nextMinor + ')' },
 					{ value: app.nextMajor, name: 'major   (' + app.nextMajor + ')' },
@@ -127,7 +127,7 @@ function release () {
 				validate: answer => semver.valid(answer) ? true : 'That\'s not a valid version number',
 			}
 		])
-		.then(({version}) => {
+		.then(({ version }) => {
 			app.version = version;
 			spinner = ora('').start();
 			// update package & manifest

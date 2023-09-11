@@ -12,11 +12,11 @@
 
 
 <script>
-import Tile from '../tile';
-import {onMount} from 'svelte';
-import {getSubTree, moveBookmark, injectCss, EVENT, clone, objectsMoreLessTheSame, initialLoad,
-	options, items, currentFolder, itemsLoaded,	wasSorted} from '../lib';
-import Sortable from 'sortablejs';
+import { Tile } from '../tile';
+import { onMount } from 'svelte';
+import { getSubTree, moveBookmark, injectCss, EVENT, clone, objectsMoreLessTheSame, initialLoad,
+	options, items, currentFolder, itemsLoaded,	wasSorted } from '../lib';
+import { default as Sortable } from 'sortablejs';
 let oldProps;
 
 onMount(() => {
@@ -74,7 +74,7 @@ function optionsChanged (props) {
 
 function onsort (e) {
 	const isInMain = e.item.closest('.bookmarks');
-	if (isInMain) moveBookmark(e.item.dataset.id, {index: e.newIndex, parentId: $currentFolder});
+	if (isInMain) moveBookmark(e.item.dataset.id, { index: e.newIndex, parentId: $currentFolder });
 }
 
 

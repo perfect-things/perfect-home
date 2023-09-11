@@ -1,26 +1,26 @@
-import {readable, writable, derived, get} from 'svelte/store';
-import {EVENT} from './event';
-import {getFaviconFromGoogle} from './google';
-import {getThemes, getThemeIcon, getThemeCSS} from './github';
-import {isChrome, getFolderTitle, getThumbs, saveThumbs, getDockedFolders, saveDockedFolders} from './browser';
+import { readable, writable, derived, get } from 'svelte/store';
+import { EVENT } from './event';
+import { getFaviconFromGoogle } from './google';
+import { getThemes, getThemeIcon, getThemeCSS } from './github';
+import { isChrome, getFolderTitle, getThumbs, saveThumbs, getDockedFolders, saveDockedFolders } from './browser';
 
 const _options = {
-	pageTitle         : 'New Tab',
-	gridMaxWidth      : 1000,
-	iconWidth         : 150,
-	iconHeight        : 140,
-	gridGap           : 30,
-	pageColor         : '#eeeeee',
-	pageBg            : '#333333',
-	showLabels        : true,
-	animSpeed         : 250,
-	openLinksInNewTab : false,
-	css               : '',
-	theme             : '',
-	themeCSS          : '',
-	rootFolder        : isChrome ? '0' : 'root________',
-	allowGH           : false,
-	allowGoogle       : false,
+	pageTitle: 'New Tab',
+	gridMaxWidth: 1000,
+	iconWidth: 150,
+	iconHeight: 140,
+	gridGap: 30,
+	pageColor: '#eeeeee',
+	pageBg: '#333333',
+	showLabels: true,
+	animSpeed: 250,
+	openLinksInNewTab: false,
+	css: '',
+	theme: '',
+	themeCSS: '',
+	rootFolder: isChrome ? '0' : 'root________',
+	allowGH: false,
+	allowGoogle: false,
 };
 
 export const currentFolder = writable('');

@@ -25,9 +25,9 @@
 
 
 <script>
-import {onMount} from 'svelte';
-import Modal from '../svelte-modal';
-import {EVENT, themes, themeIcons, options} from '../lib';
+import { onMount } from 'svelte';
+import { Modal } from '../svelte-modal';
+import { EVENT, themes, themeIcons, options } from '../lib';
 
 let modal;
 let filter = '';

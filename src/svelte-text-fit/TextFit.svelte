@@ -4,7 +4,7 @@
 
 <script>
 
-import {onMount, onDestroy} from 'svelte';
+import { onMount, onDestroy } from 'svelte';
 const MARGIN = 30;
 const DEBOUNCE_RESIZE = 100;
 let el, parent, resizeObserver, timer, mutationObserver;

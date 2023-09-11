@@ -17,7 +17,7 @@ function parseThemes (resp) {
 		themes[themeName] = { icons: [], css: '' };
 		themes[themeName].icons = thumbs
 			.filter(item => item.path.startsWith(thm))
-			.map(({path, url}) => {
+			.map(({ path, url }) => {
 				const name = path.replace(thm + '/', '').replace('.png', '');
 				const imgUrl = `${GH_IMAGE_BASE_URL}${path}`;
 				return { name, url, path, imgUrl };

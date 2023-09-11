@@ -26,7 +26,7 @@
 </header>
 
 <script>
-import {EVENT, items, options, currentFolder, currentFolderTitle, itemsLoaded} from '../lib';
+import { EVENT, items, options, currentFolder, currentFolderTitle, itemsLoaded } from '../lib';
 
 function goBack () {
 	history.back();

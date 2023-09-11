@@ -14,8 +14,8 @@
 </Modal>
 
 <script>
-import Modal from '../svelte-modal';
-import {EVENT} from '../lib';
+import { Modal } from '../svelte-modal';
+import { EVENT } from '../lib';
 
 let modal;
 

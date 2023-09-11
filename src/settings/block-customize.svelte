@@ -5,7 +5,6 @@
 	</small>
 	{#if $options.allowGH}
 		<div class="select-wrap">
-			<!-- svelte-ignore a11y-no-onchange -->
 			<select name="theme" aria-labelledby="lbl-theme"
 				bind:value="{$options.theme}" on:change="{onThemeChange}">
 				<option value="">None</option>
@@ -93,10 +92,10 @@
 
 
 <script>
-import {onMount} from 'svelte';
+import { onMount } from 'svelte';
 import SettingsBlock from './settings-block';
-import Toggle from '../svelte-toggle';
-import {themes, themeNames, options, validateCustomCss} from '../lib';
+import { Toggle } from '../svelte-toggle';
+import { themes, themeNames, options, validateCustomCss } from '../lib';
 
 
 onMount(() => {

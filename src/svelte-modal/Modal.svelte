@@ -1,3 +1,7 @@
+<!-- svelte-ignore
+	a11y-no-noninteractive-tabindex
+	a11y-no-static-element-interactions
+	a11y-click-events-have-key-events -->
 <div class="modal-backdrop {cssClass}"
 	class:visible="{opened}"
 	bind:this="{backdropEl}"

@@ -90,7 +90,7 @@ function fuzzy (hay = '', s = '') {
 	hay = hay.toLowerCase();
 	s = s.toLowerCase();
 	let n = -1;
-	for (let l of s) if (!~(n = hay.indexOf(l, n + 1))) return false;
+	for (const l of s) if (!~(n = hay.indexOf(l, n + 1))) return false;
 	return true;
 }
 
@@ -99,17 +99,17 @@ function emphasize (str, q) {
 	if (!q) return str;
 	str = '' + str;
 	let idx = 0;
-	let low = str.toLowerCase();
+	const low = str.toLowerCase();
 
 	// string includes the whole query block
 	if (low.includes(q)) return str.replace(new RegExp(`(${q})`, 'ig'), '<b>$1</b>');
 
 	// string includes the scattered query
-	let stra = str.split('');
+	const stra = str.split('');
 	q = q.toLowerCase();
-	for (let l of q) {
+	for (const l of q) {
 		idx = low.indexOf(l, idx);
-		let letter = stra[idx];
+		const letter = stra[idx];
 		if (letter) {
 			stra.splice(idx, 1, `<b>${letter}</b>`);
 			idx += 1;
@@ -121,7 +121,7 @@ function emphasize (str, q) {
 
 
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
+	const dflt = { duration: 300, easing: 'ease-out', fill: 'forwards' };
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {

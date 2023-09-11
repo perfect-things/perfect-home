@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import {flattenTree, processSubTree} from './utils';
+import { flattenTree, processSubTree } from './utils';
 
 const isChrome = browser.extension &&
 	browser.extension.getURL &&
@@ -14,11 +14,11 @@ const getFolderTitle = id => browser.bookmarks.get(id).then(res => res[0].title)
 const getSubTree = (id) => browser.bookmarks.getSubTree(id).then(processSubTree).catch(() => {});
 
 const getBookmark =	 (id) => browser.bookmarks.get(id).then(res => res.length && res[0]).catch(() => {});
-const saveBookmark = (item) => browser.bookmarks.update(item.id, {title: item.title, url: item.url});
+const saveBookmark = (item) => browser.bookmarks.update(item.id, { title: item.title, url: item.url });
 const deleteBookmark = (id) => browser.bookmarks.remove(id);
 const createBookmark = (item) => browser.bookmarks.create(item);
 
-const moveBookmark = (id, {parentId, index}) => browser.bookmarks.move(id, {parentId, index});
+const moveBookmark = (id, { parentId, index }) => browser.bookmarks.move(id, { parentId, index });
 
 const getAllItems = () => browser.bookmarks.getTree().then(tree => {
 	tree[0].title = tree[0].title || 'All Bookmarks';

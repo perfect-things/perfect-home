@@ -8,9 +8,9 @@
 
 
 <script>
-import {onMount} from 'svelte';
-import Folder from './folder';
-import {EVENT, getBookmark, dockedFolders} from '../lib';
+import { onMount } from 'svelte';
+import Folder from './Folder.svelte';
+import { EVENT, getBookmark, dockedFolders } from '../lib';
 let settingsLoaded = false;
 let foldersLoaded = false;
 

@@ -1,6 +1,6 @@
 <script>
-import {onMount} from 'svelte';
-import {getAllItems, getThumbs, saveThumbs} from '../lib';
+import { onMount } from 'svelte';
+import { getAllItems, getThumbs, saveThumbs } from '../lib';
 
 const TIMEOUT = 10000;
 
@@ -19,7 +19,7 @@ async function purgeThumbs () {
 	const items = await getAllItems();
 	const itemsIds = items.map(i => i.id);
 	let count = 0;
-	for (let thumb in thumbs) {
+	for (const thumb in thumbs) {
 		if (itemsIds.includes(thumb)) continue;
 		delete thumbs[thumb];
 		count += 1;

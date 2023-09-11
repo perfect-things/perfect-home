@@ -10,17 +10,15 @@ function fire (topic, ...args) {
 function on (topic, callback) {
 	if (!_cache[topic]) _cache[topic] = [];
 	_cache[topic].push(callback);
-	return [topic, callback];       // handle for off
 }
 
-function off (handle) {
-	let [topic, cb] = handle, ca = _cache[topic];
-	cb = cb.toString();
-	if (ca) {
-		ca.forEach((fn, i) => {
-			if (fn.toString() === cb) ca.splice(i, 1);
-		});
-	}
+function off (topic, callback) {
+	const cached = _cache[topic];
+	callback = callback.toString();
+	if (!cached) return;
+
+	const idx = cached.findIndex(fn => fn.toString() === callback);
+	if (idx > -1) cached.splice(idx, 1);
 }
 
 

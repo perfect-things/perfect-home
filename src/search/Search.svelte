@@ -1,3 +1,7 @@
+<!-- svelte-ignore
+	a11y-click-events-have-key-events
+	a11y-no-static-element-interactions -->
+
 <Modal bind:this="{modal}" cssClass="search-modal">
 	<div class="autocomplete">
 		<input type="text" class="autocomplete-input"
@@ -29,9 +33,9 @@
 
 
 <script>
-import {onMount} from 'svelte';
-import Modal from '../svelte-modal';
-import {EVENT, currentFolder, clone, fuzzy, emphasize, getAllItems, getFavicon, options} from '../lib';
+import { onMount } from 'svelte';
+import { Modal } from '../svelte-modal';
+import { EVENT, currentFolder, clone, fuzzy, emphasize, getAllItems, getFavicon, options } from '../lib';
 
 let modal;
 let data = [];

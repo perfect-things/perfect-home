@@ -1,3 +1,7 @@
+<!--svelte-ignore
+	a11y-click-events-have-key-events
+	a11y-no-noninteractive-element-interactions -->
+
 <ul class="context-menu" class:hidden="{!opened}" bind:this="{menuEl}">
 	{#if !isFolder}
 		<li class="context-menu-item" on:click="{() => newTab()}">Open in New Tab</li>
@@ -16,8 +20,8 @@
 <svelte:window on:click={onDocumentClick} on:contextmenu="{onContextMenu}"/>
 
 <script>
-import {EVENT, getBookmark, newtab, newwindow, copyToClipboard} from '../lib';
-import {showToast} from '../svelte-toaster';
+import { EVENT, getBookmark, newtab, newwindow, copyToClipboard } from '../lib';
+import { showToast } from '../svelte-toaster';
 
 let menuEl;
 let item, el;
@@ -50,20 +54,21 @@ function delBookmark () {
 	setTimeout(() => EVENT.fire(EVENT.bookmark.delete, item, el));
 }
 
-function updatePosition (e)  {
+function updatePosition (e) {
 	if (e) {	// update position to pointer
 		menuEl.style.left = e.pageX + 'px';
 		menuEl.style.top = e.pageY + 'px';
 	}
 	else {		// make sure it stays on screen
-		let {x, y, width, height} = menuEl.getBoundingClientRect();
+		const { x, y, width, height } = menuEl.getBoundingClientRect();
 		const winH = window.innerHeight;
 		const winW = window.innerWidth;
 		const padding = 10;
-		if (winH - height - y < padding) y = winH - height - padding;
-		if (winW - width - x < padding) x = winW - width - padding;
-		menuEl.style.left = x + 'px';
-		menuEl.style.top = y + 'px';
+		let left = x, top = y;
+		if (winH - height - y < padding) top = winH - height - padding;
+		if (winW - width - x < padding) left = winW - width - padding;
+		menuEl.style.left = left + 'px';
+		menuEl.style.top = top + 'px';
 	}
 }
 

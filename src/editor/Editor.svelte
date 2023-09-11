@@ -39,12 +39,12 @@
 </Modal>
 
 <script>
-import {onMount} from 'svelte';
-import Modal from '../svelte-modal';
-import TextFit from '../svelte-text-fit';
-import {showToast, hideToast} from '../svelte-toaster';
-import {EVENT, items, thumbs, getLetterThumbnailStyle, getFavicon, animate,
-	saveBookmark, deleteBookmark, createBookmark, themes, options, getHost} from '../lib';
+import { onMount } from 'svelte';
+import { Modal } from '../svelte-modal';
+import { TextFit } from '../svelte-text-fit';
+import { showToast, hideToast } from '../svelte-toaster';
+import { EVENT, items, thumbs, getLetterThumbnailStyle, getFavicon, animate,
+	saveBookmark, deleteBookmark, createBookmark, themes, options, getHost } from '../lib';
 
 let modal, item = {}, thumb, itemEl, fileInput, targetEl, thumbnailUrl;
 let letterThumb = '', letterThumbSuff = '';
@@ -74,7 +74,7 @@ function delBookmark (_item, _el) {
 	cancel();
 
 	_el = _el || targetEl;
-	animate(_el, {transform: 'scale(1)', opacity: 1}, {transform: 'scale(0)', opacity: 0})
+	animate(_el, { transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 })
 		.then(() => {
 			const undo = undoDelete(_item, $thumbs[_item.id]);
 			showToast('Bookmark has been removed.', 'info', 10000, 'Undo', (e, id) => {

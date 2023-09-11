@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="toggle" class:checked="{value}" disabled="{disabled}" bind:this="{el}"
 	tabIndex="{disabled ? undefined : 0}"
 	on:keydown="{onKey}"
@@ -11,8 +12,7 @@
 	</label>
 </div>
 <script>
-import { onMount } from 'svelte';
-import { createEventDispatcher } from 'svelte';
+import { onMount , createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher();
 
 const isTouchDevice = 'ontouchstart' in document.documentElement;
@@ -55,11 +55,11 @@ function dragStart (e) {
 
 	if (e.type === 'touchstart') {
 		document.addEventListener('touchend', dragEnd);
-		document.addEventListener('touchmove', drag, { passive: false  });
+		document.addEventListener('touchmove', drag, { passive: false });
 	}
 	else {
 		document.addEventListener('mouseup', dragEnd);
-		document.addEventListener('mousemove', drag, { passive: false  });
+		document.addEventListener('mousemove', drag, { passive: false });
 	}
 	label.style.transition = 'none';
 	startX = getMouseX(e) - currentX;

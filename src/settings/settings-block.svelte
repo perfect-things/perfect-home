@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-no-noninteractive-tabindex a11y-no-noninteractive-element-interactions -->
 <div class="settings-block" class:collapsed>
 	<h2 class="settings-block-header" tabindex="0"
 		on:keypress={toggle}

@@ -8,6 +8,7 @@
 			download="perfect-home-settings.json"
 			on:click="{exportSettings}">Export</a>
 
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex a11y-no-static-element-interactions -->
 		<div class="btn btn-import"
 			tabindex="0"
 			on:keypress="{importClick}"
@@ -23,7 +24,7 @@
 
 
 <script>
-import {EVENT, options, thumbs, dockedFolders} from '../lib';
+import { EVENT, options, thumbs, dockedFolders } from '../lib';
 import SettingsBlock from './settings-block';
 let settingsInput;
 

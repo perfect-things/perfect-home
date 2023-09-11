@@ -1,4 +1,4 @@
-import {on, off, fire} from './pubsub';
+import { on, off, fire } from './pubsub';
 export const EVENT = {
 	on,
 	off,

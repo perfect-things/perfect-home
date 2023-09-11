@@ -3,7 +3,6 @@
 
 	<div class="settings-row">
 		<div class="select-wrap">
-			<!-- svelte-ignore a11y-no-onchange -->
 			<select name="rootfolder" aria-label="Main folder"
 				on:change="{onChange}"
 				bind:value="{$options.rootFolder}">
@@ -18,7 +17,7 @@
 
 
 <script>
-import {options, currentFolder} from '../lib';
+import { options, currentFolder } from '../lib';
 import SettingsBlock from './settings-block';
 
 export let folders = [];

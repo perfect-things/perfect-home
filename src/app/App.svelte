@@ -11,18 +11,18 @@
 <Cron />
 
 <script>
-import Header from '../header';
-import Main from '../main';
-import Folders from '../folders';
-import ContextMenu from '../context-menu';
-import Settings from '../settings';
-import Search from '../search';
-import Editor from '../editor';
-import IconPicker from '../icon-picker';
-import Cron from '../cron';
-import Toaster from '../svelte-toaster';
+import { EVENT } from '../lib';
+import { Header } from '../header';
+import { Main } from '../main';
+import { Folders } from '../folders';
+import { ContextMenu } from '../context-menu';
+import { Settings } from '../settings';
+import { Search } from '../search';
+import { Editor } from '../editor';
+import { IconPicker } from '../icon-picker';
+import { Cron } from '../cron';
+import { Toaster } from '../svelte-toaster';
 import LocalLinkWarning from './localLinkWarning';
-import {EVENT} from '../lib';
 
 document.addEventListener('click', e => EVENT.fire(EVENT.document.clicked, e));
 

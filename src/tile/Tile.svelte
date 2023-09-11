@@ -1,3 +1,5 @@
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 {#if item.type === 'separator'}
 	<div class="item separator" data-id="{item.id}"><span class="item-thumb"></span></div>
 {:else if item.type === 'folder'}
@@ -47,11 +49,11 @@
 
 
 <script>
-import TextFit from '../svelte-text-fit';
-import {EVENT, getLetterThumbnailStyle, getHost, getFavicon, isImage, initialLoad, cropText,
-	currentFolder, thumbs, wasSorted, options} from '../lib';
-import {onMount, afterUpdate} from 'svelte';
-import {fade} from 'svelte/transition';
+import { TextFit } from '../svelte-text-fit';
+import { EVENT, getLetterThumbnailStyle, getHost, getFavicon, isImage, initialLoad, cropText,
+	currentFolder, thumbs, wasSorted, options } from '../lib';
+import { onMount, afterUpdate } from 'svelte';
+import { fade } from 'svelte/transition';
 
 export let item;
 let thumb;

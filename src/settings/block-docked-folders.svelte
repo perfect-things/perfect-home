@@ -4,7 +4,6 @@
 	{#each $dockedFolders as dockedFolder}
 		<div class="settings-row">
 			<div class="select-wrap">
-				<!-- svelte-ignore a11y-no-onchange -->
 				<select title="Select a docked folder"
 					aria-label="Docked Folders"
 					bind:value="{dockedFolder.id}"
@@ -32,7 +31,7 @@
 
 <script>
 import SettingsBlock from './settings-block';
-import {EVENT, dockedFolders} from '../lib';
+import { EVENT, dockedFolders } from '../lib';
 
 export let folders = [];
 
@@ -43,7 +42,7 @@ function onDockedFoldersChange (id) {
 
 function addFolder () {
 	const docked = $dockedFolders;
-	docked.push({id: '', open: false});
+	docked.push({ id: '', open: false });
 	dockedFolders.set(docked);
 }
 

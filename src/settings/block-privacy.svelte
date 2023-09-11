@@ -24,9 +24,9 @@
 
 <script>
 import SettingsBlock from './settings-block';
-import Toggle from '../svelte-toggle';
-import {showToast, hideToast} from '../svelte-toaster';
-import {options} from '../lib';
+import { Toggle } from '../svelte-toggle';
+import { showToast, hideToast } from '../svelte-toaster';
+import { options } from '../lib';
 const TIMEOUT = 3000;
 
 function onChange () {
