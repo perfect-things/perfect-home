@@ -176,6 +176,7 @@ function release () {
 				`cp gulpfile.js ~/Desktop/${app.name} && ` +
 				`cp .editorconfig ~/Desktop/${app.name} && ` +
 				`cp .eslintrc ~/Desktop/${app.name} && ` +
+				`cp README.md ~/Desktop/${app.name} && ` +
 				`7z a ~/Desktop/${app.name}-source.zip ~/Desktop/${app.name}/ && ` +
 				`rm -rf ~/Desktop/${app.name}`;
 
