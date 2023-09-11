@@ -2,7 +2,6 @@
 
 import { exec } from 'child_process';
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
 import semver from 'semver';
 import ora from 'ora';
@@ -63,16 +62,6 @@ function bump (manifest, newVersion) {
 	const pkg = getJson(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
-	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
-}
-
-// remove chrome_settings_overrides property from manifest.json
-// as chrome store doesn't allow that
-function updateManifestForChrome (pkgPath) {
-	pkgPath = pkgPath.replace('~', os.homedir);
-	const pkg = getJson(pkgPath);
-	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
-	delete pkg.chrome_settings_overrides;
 	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
 }
 
@@ -151,7 +140,7 @@ function release () {
 			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
 			spinner.succeed();
 
-			spinner.text = 'Zipping source...';
+			spinner.text = 'Packing extensions...';
 			spinner.start();
 
 			const cmd = `rm -rf ~/Desktop/${app.name} && ` +
@@ -168,6 +157,26 @@ function release () {
 				`cp dist/manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
 				`7z a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
 
+				`rm -rf ~/Desktop/${app.name}`;
+
+			return run(cmd).catch(() => {});
+		})
+		.then(() => {
+			spinner.text = 'Extensions packed.';
+			spinner.succeed();
+
+			spinner.text = 'Zipping source for Firefox submission.';
+			spinner.start();
+
+			const cmd = `rm -rf ~/Desktop/${app.name} && ` +
+				`mkdir ~/Desktop/${app.name} && ` +
+				`cp -R src/ ~/Desktop/${app.name} && ` +
+				`cp LICENSE ~/Desktop/${app.name} && ` +
+				`cp package.json ~/Desktop/${app.name} && ` +
+				`cp gulpfile ~/Desktop/${app.name} && ` +
+				`cp .editorconfig ~/Desktop/${app.name} && ` +
+				`cp .eslintrc ~/Desktop/${app.name} && ` +
+				`7z a ~/Desktop/${app.name}-source.zip ~/Desktop/${app.name}/ && ` +
 				`rm -rf ~/Desktop/${app.name}`;
 
 			return run(cmd).catch(() => {});
