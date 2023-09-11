@@ -158,6 +158,7 @@ function release () {
 				`mkdir ~/Desktop/${app.name} && ` +
 				`cp -R dist/ ~/Desktop/${app.name} && ` +
 				`cp LICENSE ~/Desktop/${app.name} && ` +
+				`rm -f ~/Desktop/${app.name}/manifest-chrome.json && ` +
 
 				// zip for firefox
 				`7z a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +

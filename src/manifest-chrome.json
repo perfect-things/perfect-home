@@ -6,9 +6,6 @@
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
-	"chrome_settings_overrides": {
-		"homepage": "index.html"
-	},
 	"description": "New tab replacement",
 	"permissions": [
 		"bookmarks",
@@ -17,11 +14,5 @@
 	"icons": {
 		"48": "icon48.png",
 		"96": "icon96.png"
-	},
-	"browser_specific_settings": {
-		"gecko": {
-			"id": "page-spotlight@perfectthings.dev",
-			"strict_min_version": "80.0"
-		}
 	}
 }
