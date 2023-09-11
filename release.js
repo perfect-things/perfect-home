@@ -81,7 +81,6 @@ function commit (version) {
 	if (dryrun) return faker();
 	return new Promise((resolve, reject) => {
 		git
-			.silent(true)
 			.add('./*')
 			.commit('Release v' + version)
 			.push(['origin', 'master'], err => {
@@ -172,9 +171,13 @@ function release () {
 
 			const cmd = 'mkdir ~/Desktop/source && ' +
 				'cp -R src ~/Desktop/source && ' +
-				'cp package.json ~/Desktop/source && ' +
-				'cp gulpfile.js ~/Desktop/source && ' +
-				'7z a ~/Desktop/source.zip ~/Desktop/source/ > /dev/null && ' +
+
+				// zip for chrome
+				'7z a ~/Desktop/source-chrome.zip ~/Desktop/source/ && ' +
+
+				// zip for firefox
+				'7z a ~/Desktop/source-firefox.zip ~/Desktop/source/* && ' +
+
 				'rm -rf ~/Desktop/source';
 			return run(cmd).catch(() => {});
 		})
