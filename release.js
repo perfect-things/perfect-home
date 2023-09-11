@@ -170,10 +170,10 @@ function release () {
 
 			const cmd = `rm -rf ~/Desktop/${app.name} && ` +
 				`mkdir ~/Desktop/${app.name} && ` +
-				`cp -R src/ ~/Desktop/${app.name} && ` +
+				`cp -R src/ ~/Desktop/${app.name}/src/ && ` +
 				`cp LICENSE ~/Desktop/${app.name} && ` +
 				`cp package.json ~/Desktop/${app.name} && ` +
-				`cp gulpfile ~/Desktop/${app.name} && ` +
+				`cp gulpfile.js ~/Desktop/${app.name} && ` +
 				`cp .editorconfig ~/Desktop/${app.name} && ` +
 				`cp .eslintrc ~/Desktop/${app.name} && ` +
 				`7z a ~/Desktop/${app.name}-source.zip ~/Desktop/${app.name}/ && ` +
