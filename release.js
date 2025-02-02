@@ -15,7 +15,7 @@ import Git from 'simple-git';
 const git = Git();
 const cwd = process.cwd();
 
-const manifests = ['package.json', 'src/manifest.json'];
+const manifests = ['package.json', 'src/manifest.json', 'src/manifest-chrome.json'];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
 const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
 const dryrun = false;
