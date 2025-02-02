@@ -35,7 +35,10 @@ function exportSettings (e) {
 		dockedFolders: $dockedFolders,
 		thumbs: $thumbs,
 	});
-	e.target.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(exp);
+	const blob = new Blob([exp], { type: 'application/json' });
+	const url = URL.createObjectURL(blob);
+	e.target.href = url;
+	URL.revokeObjectURL(url);
 }
 
 function importSettings (e) {

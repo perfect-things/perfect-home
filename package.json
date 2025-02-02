@@ -21,10 +21,10 @@
 	"license": "GPL-3.0-or-later",
 	"devDependencies": {
 		"@esbuild-plugins/node-resolve": "^0.2.2",
-		"chalk": "^5.3.0",
-		"del": "^7.1.0",
+		"chalk": "^5.4.1",
+		"del": "^8.0.0",
 		"detect-indent": "^7.0.1",
-		"eslint": "^8.47.0",
+		"eslint": "^8.57.1",
 		"esbuild-svelte": "^0.7.4",
 		"eslint-import-resolver-custom-alias": "^1.3.2",
 		"eslint-plugin-import": "^2.28.0",
@@ -33,24 +33,24 @@
 		"gulp-clean-css": "^4.3.0",
 		"gulp-concat": "^2.6.1",
 		"gulp-env": "^0.4.0",
-		"gulp-esbuild": "^0.11.2",
+		"gulp-esbuild": "^0.14.0",
 		"gulp-eslint-new": "^1.8.3",
 		"gulp-livereload": "^4.0.2",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-stylus": "^3.0.1",
-		"inquirer": "^9.2.11",
+		"inquirer": "^9.3.7",
 		"npm-run-all": "^4.1.5",
 		"open": "^9.1.0",
 		"ora": "^7.0.1",
-		"semver": "^7.3.5",
-		"simple-git": "^3.19.1",
-		"svelte": "^4.2.0",
+		"semver": "^7.7.0",
+		"simple-git": "^3.27.0",
+		"svelte": "^4.2.19",
 		"through2": "^4.0.2",
-		"web-ext": "^7.7.0",
-		"webextension-polyfill": "^0.10.0"
+		"web-ext": "^7.12.0",
+		"webextension-polyfill": "^0.12.0"
 	},
 	"dependencies": {
-		"sortablejs": "^1.15.0"
+		"sortablejs": "^1.15.6"
 	},
 	"webExt": {
 		"sourceDir": "dist/",
