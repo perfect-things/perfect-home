@@ -150,12 +150,12 @@ function release () {
 				`rm -f ~/Desktop/${app.name}/manifest-chrome.json && ` +
 
 				// zip for firefox
-				`7z a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +
+				`7zz a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +
 
 				// zip for chrome
 				`rm -f ~/Desktop/${app.name}/manifest.json && ` +
 				`cp dist/manifest-chrome.json ~/Desktop/${app.name}/manifest.json && ` +
-				`7z a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
+				`7zz a ~/Desktop/${app.name}-chrome.zip ~/Desktop/${app.name}/ && ` +
 
 				`rm -rf ~/Desktop/${app.name}`;
 
@@ -177,7 +177,7 @@ function release () {
 				`cp .editorconfig ~/Desktop/${app.name} && ` +
 				`cp .eslintrc ~/Desktop/${app.name} && ` +
 				`cp README.md ~/Desktop/${app.name} && ` +
-				`7z a ~/Desktop/${app.name}-source.zip ~/Desktop/${app.name}/ && ` +
+				`7zz a ~/Desktop/${app.name}-source.zip ~/Desktop/${app.name}/ && ` +
 				`rm -rf ~/Desktop/${app.name}`;
 
 			return run(cmd).catch(() => {});
