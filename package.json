@@ -14,7 +14,7 @@
 		"ext:build": "web-ext build --overwrite-dest -s ./dist",
 		"src:start": "gulp watch",
 		"dist": "gulp build --prod",
-		"build": "gulp build",
+		"build": "gulp build && npm run ext:build",
 		"watch": "run-p ext:start src:start",
 		"start": "run-s build watch"
 	},

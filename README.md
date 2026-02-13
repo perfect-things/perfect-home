@@ -54,7 +54,7 @@ See [a tutorial here](customization-tutorial.md)
     ```
 3. To build a zip artifact (that can be uploaded to mozilla addons):
     ```sh
-    npm run ext-build
+    npm run build
     ```
 
 ## Creating test-profile in Firefox
