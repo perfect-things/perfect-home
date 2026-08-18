@@ -1,6 +1,6 @@
 > [!IMPORTANT]
 > **UPDATE March 2026:** Unfortunately the extension is no longer available in Mozilla's Addons store.
-> 
+>
 > I recently received an email from them, saying that this extension was reported that it's not possible to build it from source.
 > And that I need fix this or they will remove it from their store.
 > 
@@ -62,15 +62,47 @@ See [a tutorial here](customization-tutorial.md)
 
 
 ## Build locally
-1. `npm i`
-2. To test the extension in a temporary firefox profile, use the test script:
-    ```sh
-    npm start
-    ```
-3. To build a zip artifact (that can be uploaded to mozilla addons):
-    ```sh
-    npm run build
-    ```
+
+### Firefox / Mozilla Add-ons build
+
+Install the exact dependency versions from the lockfile:
+
+```sh
+npm ci
+```
+
+Build the production Firefox extension:
+
+```sh
+npm run build:amo
+```
+
+The unpacked Firefox extension is generated in:
+
+```text
+amo-dist/
+```
+
+The uploadable ZIP is generated in:
+
+```text
+web-ext-artifacts/
+```
+
+Mozilla's default reviewer build environment is:
+
+* Ubuntu 24.04.4 LTS
+* ARM64
+* Node.js 24.14.0
+* npm 11.9.0
+
+### Development
+
+To test the extension in a temporary Firefox profile:
+
+```sh
+npm start
+```
 
 ## Creating test-profile in Firefox
 1. Open `about:profiles`
