@@ -15,7 +15,7 @@ import Git from 'simple-git';
 const git = Git();
 const cwd = process.cwd();
 
-const manifests = ['package.json', 'src/manifest.json', 'src/manifest-chrome.json'];
+const manifests = ['package.json', 'package-lock.json', 'src/manifest.json', 'src/manifest-chrome.json'];
 const addonUrl = 'https://addons.mozilla.org/en-US/developers/addon/perfect-home/versions';
 const chromeStoreDash = 'https://chrome.google.com/webstore/devconsole';
 const dryrun = false;
@@ -62,6 +62,9 @@ function bump (manifest, newVersion) {
 	const pkg = getJson(pkgPath);
 	const usedIndent = indent(fs.readFileSync(pkgPath, 'utf8')).indent || '  ';
 	pkg.version = newVersion;
+
+	if (manifest === 'package-lock.json' && pkg.packages?.['']) pkg.packages[''].version = newVersion;
+
 	if (!dryrun) fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, usedIndent) + '\n');
 }
 
@@ -134,7 +137,7 @@ function release () {
 
 			spinner.text = 'Building a ' + chalk.cyan('production') + ' version.';
 			spinner.start();
-			return run('gulp build --prod');
+			return run('npm run build:amo');
 		})
 		.then(() => {
 			spinner.text = 'Built a ' + chalk.cyan('production') + ' version.';
@@ -145,9 +148,7 @@ function release () {
 
 			const cmd = `rm -rf ~/Desktop/${app.name} && ` +
 				`mkdir ~/Desktop/${app.name} && ` +
-				`cp -R dist/ ~/Desktop/${app.name} && ` +
-				`cp LICENSE ~/Desktop/${app.name} && ` +
-				`rm -f ~/Desktop/${app.name}/manifest-chrome.json && ` +
+				`cp -R amo-dist/. ~/Desktop/${app.name}/ && ` +
 
 				// zip for firefox
 				`7zz a ~/Desktop/${app.name}-firefox.zip ~/Desktop/${app.name}/* && ` +
@@ -173,6 +174,8 @@ function release () {
 				`cp -R src/ ~/Desktop/${app.name}/src/ && ` +
 				`cp LICENSE ~/Desktop/${app.name} && ` +
 				`cp package.json ~/Desktop/${app.name} && ` +
+				`cp package-lock.json ~/Desktop/${app.name} && ` +
+				`cp .npmrc ~/Desktop/${app.name} && ` +
 				`cp gulpfile.js ~/Desktop/${app.name} && ` +
 				`cp .editorconfig ~/Desktop/${app.name} && ` +
 				`cp .eslintrc ~/Desktop/${app.name} && ` +

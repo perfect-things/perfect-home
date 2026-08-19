@@ -3,3 +3,4 @@ dist/
 web-ext-artifacts/
 config-prod.json
 yarn.lock
+amo-dist/

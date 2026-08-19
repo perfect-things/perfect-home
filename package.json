@@ -15,6 +15,7 @@
 		"src:start": "gulp watch",
 		"dist": "gulp build --prod",
 		"build": "gulp build && npm run ext:build",
+		"build:amo": "gulp build --prod && rm -rf amo-dist && cp -R dist amo-dist && cp LICENSE amo-dist/ && rm -f amo-dist/manifest-chrome.json && web-ext build --overwrite-dest -s ./amo-dist",
 		"watch": "run-p ext:start src:start",
 		"start": "run-s build watch"
 	},
