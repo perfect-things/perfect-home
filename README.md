@@ -1,18 +1,3 @@
-> [!IMPORTANT]
-> **UPDATE March 2026:** Unfortunately the extension is no longer available in Mozilla's Addons store.
->
-> I recently received an email from them, saying that this extension was reported that it's not possible to build it from source.
-> And that I need fix this or they will remove it from their store.
-> 
-> I tweaked the scripts to make them idiot-proof, updated the Readme doc, and pushed a new version, but unfortunately it was not enough for them.
-> I've got the same email saying that they can't build it (with the same log attached, where some automated process tries to run scripts that don't exist). 
-> No idea why. No idea what else I can do. I have no more capacity to keep trying to satisfy mozilla's extension "experts".
-> 
-> Feel free to fork & publish.
-
-----
-
-
 # Perfect Home
 
 Replace your new-tab page and home page with your bookmarks.
