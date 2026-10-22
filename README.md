@@ -6,7 +6,7 @@ Just your own, predictable grid of links.
 
 **Download from [chrome web store](https://chrome.google.com/webstore/detail/hdekbnedodfockfppllkaaahaibfgcaj)**
 
-**Download from [mozilla addons page](https://addons.mozilla.org/firefox/addon/perfect-home/)** *
+**Download from [mozilla addons page](https://addons.mozilla.org/firefox/addon/perfect-home/)**
 
 **[![Screenshot](_stuff/1-main.png)](https://addons.mozilla.org/firefox/addon/perfect-home/)**
 
